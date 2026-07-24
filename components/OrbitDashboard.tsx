@@ -129,7 +129,7 @@ export default function OrbitDashboard({
             "font-family:var(--font-display);font-size:22px;font-weight:400;letter-spacing:-.01em;white-space:nowrap;color:var(--color-ink)"
           )}
         >
-          {greeting}! Here's your team at work.
+          {greeting}! Here&apos;s your team at work.
         </div>
       </div>
 

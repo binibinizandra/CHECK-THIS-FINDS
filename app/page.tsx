@@ -265,7 +265,7 @@ export default function Home() {
               </div>
               <div style={{ flex: 1, background: PAGE_TINT, padding: 20, display: "flex", flexDirection: "column", gap: 12 }}>
                 <div style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 12.5, color: NAVY }}>
-                  Good afternoon! Here's your team at work.
+                  Good afternoon! Here&apos;s your team at work.
                 </div>
                 {[
                   { i: "NN", n: "Nailah Nectar", c: "#22C55E", t: "found 4 new brands that fit your niche" },
@@ -454,9 +454,9 @@ export default function Home() {
             Built for creators managing their own deals
           </h2>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.55, color: "rgba(255,255,255,.75)" }}>
-            If you're a content creator who wants brand partnerships but doesn't have a manager
+            If you&apos;re a content creator who wants brand partnerships but doesn&apos;t have a manager
             chasing them for you, this is your team. It grounds every pitch, brief, and proposal in
-            your real audience and your real rates — so the work sounds like you, because it's
+            your real audience and your real rates — so the work sounds like you, because it&apos;s
             built entirely on who you are.
           </p>
         </div>

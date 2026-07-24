@@ -30,7 +30,7 @@ export default function BriefCard({ research }: { research: LeadResearch }) {
 
       {!!research.priorities?.length && (
         <div>
-          <div style={labelStyle}>What they'd want</div>
+          <div style={labelStyle}>What they&apos;d want</div>
           <ul style={{ margin: 0, paddingLeft: 18, display: "flex", flexDirection: "column", gap: 4 }}>
             {research.priorities.map((p, i) => (
               <li key={i} style={{ fontFamily: "var(--font-body)", fontSize: 13.5, color: "var(--color-muted-2)" }}>

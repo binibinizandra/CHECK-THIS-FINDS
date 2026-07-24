@@ -50,7 +50,7 @@ export default function ChatPageClient({
     inputRef.current?.focus();
   }
 
-  function useTip(prompt: string) {
+  function applyTip(prompt: string) {
     setText(prompt);
     inputRef.current?.focus();
   }
@@ -176,7 +176,7 @@ export default function ChatPageClient({
               <button
                 key={p}
                 type="button"
-                onClick={() => useTip(p)}
+                onClick={() => applyTip(p)}
                 style={{
                   textAlign: "left",
                   background: "rgba(255,255,255,.08)",

@@ -72,7 +72,7 @@ export default function ProfileForm({ initial }: { initial: CreatorProfileData }
       </div>
 
       <div style={f.fieldWrap}>
-        <label style={f.label}>Rate floor — the least you'll take for a single deliverable</label>
+        <label style={f.label}>Rate floor — the least you&apos;ll take for a single deliverable</label>
         <div style={{ display: "flex", alignItems: "center", gap: 8, maxWidth: 220 }}>
           <span style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "var(--color-muted)" }}>$</span>
           <input

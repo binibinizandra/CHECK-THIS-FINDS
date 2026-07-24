@@ -59,7 +59,7 @@ export default function WidgetDashboard({
       }}
     >
       <div style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 400, color: NAVY }}>
-        {greeting}! Here's your team at work.
+        {greeting}! Here&apos;s your team at work.
       </div>
 
       {/* Hero widget */}

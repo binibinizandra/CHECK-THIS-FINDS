@@ -67,7 +67,7 @@ export default function DealsPageClient({
         </div>
       </div>
       <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "var(--color-muted)", margin: "0 0 24px" }}>
-        Every brand you're working, from first contact to booked call.
+        Every brand you&apos;re working, from first contact to booked call.
       </p>
 
       {showAddForm && (
