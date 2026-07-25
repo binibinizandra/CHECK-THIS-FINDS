@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { av, statusMeta } from "@/lib/visuals";
 import { DEMO_AGENTS, DEMO_STATS, DEMO_ACTIVITY, type DemoAgent, type WorkspaceStats, type ActivityItem } from "@/lib/demoDashboard";
+import type { TikTokConnection } from "@/lib/tiktok/store";
 
 const YELLOW = "#FFC700";
 const NAVY = "#0A192F";
@@ -25,10 +26,12 @@ export default function WidgetDashboard({
   agents: agentsProp,
   stats: statsProp,
   activity: activityProp,
+  tiktokConnection,
 }: {
   agents?: DemoAgent[];
   stats?: WorkspaceStats;
   activity?: ActivityItem[];
+  tiktokConnection?: TikTokConnection | null;
 } = {}) {
   const [greeting, setGreeting] = useState("Good morning");
   useEffect(() => {
@@ -152,6 +155,56 @@ export default function WidgetDashboard({
           </span>
         </div>
       </div>
+
+      {tiktokConnection && (
+        <div
+          style={{
+            ...cardStyle,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: "26px 20px",
+            gap: 6,
+            maxWidth: 320,
+            margin: "0 auto",
+          }}
+        >
+          {tiktokConnection.avatarUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={tiktokConnection.avatarUrl}
+              alt={tiktokConnection.displayName ?? "TikTok profile photo"}
+              style={{ width: 84, height: 84, borderRadius: "50%", objectFit: "cover", border: `3px solid ${YELLOW}` }}
+            />
+          ) : (
+            <div
+              style={{
+                width: 84,
+                height: 84,
+                borderRadius: "50%",
+                background: NAVY,
+                color: YELLOW,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: "var(--font-body)",
+                fontWeight: 700,
+                fontSize: 22,
+              }}
+            >
+              TT
+            </div>
+          )}
+          <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 16, color: NAVY, marginTop: 4 }}>
+            {tiktokConnection.displayName ?? "TikTok creator"}
+          </div>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#64748B" }}>
+            {tiktokConnection.followerCount != null
+              ? `${tiktokConnection.followerCount.toLocaleString()} followers`
+              : "Follower count unavailable"}
+          </div>
+        </div>
+      )}
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20, marginTop: 6 }}>
         {/* Agent status widget */}

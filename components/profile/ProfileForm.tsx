@@ -3,10 +3,18 @@ import { useState, useTransition } from "react";
 import * as f from "@/components/profile/formStyles";
 import PlatformEditor from "@/components/profile/PlatformEditor";
 import AudienceFields from "@/components/profile/AudienceFields";
+import TikTokConnectCard from "@/components/profile/TikTokConnectCard";
 import { saveProfile } from "@/lib/profile/actions";
 import type { CreatorProfileData } from "@/lib/profile/types";
+import type { TikTokConnection } from "@/lib/tiktok/store";
 
-export default function ProfileForm({ initial }: { initial: CreatorProfileData }) {
+export default function ProfileForm({
+  initial,
+  tiktokConnection,
+}: {
+  initial: CreatorProfileData;
+  tiktokConnection: TikTokConnection | null;
+}) {
   const [data, setData] = useState<CreatorProfileData>(initial);
   const [pending, startTransition] = useTransition();
   const [saved, setSaved] = useState(false);
@@ -40,6 +48,8 @@ export default function ProfileForm({ initial }: { initial: CreatorProfileData }
           style={f.textarea}
         />
       </div>
+
+      <TikTokConnectCard connection={tiktokConnection} />
 
       <div style={f.fieldWrap}>
         <label style={f.label}>Platforms</label>

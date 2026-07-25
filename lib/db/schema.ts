@@ -23,6 +23,21 @@ export const creatorProfile = pgTable("creator_profile", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+export const tiktokConnections = pgTable("tiktok_connections", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => users.id),
+  openId: text("open_id").notNull(),
+  displayName: text("display_name"),
+  avatarUrl: text("avatar_url"),
+  followerCount: integer("follower_count"),
+  accessToken: text("access_token").notNull(),
+  refreshToken: text("refresh_token"),
+  expiresAt: timestamp("expires_at", { withTimezone: true }),
+  connectedAt: timestamp("connected_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const agents = pgTable(
   "agents",
   {

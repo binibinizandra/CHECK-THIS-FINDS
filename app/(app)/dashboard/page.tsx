@@ -1,6 +1,7 @@
 import { currentUser, currentUserId } from "@/lib/auth/currentUser";
 import { ensureUser } from "@/lib/users/store";
 import { getLiveDashboardData } from "@/lib/dashboard/store";
+import { getTikTokConnection } from "@/lib/tiktok/store";
 import LiveDashboard from "@/components/dashboard/LiveDashboard";
 import WidgetDashboard from "@/components/dashboard/WidgetDashboard";
 
@@ -13,7 +14,7 @@ export default async function DashboardPage() {
 
   if (!userId) return <WidgetDashboard />;
 
-  const liveData = await getLiveDashboardData(userId);
+  const [liveData, tiktokConnection] = await Promise.all([getLiveDashboardData(userId), getTikTokConnection(userId)]);
 
-  return <LiveDashboard initial={liveData} />;
+  return <LiveDashboard initial={liveData} tiktokConnection={tiktokConnection} />;
 }
