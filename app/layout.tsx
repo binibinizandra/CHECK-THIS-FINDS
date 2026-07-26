@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Check This Finds",
-  description: "Aesthetic & practical picks for everyday living — curated finds worth the tap.",
+  description: "Only tested & high-quality items — curated home, kitchen, and lifestyle finds.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

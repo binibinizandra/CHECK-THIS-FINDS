@@ -1,467 +1,332 @@
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+"use client";
+import { useState } from "react";
 
-const YELLOW = "#FFC700";
 const NAVY = "#0A192F";
-const LIGHT = "#F1F3FF";
-const LIGHT_MUTED = "#AAB2D6";
-const PAGE_GLOW =
-  "radial-gradient(50% 26% at 15% 6%, rgba(157,92,255,.30), transparent 60%)," +
-  "radial-gradient(50% 26% at 88% 26%, rgba(47,224,245,.18), transparent 60%)," +
-  "radial-gradient(55% 26% at 18% 50%, rgba(255,61,174,.14), transparent 60%)," +
-  "radial-gradient(50% 26% at 85% 72%, rgba(157,92,255,.20), transparent 60%)," +
-  "radial-gradient(60% 26% at 30% 94%, rgba(47,224,245,.14), transparent 60%)," +
-  "linear-gradient(180deg, #131A42 0%, #0B1130 30%, #0A0F2A 62%, #090C24 100%)";
-const YELLOW_GLOW = "0 0 20px rgba(255,199,0,.55), 0 0 44px rgba(255,199,0,.28)";
 
-const FEATURES = [
+type Product = {
+  name: string;
+  cat: string[];
+  rating: number;
+  reviews: number;
+  tint: string;
+  icon: React.ReactNode;
+};
+
+const PRODUCTS: Product[] = [
   {
-    title: "Carefully Curated",
-    body: "We search and filter through hundreds of trending items to select only the ones with great quality, high ratings, and real function.",
+    name: "Adjustable Aluminum Laptop Stand",
+    cat: ["home", "top"],
+    rating: 4.8,
+    reviews: 312,
+    tint: "linear-gradient(150deg,#FFF3D6,#FFE6A6)",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="4" width="16" height="10" rx="1.5" />
+        <path d="M2 18h20l-2 3H4z" />
+      </svg>
+    ),
   },
   {
-    title: "Tried & Reviewed",
-    body: "No fake hype. We break down the key features, aesthetic details, and practical uses so you know exactly what you’re getting.",
+    name: "Ceramic Pour-Over Coffee Dripper",
+    cat: ["kitchen", "top"],
+    rating: 4.9,
+    reviews: 501,
+    tint: "linear-gradient(150deg,#F3ECE2,#E3D5C0)",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M18 8H13v6a4 4 0 0 1-8 0V8H4" />
+        <path d="M8 8V5h8v3" />
+        <path d="M6 20h12" />
+      </svg>
+    ),
   },
   {
-    title: "Shop with Confidence",
-    body: "Direct, verified product links to official store deals so you can grab the best home and lifestyle essentials with ease.",
+    name: "Stackable Foldable Storage Bins",
+    cat: ["home"],
+    rating: 4.6,
+    reviews: 189,
+    tint: "linear-gradient(150deg,#EAF1EA,#D3E4D2)",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="9" width="16" height="11" rx="1.5" />
+        <path d="M4 9l3-5h10l3 5" />
+      </svg>
+    ),
+  },
+  {
+    name: "Minimalist LED Desk Lamp",
+    cat: ["home", "top"],
+    rating: 4.7,
+    reviews: 264,
+    tint: "linear-gradient(150deg,#EFEAF7,#DCD2EE)",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 21h8M10 21v-6" />
+        <path d="M4 9l6-6 8 8-6 4-8-6z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Reusable Silicone Food Bags (Set of 6)",
+    cat: ["kitchen"],
+    rating: 4.5,
+    reviews: 148,
+    tint: "linear-gradient(150deg,#E7F3F1,#CDE7E2)",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7 4h10l1 6a8 8 0 0 1-12 0z" />
+        <path d="M9 4V2M15 4V2" />
+      </svg>
+    ),
+  },
+  {
+    name: "Bamboo Drawer Organizer Set",
+    cat: ["home"],
+    rating: 4.6,
+    reviews: 97,
+    tint: "linear-gradient(150deg,#F7EFE4,#EBDBC2)",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="6" width="8" height="8" rx="1" />
+        <rect x="13" y="6" width="8" height="8" rx="1" />
+        <rect x="3" y="16" width="18" height="4" rx="1" />
+      </svg>
+    ),
+  },
+  {
+    name: "Electric Milk Frother",
+    cat: ["kitchen", "top"],
+    rating: 4.8,
+    reviews: 356,
+    tint: "linear-gradient(150deg,#FDECE7,#F8D4C7)",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="9" y="2" width="6" height="4" rx="1" />
+        <path d="M12 6v6M8 12h8l-1 8H9z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Under-Sink Sliding Storage Rack",
+    cat: ["kitchen"],
+    rating: 4.5,
+    reviews: 121,
+    tint: "linear-gradient(150deg,#EAF0F6,#D2E0EE)",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="4" width="18" height="16" rx="1.5" />
+        <path d="M3 12h18M9 4v16" />
+      </svg>
+    ),
   },
 ];
 
-const STEPS = [
-  { n: "01", title: "Search & Filter", body: "We scan top platforms for trending items across home, fashion, tech, and daily essentials with verified high ratings." },
-  { n: "02", title: "Quality Check", body: "We review real buyer feedback, durability, and practical function to ensure zero fake hype or low-quality traps." },
-  { n: "03", title: "Spot the Best Deals", body: "We track price drops and official vouchers so you get the best value for your hard-earned money." },
-  { n: "04", title: "Shop via Direct Links", body: "Tap verified product links to order straight from trusted sellers with smooth checkout and reliable shipping." },
+const TABS = [
+  { key: "all", label: "All Finds" },
+  { key: "home", label: "Home & Living" },
+  { key: "kitchen", label: "Kitchen Must-Haves" },
+  { key: "top", label: "Top Rated" },
 ];
+
+function Stars({ rating }: { rating: number }) {
+  const pct = Math.round((rating / 5) * 100);
+  return (
+    <span className="sf-stars" aria-hidden="true">
+      ★★★★★
+      <span className="sf-stars-fill" style={{ width: `${pct}%` }}>
+        ★★★★★
+      </span>
+    </span>
+  );
+}
 
 export default function Home() {
+  const [filter, setFilter] = useState("all");
+  const visible = filter === "all" ? PRODUCTS : PRODUCTS.filter((p) => p.cat.includes(filter));
+
   return (
-    <div style={{ minHeight: "100dvh", display: "flex", flexDirection: "column", background: PAGE_GLOW }}>
-      <header
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "16px 26px",
-          maxWidth: 1440,
-          margin: "0 auto",
-          width: "100%",
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "var(--font-display)",
-            fontWeight: 700,
-            fontSize: 19,
-            color: LIGHT,
-            letterSpacing: "-0.01em",
-          }}
-        >
-          Check This Finds
-        </span>
-        <div style={{ display: "flex", gap: 22, alignItems: "center" }}>
-          <SignedOut>
-            <a href="/sign-in" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: 14, color: LIGHT }}>
-              Log in
-            </a>
-            <a
-              href="/sign-up"
-              style={{
-                fontFamily: "var(--font-body)",
-                fontWeight: 700,
-                fontSize: 14,
-                color: NAVY,
-                background: YELLOW,
-                borderRadius: "var(--radius-buttons)",
-                padding: "9px 20px",
-                boxShadow: YELLOW_GLOW,
-              }}
-            >
-              Sign up
-            </a>
-          </SignedOut>
-          <SignedIn>
-            <a href="/dashboard" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: 14, color: LIGHT }}>
-              Dashboard
-            </a>
-            <UserButton afterSignOutUrl="/" />
-          </SignedIn>
-        </div>
-      </header>
+    <>
+      <style>{`
+        .sf-wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
 
-      {/* Hero */}
-      <section style={{ position: "relative", overflow: "hidden", maxWidth: 1440, margin: "0 auto", width: "100%", padding: "60px 26px 0" }}>
-        <div style={{ position: "relative", textAlign: "center", maxWidth: 720, margin: "0 auto 8px" }}>
-          <div
-            style={{
-              display: "inline-block",
-              fontFamily: "var(--font-body)",
-              fontWeight: 700,
-              fontSize: 13,
-              letterSpacing: "0.02em",
-              textTransform: "uppercase",
-              color: NAVY,
-              background: YELLOW,
-              borderRadius: "var(--radius-buttons)",
-              padding: "6px 16px",
-              marginBottom: 20,
-              boxShadow: YELLOW_GLOW,
-            }}
-          >
-            Aesthetic &amp; Practical Picks for Everyday Living
-          </div>
-          <h1
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "clamp(34px, 5.6vw, 64px)",
-              lineHeight: 1.06,
-              letterSpacing: "-0.02em",
-              margin: "0 0 20px",
-              color: LIGHT,
-            }}
-          >
-            Smart finds for a space you&apos;ll love.
-          </h1>
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: 19,
-              lineHeight: 1.5,
-              letterSpacing: "-0.011em",
-              color: LIGHT_MUTED,
-              margin: "0 auto 30px",
-              maxWidth: 580,
-            }}
-          >
-            Check This Finds brings you handpicked, high-quality home and lifestyle items — tested for durability,
-            designed for function, and worth every peso.
-          </p>
-          <a
-            href="/sign-up"
-            style={{
-              display: "inline-block",
-              fontFamily: "var(--font-body)",
-              fontWeight: 700,
-              fontSize: 17,
-              color: NAVY,
-              background: YELLOW,
-              borderRadius: "var(--radius-buttons)",
-              padding: "12px 26px",
-              boxShadow: YELLOW_GLOW,
-            }}
-          >
-            Explore The Collection
-          </a>
-        </div>
-      </section>
+        .sf-header { position: sticky; top: 0; z-index: 20; background: var(--sf-paper); border-bottom: 1px solid var(--sf-border); }
+        .sf-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; }
+        .sf-brand-block { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+        .sf-brand-name { font-weight: 800; font-size: 19px; letter-spacing: -0.01em; color: var(--sf-ink); }
+        .sf-brand-tagline { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--sf-ink-faint); }
+        .sf-social-row { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .sf-social-btn { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: var(--sf-card); border: 1px solid var(--sf-border); color: var(--sf-ink); transition: transform .15s ease, border-color .15s ease; }
+        .sf-social-btn svg { width: 16px; height: 16px; }
+        @media (prefers-reduced-motion: no-preference) { .sf-social-btn:hover { transform: translateY(-2px); border-color: var(--sf-gold); } }
 
-      {/* Product mockup collage */}
-      <section
-        style={{
-          position: "relative",
-          overflow: "hidden",
-          maxWidth: 1440,
-          margin: "0 auto",
-          width: "100%",
-          padding: "50px 26px 100px",
-        }}
-      >
-        {/* Coffee mug prop */}
-        <div className="hero-float-card" style={{ position: "absolute", top: 6, left: "42%", width: 44, opacity: 0.9 }}>
-          <svg viewBox="0 0 24 24" fill="none" stroke={LIGHT} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M4 8h13v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8z" />
-            <path d="M17 9.5h1.5a2.5 2.5 0 0 1 0 5H17" />
-            <path d="M8 4.5c0 1-1 1-1 2M12 4.5c0 1-1 1-1 2" />
-          </svg>
-        </div>
+        .sf-featured { padding: 28px 0 8px; }
+        .sf-featured-label { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-gold-deep); background: rgba(255, 199, 0, 0.15); border-radius: 999px; padding: 5px 12px; margin-bottom: 12px; }
+        .sf-video-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; background: radial-gradient(120% 140% at 15% 10%, rgba(255,199,0,.35), transparent 55%), linear-gradient(150deg, #16233C, #0A192F 70%); display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 40px -20px rgba(10,25,47,.5); }
+        .sf-play-btn { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,.14); border: 1.5px solid rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .sf-play-btn svg { width: 22px; height: 22px; margin-left: 3px; }
+        .sf-video-caption { position: absolute; left: 16px; bottom: 14px; right: 16px; color: #fff; font-size: 13px; font-weight: 600; opacity: .85; }
+        .sf-featured-cta-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+        .sf-featured-name { font-size: 15px; font-weight: 700; color: var(--sf-ink); }
+        .sf-featured-sub { font-size: 12.5px; color: var(--sf-ink-muted); margin-top: 2px; }
+        .sf-btn-buy-now { display: inline-flex; align-items: center; gap: 6px; background: var(--sf-gold); color: var(--sf-ink); font-weight: 800; font-size: 14px; padding: 11px 22px; border-radius: 999px; border: none; box-shadow: 0 10px 22px -8px rgba(255,199,0,.6); flex-shrink: 0; cursor: pointer; }
 
-        <div
-          style={{
-            position: "relative",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 28,
-            flexWrap: "wrap",
-            padding: "20px 0",
-          }}
-        >
-          {/* Laptop mockup */}
-          <div style={{ width: "min(560px, 92vw)" }}>
-            <div
-              style={{
-                background: NAVY,
-                borderRadius: "20px 20px 4px 4px",
-                padding: "14px 14px 10px",
-                boxShadow: "0 30px 60px rgba(10,25,47,.35), 0 0 50px -12px rgba(157,92,255,.4)",
-              }}
-            >
-              <div
-                style={{
-                  background: "linear-gradient(160deg, #1B2352, #0D1230)",
-                  border: "1px solid rgba(255,255,255,.1)",
-                  borderRadius: 12,
-                  padding: "56px 32px",
-                  textAlign: "center",
-                }}
-              >
-                <div style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "#2FE0F5", marginBottom: 10 }}>
-                  Check This Finds
-                </div>
-                <div
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 800,
-                    fontSize: "clamp(24px, 3.2vw, 34px)",
-                    background: "linear-gradient(90deg, #FF3DAE, #9D5CFF 55%, #2FE0F5)",
-                    WebkitBackgroundClip: "text",
-                    backgroundClip: "text",
-                    color: "transparent",
-                  }}
-                >
-                  Best Picks
-                </div>
-              </div>
+        .sf-tabs-section { padding: 28px 0 4px; }
+        .sf-tabs-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+        .sf-tabs-row::-webkit-scrollbar { display: none; }
+        .sf-tab-btn { flex-shrink: 0; border: 1px solid var(--sf-border); background: var(--sf-card); color: var(--sf-ink-muted); font-weight: 700; font-size: 13px; padding: 9px 16px; border-radius: 999px; transition: background .15s ease, color .15s ease, border-color .15s ease; cursor: pointer; }
+        .sf-tab-btn[aria-pressed=true] { background: var(--sf-ink); border-color: var(--sf-ink); color: var(--sf-gold); }
+
+        .sf-grid-section { padding: 20px 0 8px; }
+        .sf-product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+        @media (min-width: 720px) { .sf-product-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+
+        .sf-card { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+        .sf-card-media { position: relative; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+        .sf-card-media svg { width: 38%; height: 38%; opacity: .85; }
+        .sf-quality-badge { position: absolute; top: 10px; left: 10px; display: inline-flex; align-items: center; gap: 4px; background: rgba(10,25,47,.85); color: var(--sf-gold); font-size: 9.5px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; padding: 5px 9px; border-radius: 999px; }
+        .sf-quality-badge svg { width: 10px; height: 10px; }
+        .sf-card-body { padding: 12px 12px 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+        .sf-card-name { font-size: 13.5px; font-weight: 700; line-height: 1.3; color: var(--sf-ink); min-height: 34px; }
+        .sf-stars { position: relative; display: inline-block; font-size: 12px; line-height: 1; letter-spacing: 2px; color: var(--sf-star-bg); }
+        .sf-stars-fill { position: absolute; inset: 0; overflow: hidden; color: var(--sf-star); white-space: nowrap; }
+        .sf-rating-row { display: flex; align-items: center; gap: 6px; }
+        .sf-rating-num { font-size: 11.5px; font-weight: 700; color: var(--sf-ink-muted); font-variant-numeric: tabular-nums; }
+        .sf-card-actions { display: flex; flex-direction: column; gap: 6px; margin-top: auto; }
+        .sf-btn-store { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 9px 8px; border-radius: 10px; border: none; color: #fff; cursor: pointer; }
+        .sf-btn-shopee { background: var(--sf-shopee); }
+        .sf-btn-tiktok { background: var(--sf-tiktok); }
+        @media (prefers-reduced-motion: no-preference) { .sf-btn-store { transition: opacity .15s ease; } .sf-btn-store:hover { opacity: .88; } }
+
+        .sf-footer { margin-top: 44px; border-top: 1px solid var(--sf-border); padding: 26px 0 40px; }
+        .sf-footer-copy { font-size: 12.5px; color: var(--sf-ink-muted); text-align: center; }
+        .sf-footer-disclosure { font-size: 11.5px; color: var(--sf-ink-faint); text-align: center; max-width: 460px; margin: 8px auto 0; line-height: 1.5; }
+
+        :root {
+          --sf-paper: #FFFCF6;
+          --sf-card: #FFFFFF;
+          --sf-ink: #0A192F;
+          --sf-ink-muted: #5B6472;
+          --sf-ink-faint: #8B92A3;
+          --sf-gold: #FFC700;
+          --sf-gold-deep: #A87B00;
+          --sf-border: #ECE7DC;
+          --sf-shopee: #EE4D2D;
+          --sf-tiktok: #10141C;
+          --sf-star: #FFC700;
+          --sf-star-bg: #E4E1D6;
+        }
+        @media (prefers-color-scheme: dark) {
+          :root { --sf-paper: #14181F; --sf-card: #1B212C; --sf-ink: #F3F1EA; --sf-ink-muted: #A6ADBB; --sf-ink-faint: #6E7585; --sf-border: #2A3140; --sf-star-bg: #333B4B; }
+        }
+      `}</style>
+
+      <div style={{ background: "var(--sf-paper)", color: "var(--sf-ink)", minHeight: "100dvh", fontFamily: "-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" }}>
+        <header className="sf-header">
+          <div className="sf-wrap sf-header-row">
+            <div className="sf-brand-block">
+              <span className="sf-brand-name">Check This Finds</span>
+              <span className="sf-brand-tagline">Only Tested &amp; High-Quality Items</span>
             </div>
-            {/* Keyboard */}
-            <div
-              style={{
-                background: "linear-gradient(180deg, #16233C, #0A192F)",
-                borderRadius: "0 0 14px 14px",
-                padding: "10px 12%",
-                boxShadow: "0 20px 40px -18px rgba(10,25,47,.5)",
-              }}
-            >
-              <div style={{ display: "flex", gap: "3%", marginBottom: "8%" }}>
-                {Array.from({ length: 10 }).map((_, i) => (
-                  <div key={i} style={{ flex: 1, aspectRatio: "2.4", background: "rgba(255,255,255,.08)", borderRadius: 2 }} />
-                ))}
-              </div>
-              <div style={{ display: "flex", gap: "3%", marginBottom: "8%" }}>
-                {Array.from({ length: 10 }).map((_, i) => (
-                  <div key={i} style={{ flex: 1, aspectRatio: "2.4", background: "rgba(255,255,255,.08)", borderRadius: 2 }} />
-                ))}
-              </div>
-              <div style={{ height: 12, background: "rgba(255,255,255,.06)", borderRadius: 5, margin: "0 24%" }} />
+            <div className="sf-social-row">
+              <a className="sf-social-btn" href="#" aria-label="Check This Finds on TikTok">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M16.6 5.2c-.9-.8-1.4-1.9-1.5-3.2h-3.1v13.6c0 1.5-1.2 2.7-2.7 2.7-1.5 0-2.7-1.2-2.7-2.7 0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9c-.3-.04-.6-.06-.9-.06-3.2 0-5.8 2.6-5.8 5.8s2.6 5.8 5.8 5.8 5.8-2.6 5.8-5.8V8.6c1.2.9 2.7 1.4 4.3 1.4V6.9c-.9 0-1.8-.3-2.5-.9-.1-.2-.2-.3-.3-.5-.4-.1-.7-.2-1-.3z" />
+                </svg>
+              </a>
+              <a className="sf-social-btn" href="#" aria-label="Check This Finds on Facebook">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M13.5 21v-7.6h2.6l.4-3h-3v-1.9c0-.87.24-1.46 1.5-1.46h1.6V4.3c-.28-.04-1.23-.12-2.34-.12-2.32 0-3.9 1.4-3.9 4V10.4H7.3v3h2.4V21h3.8z" />
+                </svg>
+              </a>
             </div>
           </div>
-        </div>
+        </header>
 
-        {/* Floating detail cards */}
-        <div
-          style={{
-            position: "absolute",
-            top: 40,
-            right: "12%",
-            background: "#fff",
-            borderRadius: 14,
-            padding: "10px 16px",
-            boxShadow: "0 14px 30px rgba(10,25,47,.16)",
-            fontFamily: "var(--font-body)",
-            fontSize: 12.5,
-            fontWeight: 600,
-            color: NAVY,
-            alignItems: "center",
-            gap: 8,
-          }}
-          className="hero-float-card"
-        >
-          <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#22C55E" }} />
-          Pitch drafted for Acme Outdoor
-        </div>
-        <div
-          style={{
-            position: "absolute",
-            bottom: 60,
-            left: "10%",
-            background: NAVY,
-            borderRadius: 14,
-            padding: "10px 16px",
-            boxShadow: "0 14px 30px rgba(10,25,47,.24)",
-            fontFamily: "var(--font-body)",
-            fontSize: 12.5,
-            fontWeight: 600,
-            color: YELLOW,
-            alignItems: "center",
-            gap: 8,
-          }}
-          className="hero-float-card"
-        >
-          <span style={{ width: 8, height: 8, borderRadius: "50%", background: YELLOW }} />
-          Call booked — Thu 2pm
-        </div>
-      </section>
-
-      <section style={{ padding: "80px 26px" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "clamp(28px, 3.4vw, 40px)",
-              lineHeight: 1.1,
-              letterSpacing: "-0.012em",
-              margin: "0 0 44px",
-              color: LIGHT,
-            }}
-          >
-            How Check This Finds Works
-          </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 28 }}>
-            {FEATURES.map((f, i) => (
-              <div
-                key={f.title}
-                style={{
-                  background: "#ffffff",
-                  borderRadius: "var(--radius-cards)",
-                  padding: 32,
-                  boxShadow: "0 8px 24px rgba(10,25,47,.06)",
-                }}
-              >
-                <div
-                  style={{
-                    width: 34,
-                    height: 34,
-                    borderRadius: 10,
-                    background: YELLOW,
-                    color: NAVY,
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 700,
-                    fontSize: 14,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: 16,
-                    boxShadow: YELLOW_GLOW,
-                  }}
-                >
-                  {i + 1}
-                </div>
-                <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 19, color: NAVY, marginBottom: 8 }}>
-                  {f.title}
-                </div>
-                <div style={{ fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.5, color: "var(--color-muted)" }}>
-                  {f.body}
-                </div>
+        <main className="sf-wrap">
+          <section className="sf-featured">
+            <span className="sf-featured-label">Featured Find</span>
+            <div className="sf-video-frame">
+              {/* Swap for a real embed: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowFullScreen /> */}
+              <div className="sf-play-btn">
+                <svg viewBox="0 0 24 24" fill="#fff">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section style={{ padding: "80px 26px" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "clamp(28px, 3.4vw, 40px)",
-              lineHeight: 1.1,
-              letterSpacing: "-0.012em",
-              margin: "0 0 44px",
-              color: LIGHT,
-            }}
-          >
-            How We Curate Your Finds
-          </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 28 }}>
-            {STEPS.map((s) => (
-              <div key={s.n}>
-                <div
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: 38,
-                    height: 38,
-                    borderRadius: "50%",
-                    background: YELLOW,
-                    color: NAVY,
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 700,
-                    fontSize: 13,
-                    marginBottom: 14,
-                    boxShadow: YELLOW_GLOW,
-                  }}
-                >
-                  {s.n}
-                </div>
-                <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 19, marginBottom: 8, color: LIGHT }}>
-                  {s.title}
-                </div>
-                <div style={{ fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.5, color: LIGHT_MUTED }}>
-                  {s.body}
-                </div>
+              <div className="sf-video-caption">AI Product Review — this week&rsquo;s pick, tested end to end</div>
+            </div>
+            <div className="sf-featured-cta-row">
+              <div>
+                <div className="sf-featured-name">Adjustable Aluminum Laptop Stand</div>
+                <div className="sf-featured-sub">Watch the full review, then grab it below</div>
               </div>
-            ))}
+              <a className="sf-btn-buy-now" href="#">
+                Buy Now
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M5 10h10M11 5l5 5-5 5" />
+                </svg>
+              </a>
+            </div>
+          </section>
+
+          <section className="sf-tabs-section">
+            <div className="sf-tabs-row" role="tablist" aria-label="Product categories">
+              {TABS.map((t) => (
+                <button
+                  key={t.key}
+                  type="button"
+                  className="sf-tab-btn"
+                  aria-pressed={filter === t.key}
+                  onClick={() => setFilter(t.key)}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className="sf-grid-section">
+            <div className="sf-product-grid">
+              {visible.map((p) => (
+                <article key={p.name} className="sf-card">
+                  <div className="sf-card-media" style={{ background: p.tint }}>
+                    <span className="sf-quality-badge">
+                      <svg viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 1l2.6 5.6L19 7.3l-4.5 4.2 1.1 6.2L10 14.8l-5.6 2.9 1.1-6.2L1 7.3l6.4-.7z" />
+                      </svg>
+                      Tested Quality
+                    </span>
+                    {p.icon}
+                  </div>
+                  <div className="sf-card-body">
+                    <div className="sf-card-name">{p.name}</div>
+                    <div className="sf-rating-row">
+                      <Stars rating={p.rating} />
+                      <span className="sf-rating-num">
+                        {p.rating.toFixed(1)} ({p.reviews})
+                      </span>
+                    </div>
+                    <div className="sf-card-actions">
+                      <button className="sf-btn-store sf-btn-shopee" type="button">
+                        Buy on Shopee
+                      </button>
+                      <button className="sf-btn-store sf-btn-tiktok" type="button">
+                        Buy on TikTok
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        </main>
+
+        <footer className="sf-footer">
+          <div className="sf-wrap">
+            <div className="sf-footer-copy">© {new Date().getFullYear()} Check This Finds. All rights reserved.</div>
+            <p className="sf-footer-disclosure">This site contains affiliate links. We may earn a commission at no extra cost to you.</p>
           </div>
-        </div>
-      </section>
-
-      <section style={{ padding: "80px 26px" }}>
-        <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "clamp(26px, 3vw, 36px)",
-              lineHeight: 1.15,
-              letterSpacing: "-0.01em",
-              margin: "0 0 18px",
-              color: "#ffffff",
-            }}
-          >
-            Everyday essentials, carefully curated.
-          </h2>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.55, color: "rgba(255,255,255,.75)" }}>
-            From home finds and personal care to trending fashion and smart gadgets — Check This Finds
-            brings together clean, high-quality recommendations so you can discover items that upgrade
-            your daily life without the endless scrolling.
-          </p>
-        </div>
-      </section>
-
-      <section style={{ position: "relative", overflow: "hidden", padding: "80px 26px", textAlign: "center" }}>
-        <div style={{ position: "relative", maxWidth: 640, margin: "0 auto" }}>
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 600,
-              fontSize: "clamp(26px, 3.2vw, 38px)",
-              lineHeight: 1.1,
-              letterSpacing: "-0.01em",
-              margin: "0 0 22px",
-              color: LIGHT,
-            }}
-          >
-            Aesthetic &amp; Practical Picks for Everyday Living
-          </h2>
-          <a
-            href="/sign-up"
-            style={{
-              display: "inline-block",
-              fontFamily: "var(--font-body)",
-              fontWeight: 700,
-              fontSize: 17,
-              color: NAVY,
-              background: YELLOW,
-              borderRadius: "var(--radius-buttons)",
-              padding: "12px 28px",
-              boxShadow: YELLOW_GLOW,
-            }}
-          >
-            Sign up free
-          </a>
-        </div>
-      </section>
-
-      <footer style={{ padding: "40px 26px", textAlign: "center" }}>
-        <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: LIGHT_MUTED }}>
-          © {new Date().getFullYear()} Check This Finds. All rights reserved.
-        </div>
-      </footer>
-    </div>
+        </footer>
+      </div>
+    </>
   );
 }
