@@ -2,7 +2,6 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const YELLOW = "#FFC700";
 const NAVY = "#0A192F";
-const PAGE_TINT = "#FFFDE7";
 const LIGHT = "#F1F3FF";
 const LIGHT_MUTED = "#AAB2D6";
 const PAGE_GLOW =
@@ -35,10 +34,6 @@ const STEPS = [
   { n: "03", title: "Spot the Best Deals", body: "We track price drops and official vouchers so you get the best value for your hard-earned money." },
   { n: "04", title: "Shop via Direct Links", body: "Tap verified product links to order straight from trusted sellers with smooth checkout and reliable shipping." },
 ];
-
-function Blob({ style }: { style: React.CSSProperties }) {
-  return <div style={{ position: "absolute", borderRadius: "50%", pointerEvents: "none", ...style }} />;
-}
 
 export default function Home() {
   return (
@@ -173,41 +168,6 @@ export default function Home() {
           padding: "50px 26px 100px",
         }}
       >
-        <Blob style={{ width: 260, height: 260, background: YELLOW, opacity: 0.12, top: 0, left: -80 }} />
-        <Blob style={{ width: 180, height: 180, background: YELLOW, opacity: 0.14, bottom: -40, right: 40 }} />
-
-        <div
-          className="hero-float-card"
-          style={{
-            position: "absolute",
-            bottom: 32,
-            right: 32,
-            gap: 18,
-            fontFamily: "var(--font-body)",
-            fontWeight: 700,
-            fontSize: 12,
-            letterSpacing: "0.05em",
-            textTransform: "uppercase",
-          }}
-        >
-          {["Personal Care", "Home Finds", "Tech"].map((label, i) => (
-            <span
-              key={label}
-              style={{
-                marginLeft: i === 0 ? 0 : 18,
-                paddingLeft: i === 0 ? 0 : 18,
-                borderLeft: i === 0 ? "none" : "1px solid rgba(234,237,255,.25)",
-                background: "linear-gradient(90deg, #FF3DAE, #9D5CFF 55%, #2FE0F5)",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                color: "transparent",
-              }}
-            >
-              {label}
-            </span>
-          ))}
-        </div>
-
         {/* Coffee mug prop */}
         <div className="hero-float-card" style={{ position: "absolute", top: 6, left: "42%", width: 44, opacity: 0.9 }}>
           <svg viewBox="0 0 24 24" fill="none" stroke={LIGHT} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
@@ -228,47 +188,6 @@ export default function Home() {
             padding: "20px 0",
           }}
         >
-          {/* Phone mockup */}
-          <div
-            style={{
-              width: 168,
-              flexShrink: 0,
-              background: NAVY,
-              borderRadius: 28,
-              padding: 8,
-              boxShadow: "0 24px 48px rgba(10,25,47,.28)",
-            }}
-          >
-            <div style={{ background: PAGE_TINT, borderRadius: 20, padding: "16px 12px", minHeight: 300 }}>
-              <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 11, color: NAVY, marginBottom: 14 }}>
-                Check This Finds
-              </div>
-              {["Dashboard", "Deals", "Agents", "Chat"].map((label, i) => (
-                <div
-                  key={label}
-                  style={{
-                    fontFamily: "var(--font-body)",
-                    fontSize: 10.5,
-                    fontWeight: i === 0 ? 700 : 500,
-                    color: i === 0 ? NAVY : "#7a7a55",
-                    background: i === 0 ? YELLOW : "transparent",
-                    borderRadius: 8,
-                    padding: "6px 8px",
-                    marginBottom: 4,
-                  }}
-                >
-                  {label}
-                </div>
-              ))}
-              <div style={{ background: "#fff", borderRadius: 12, padding: 10, marginTop: 14, boxShadow: "0 6px 14px rgba(10,25,47,.08)" }}>
-                <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 20, color: NAVY }}>23</div>
-                <div style={{ fontFamily: "var(--font-body)", fontSize: 8.5, color: "#7a7a55", textTransform: "uppercase", letterSpacing: ".03em" }}>
-                  Brands worked
-                </div>
-              </div>
-            </div>
-          </div>
-
           {/* Laptop mockup */}
           <div style={{ width: "min(560px, 92vw)" }}>
             <div
@@ -279,41 +198,30 @@ export default function Home() {
                 boxShadow: "0 30px 60px rgba(10,25,47,.35), 0 0 50px -12px rgba(157,92,255,.4)",
               }}
             >
-              <div style={{ background: "#fff", borderRadius: 12, overflow: "hidden", display: "flex" }}>
-                <div style={{ width: 56, background: YELLOW, display: "flex", flexDirection: "column", alignItems: "center", gap: 16, padding: "18px 0" }}>
-                  {[0, 1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      style={{
-                        width: 24,
-                        height: 24,
-                        borderRadius: 8,
-                        background: i === 0 ? NAVY : "rgba(10,25,47,.14)",
-                      }}
-                    />
-                  ))}
+              <div
+                style={{
+                  background: "linear-gradient(160deg, #1B2352, #0D1230)",
+                  border: "1px solid rgba(255,255,255,.1)",
+                  borderRadius: 12,
+                  padding: "56px 32px",
+                  textAlign: "center",
+                }}
+              >
+                <div style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "#2FE0F5", marginBottom: 10 }}>
+                  Check This Finds
                 </div>
-                <div style={{ flex: 1, background: PAGE_TINT, padding: 20, display: "flex", flexDirection: "column", gap: 12 }}>
-                  <div style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 12.5, color: NAVY }}>
-                    Good afternoon! Here&apos;s your team at work.
-                  </div>
-                  {[
-                    { i: "NN", n: "Nailah Nectar", c: "#22C55E", t: "found 4 new brands that fit your niche" },
-                    { i: "OS", n: "Ollie Sta.Ana", c: "#6B21A8", t: "drafted a pitch for Acme Outdoor" },
-                    { i: "TB", n: "Tomi Ballesteros", c: "#64748B", t: "wrote a proposal for Verve Media" },
-                  ].map((a) => (
-                    <div key={a.n} style={{ display: "flex", alignItems: "center", gap: 10, background: "#fff", borderRadius: 12, padding: "8px 12px" }}>
-                      <div style={{ width: 28, height: 28, borderRadius: "50%", background: a.c, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-body)", fontWeight: 700, fontSize: 10, flexShrink: 0 }}>
-                        {a.i}
-                      </div>
-                      <div style={{ minWidth: 0 }}>
-                        <div style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 11.5, color: NAVY }}>{a.n}</div>
-                        <div style={{ fontFamily: "var(--font-body)", fontSize: 10.5, color: "#8a8a5f", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                          {a.t}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                <div
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 800,
+                    fontSize: "clamp(24px, 3.2vw, 34px)",
+                    background: "linear-gradient(90deg, #FF3DAE, #9D5CFF 55%, #2FE0F5)",
+                    WebkitBackgroundClip: "text",
+                    backgroundClip: "text",
+                    color: "transparent",
+                  }}
+                >
+                  Best Picks
                 </div>
               </div>
             </div>
