@@ -137,7 +137,7 @@ export default function Home() {
         .sf-footer-disclosure { font-size: 11.5px; color: var(--sf-ink-faint); text-align: center; max-width: 460px; margin: 8px auto 0; line-height: 1.5; }
 
         :root {
-          --sf-paper: #FFFCF6;
+          --sf-paper: #FFFFFF;
           --sf-card: #FFFFFF;
           --sf-ink: #0A192F;
           --sf-ink-muted: #5B6472;
@@ -149,9 +149,6 @@ export default function Home() {
           --sf-tiktok: #10141C;
           --sf-star: #FFC700;
           --sf-star-bg: #E4E1D6;
-        }
-        @media (prefers-color-scheme: dark) {
-          :root { --sf-paper: #14181F; --sf-card: #1B212C; --sf-ink: #F3F1EA; --sf-ink-muted: #A6ADBB; --sf-ink-faint: #6E7585; --sf-border: #2A3140; --sf-star-bg: #333B4B; }
         }
       `}</style>
 
