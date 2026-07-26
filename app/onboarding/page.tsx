@@ -40,7 +40,7 @@ export default async function OnboardingPage() {
             letterSpacing: "-0.01em",
           }}
         >
-          Agentic Sales Team
+          Check This Finds
         </span>
         <UserButton afterSignOutUrl="/" />
       </header>

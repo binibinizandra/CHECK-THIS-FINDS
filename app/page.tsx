@@ -65,7 +65,7 @@ export default function Home() {
             letterSpacing: "-0.01em",
           }}
         >
-          Agentic Sales Team
+          Check This Finds
         </span>
         <div style={{ display: "flex", gap: 22, alignItems: "center" }}>
           <SignedOut>
@@ -143,7 +143,7 @@ export default function Home() {
               maxWidth: 580,
             }}
           >
-            Agentic Sales Team finds brands, pitches them in your own voice, prices the proposal,
+            Check This Finds does the work — finds brands, pitches them in your own voice, prices the proposal,
             follows up, and books the call — so you spend your time creating, not chasing deals.
           </p>
           <a
@@ -204,7 +204,7 @@ export default function Home() {
           >
             <div style={{ background: PAGE_TINT, borderRadius: 20, padding: "16px 12px", minHeight: 300 }}>
               <div style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 11, color: NAVY, marginBottom: 14 }}>
-                Agentic Sales Team
+                Check This Finds
               </div>
               {["Dashboard", "Deals", "Agents", "Chat"].map((label, i) => (
                 <div
@@ -500,7 +500,7 @@ export default function Home() {
 
       <footer style={{ padding: "40px 26px", textAlign: "center", background: PAGE_TINT }}>
         <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "var(--color-muted)" }}>
-          © {new Date().getFullYear()} Agentic Sales Team. All rights reserved.
+          © {new Date().getFullYear()} Check This Finds. All rights reserved.
         </div>
       </footer>
     </div>

@@ -33,7 +33,7 @@ export default function AppFrame({ children }: { children: ReactNode }) {
               letterSpacing: "-0.01em",
             }}
           >
-            Agentic Sales Team
+            Check This Finds
           </Link>
           <button
             className="app-frame-menu-btn"
