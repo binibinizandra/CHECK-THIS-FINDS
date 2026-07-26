@@ -3,6 +3,15 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 const YELLOW = "#FFC700";
 const NAVY = "#0A192F";
 const PAGE_TINT = "#FFFDE7";
+const LIGHT = "#F1F3FF";
+const LIGHT_MUTED = "#AAB2D6";
+const PAGE_GLOW =
+  "radial-gradient(50% 26% at 15% 6%, rgba(157,92,255,.30), transparent 60%)," +
+  "radial-gradient(50% 26% at 88% 26%, rgba(47,224,245,.18), transparent 60%)," +
+  "radial-gradient(55% 26% at 18% 50%, rgba(255,61,174,.14), transparent 60%)," +
+  "radial-gradient(50% 26% at 85% 72%, rgba(157,92,255,.20), transparent 60%)," +
+  "radial-gradient(60% 26% at 30% 94%, rgba(47,224,245,.14), transparent 60%)," +
+  "linear-gradient(180deg, #131A42 0%, #0B1130 30%, #0A0F2A 62%, #090C24 100%)";
 
 const FEATURES = [
   {
@@ -32,7 +41,7 @@ function Blob({ style }: { style: React.CSSProperties }) {
 
 export default function Home() {
   return (
-    <div style={{ minHeight: "100dvh", display: "flex", flexDirection: "column", background: "#ffffff" }}>
+    <div style={{ minHeight: "100dvh", display: "flex", flexDirection: "column", background: PAGE_GLOW }}>
       <header
         style={{
           display: "flex",
@@ -49,7 +58,7 @@ export default function Home() {
             fontFamily: "var(--font-display)",
             fontWeight: 700,
             fontSize: 19,
-            color: NAVY,
+            color: LIGHT,
             letterSpacing: "-0.01em",
           }}
         >
@@ -57,7 +66,7 @@ export default function Home() {
         </span>
         <div style={{ display: "flex", gap: 22, alignItems: "center" }}>
           <SignedOut>
-            <a href="/sign-in" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: 14, color: NAVY }}>
+            <a href="/sign-in" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: 14, color: LIGHT }}>
               Log in
             </a>
             <a
@@ -77,7 +86,7 @@ export default function Home() {
             </a>
           </SignedOut>
           <SignedIn>
-            <a href="/dashboard" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: 14, color: NAVY }}>
+            <a href="/dashboard" style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: 14, color: LIGHT }}>
               Dashboard
             </a>
             <UserButton afterSignOutUrl="/" />
@@ -87,8 +96,6 @@ export default function Home() {
 
       {/* Hero */}
       <section style={{ position: "relative", overflow: "hidden", maxWidth: 1440, margin: "0 auto", width: "100%", padding: "60px 26px 0" }}>
-        <Blob style={{ width: 340, height: 340, background: YELLOW, opacity: 0.22, top: -140, right: -60 }} />
-        <Blob style={{ width: 180, height: 180, background: NAVY, opacity: 0.06, bottom: -60, left: -40 }} />
         <div style={{ position: "relative", textAlign: "center", maxWidth: 720, margin: "0 auto 8px" }}>
           <div
             style={{
@@ -115,7 +122,7 @@ export default function Home() {
               lineHeight: 1.06,
               letterSpacing: "-0.02em",
               margin: "0 0 20px",
-              color: NAVY,
+              color: LIGHT,
             }}
           >
             Smart finds for a space you&apos;ll love.
@@ -126,7 +133,7 @@ export default function Home() {
               fontSize: 19,
               lineHeight: 1.5,
               letterSpacing: "-0.011em",
-              color: "var(--color-muted)",
+              color: LIGHT_MUTED,
               margin: "0 auto 30px",
               maxWidth: 580,
             }}
@@ -159,19 +166,13 @@ export default function Home() {
           position: "relative",
           overflow: "hidden",
           maxWidth: 1440,
-          margin: "40px auto 0",
-          width: "calc(100% - 52px)",
-          borderRadius: 32,
+          margin: "0 auto",
+          width: "100%",
           padding: "50px 26px 100px",
-          background:
-            "radial-gradient(45% 45% at 15% 15%, rgba(157,92,255,.35), transparent 60%)," +
-            "radial-gradient(45% 45% at 90% 85%, rgba(47,224,245,.22), transparent 60%)," +
-            "radial-gradient(60% 60% at 50% 100%, rgba(255,61,174,.12), transparent 60%)," +
-            "linear-gradient(160deg, #131A42 0%, #0B1130 55%, #090C24 100%)",
         }}
       >
-        <Blob style={{ width: 260, height: 260, background: YELLOW, opacity: 0.15, top: 0, left: -80 }} />
-        <Blob style={{ width: 180, height: 180, background: YELLOW, opacity: 0.18, bottom: -40, right: 40 }} />
+        <Blob style={{ width: 260, height: 260, background: YELLOW, opacity: 0.12, top: 0, left: -80 }} />
+        <Blob style={{ width: 180, height: 180, background: YELLOW, opacity: 0.14, bottom: -40, right: 40 }} />
 
         <div
           className="hero-float-card"
@@ -373,7 +374,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={{ background: PAGE_TINT, padding: "80px 26px" }}>
+      <section style={{ padding: "80px 26px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <h2
             style={{
@@ -383,7 +384,7 @@ export default function Home() {
               lineHeight: 1.1,
               letterSpacing: "-0.012em",
               margin: "0 0 44px",
-              color: NAVY,
+              color: LIGHT,
             }}
           >
             How Check This Finds Works
@@ -429,7 +430,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={{ background: "var(--color-bg)", padding: "80px 26px" }}>
+      <section style={{ padding: "80px 26px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <h2
             style={{
@@ -439,7 +440,7 @@ export default function Home() {
               lineHeight: 1.1,
               letterSpacing: "-0.012em",
               margin: "0 0 44px",
-              color: NAVY,
+              color: LIGHT,
             }}
           >
             How We Curate Your Finds
@@ -455,20 +456,21 @@ export default function Home() {
                     width: 38,
                     height: 38,
                     borderRadius: "50%",
-                    background: NAVY,
-                    color: YELLOW,
+                    background: YELLOW,
+                    color: NAVY,
                     fontFamily: "var(--font-display)",
                     fontWeight: 700,
                     fontSize: 13,
                     marginBottom: 14,
+                    boxShadow: "0 0 20px -4px rgba(255,199,0,.6)",
                   }}
                 >
                   {s.n}
                 </div>
-                <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 19, marginBottom: 8, color: NAVY }}>
+                <div style={{ fontFamily: "var(--font-display)", fontWeight: 600, fontSize: 19, marginBottom: 8, color: LIGHT }}>
                   {s.title}
                 </div>
-                <div style={{ fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.5, color: "var(--color-muted)" }}>
+                <div style={{ fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.5, color: LIGHT_MUTED }}>
                   {s.body}
                 </div>
               </div>
@@ -477,7 +479,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={{ padding: "80px 26px", background: NAVY }}>
+      <section style={{ padding: "80px 26px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
           <h2
             style={{
@@ -500,9 +502,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section style={{ position: "relative", overflow: "hidden", padding: "80px 26px", textAlign: "center", background: YELLOW }}>
-        <Blob style={{ width: 200, height: 200, background: "#ffffff", opacity: 0.15, top: -70, left: 40 }} />
-        <Blob style={{ width: 260, height: 260, background: NAVY, opacity: 0.06, bottom: -120, right: -60 }} />
+      <section style={{ position: "relative", overflow: "hidden", padding: "80px 26px", textAlign: "center" }}>
         <div style={{ position: "relative", maxWidth: 640, margin: "0 auto" }}>
           <h2
             style={{
@@ -512,7 +512,7 @@ export default function Home() {
               lineHeight: 1.1,
               letterSpacing: "-0.01em",
               margin: "0 0 22px",
-              color: NAVY,
+              color: LIGHT,
             }}
           >
             Aesthetic &amp; Practical Picks for Everyday Living
@@ -524,11 +524,11 @@ export default function Home() {
               fontFamily: "var(--font-body)",
               fontWeight: 700,
               fontSize: 17,
-              color: YELLOW,
-              background: NAVY,
+              color: NAVY,
+              background: YELLOW,
               borderRadius: "var(--radius-buttons)",
               padding: "12px 28px",
-              boxShadow: "0 10px 26px rgba(10,25,47,.3)",
+              boxShadow: "0 10px 26px rgba(255,199,0,.35)",
             }}
           >
             Sign up free
@@ -536,8 +536,8 @@ export default function Home() {
         </div>
       </section>
 
-      <footer style={{ padding: "40px 26px", textAlign: "center", background: PAGE_TINT }}>
-        <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "var(--color-muted)" }}>
+      <footer style={{ padding: "40px 26px", textAlign: "center" }}>
+        <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: LIGHT_MUTED }}>
           © {new Date().getFullYear()} Check This Finds. All rights reserved.
         </div>
       </footer>
