@@ -6,28 +6,16 @@ const PAGE_TINT = "#FFFDE7";
 
 const FEATURES = [
   {
-    title: "Find brands",
-    body: "Your Research agent scans the web for brands that already sponsor creators in your niche, and drops them into a queue for you to approve.",
+    title: "Carefully Curated",
+    body: "We search and filter through hundreds of trending items to select only the ones with great quality, high ratings, and real function.",
   },
   {
-    title: "Pitch in your voice",
-    body: "Initial Outreach writes a personalized first message for every brand — an email or a DM — that sounds like you, not a template.",
+    title: "Tried & Reviewed",
+    body: "No fake hype. We break down the key features, aesthetic details, and practical uses so you know exactly what you’re getting.",
   },
   {
-    title: "Price it right",
-    body: "Proposal turns interest into a scoped, priced offer, grounded in your audience, your niche, and your rate floor.",
-  },
-  {
-    title: "Stay on their radar",
-    body: "Follow-up nudges brands that went quiet, building on what you already said instead of starting over.",
-  },
-  {
-    title: "Book the call",
-    body: "Scheduler locks in the brand call the moment you're ready — just ask it in plain English.",
-  },
-  {
-    title: "Watch it all happen",
-    body: "A live dashboard shows your team working in real time — who's active, what's moving, and what they've gotten done.",
+    title: "Shop with Confidence",
+    body: "Direct, verified product links to official store deals so you can grab the best home and lifestyle essentials with ease.",
   },
 ];
 
@@ -347,9 +335,9 @@ export default function Home() {
               color: NAVY,
             }}
           >
-            Everything a brand deal needs, handled
+            How Check This Finds Works
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 28 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 28 }}>
             {FEATURES.map((f, i) => (
               <div
                 key={f.title}
