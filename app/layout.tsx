@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Check This Finds",
-  description: "Your AI sales team — finding brands, pitching in your voice, and booking the call.",
+  description: "Aesthetic & practical picks for everyday living — curated finds worth the tap.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -117,7 +117,7 @@ export default function Home() {
               marginBottom: 20,
             }}
           >
-            Your AI sales team
+            Aesthetic &amp; Practical Picks for Everyday Living
           </div>
           <h1
             style={{
@@ -477,7 +477,7 @@ export default function Home() {
               color: NAVY,
             }}
           >
-            Ready for your AI sales team?
+            Aesthetic &amp; Practical Picks for Everyday Living
           </h2>
           <a
             href="/sign-up"
