@@ -154,17 +154,11 @@ export default function Home() {
         .sf-brand-block { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
         .sf-brand-name { font-weight: 800; font-size: 19px; letter-spacing: -0.01em; color: var(--sf-ink); }
         .sf-brand-tagline { font-size: 11px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--sf-ink-faint); }
-        .sf-social-row { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .sf-social-btn { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: var(--sf-card); border: 1px solid var(--sf-border); color: var(--sf-ink); transition: transform .15s ease, border-color .15s ease; }
-        .sf-social-btn svg { width: 16px; height: 16px; }
-        @media (prefers-reduced-motion: no-preference) { .sf-social-btn:hover { transform: translateY(-2px); border-color: var(--sf-gold); } }
 
         .sf-featured { padding: 28px 0 8px; }
         .sf-featured-label { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-gold-deep); background: rgba(255, 199, 0, 0.15); border-radius: 999px; padding: 5px 12px; margin-bottom: 12px; }
-        .sf-video-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; background: radial-gradient(120% 140% at 15% 10%, rgba(255,199,0,.35), transparent 55%), linear-gradient(150deg, #16233C, #0A192F 70%); display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 40px -20px rgba(10,25,47,.5); }
-        .sf-play-btn { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,.14); border: 1.5px solid rgba(255,255,255,.5); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
-        .sf-play-btn svg { width: 22px; height: 22px; margin-left: 3px; }
-        .sf-video-caption { position: absolute; left: 16px; bottom: 14px; right: 16px; color: #fff; font-size: 13px; font-weight: 600; opacity: .85; }
+        .sf-hero-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; background: linear-gradient(150deg,#FFF3D6,#FFE6A6); display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 40px -20px rgba(10,25,47,.3); }
+        .sf-hero-frame svg { width: 34%; max-width: 180px; opacity: .9; }
         .sf-featured-cta-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
         .sf-featured-name { font-size: 15px; font-weight: 700; color: var(--sf-ink); }
         .sf-featured-sub { font-size: 12.5px; color: var(--sf-ink-muted); margin-top: 2px; }
@@ -227,37 +221,22 @@ export default function Home() {
               <span className="sf-brand-name">Check This Finds</span>
               <span className="sf-brand-tagline">Only Tested &amp; High-Quality Items</span>
             </div>
-            <div className="sf-social-row">
-              <a className="sf-social-btn" href="#" aria-label="Check This Finds on TikTok">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M16.6 5.2c-.9-.8-1.4-1.9-1.5-3.2h-3.1v13.6c0 1.5-1.2 2.7-2.7 2.7-1.5 0-2.7-1.2-2.7-2.7 0-1.5 1.2-2.7 2.7-2.7.3 0 .6.05.9.14V9.9c-.3-.04-.6-.06-.9-.06-3.2 0-5.8 2.6-5.8 5.8s2.6 5.8 5.8 5.8 5.8-2.6 5.8-5.8V8.6c1.2.9 2.7 1.4 4.3 1.4V6.9c-.9 0-1.8-.3-2.5-.9-.1-.2-.2-.3-.3-.5-.4-.1-.7-.2-1-.3z" />
-                </svg>
-              </a>
-              <a className="sf-social-btn" href="#" aria-label="Check This Finds on Facebook">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M13.5 21v-7.6h2.6l.4-3h-3v-1.9c0-.87.24-1.46 1.5-1.46h1.6V4.3c-.28-.04-1.23-.12-2.34-.12-2.32 0-3.9 1.4-3.9 4V10.4H7.3v3h2.4V21h3.8z" />
-                </svg>
-              </a>
-            </div>
           </div>
         </header>
 
         <main className="sf-wrap">
           <section className="sf-featured">
             <span className="sf-featured-label">Featured Find</span>
-            <div className="sf-video-frame">
-              {/* Swap for a real embed: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowFullScreen /> */}
-              <div className="sf-play-btn">
-                <svg viewBox="0 0 24 24" fill="#fff">
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-              <div className="sf-video-caption">AI Product Review — this week&rsquo;s pick, tested end to end</div>
+            <div className="sf-hero-frame">
+              <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="4" y="4" width="16" height="10" rx="1.5" />
+                <path d="M2 18h20l-2 3H4z" />
+              </svg>
             </div>
             <div className="sf-featured-cta-row">
               <div>
                 <div className="sf-featured-name">Adjustable Aluminum Laptop Stand</div>
-                <div className="sf-featured-sub">Watch the full review, then grab it below</div>
+                <div className="sf-featured-sub">Tested and approved — grab it below</div>
               </div>
               <a className="sf-btn-buy-now" href="#">
                 Buy Now
