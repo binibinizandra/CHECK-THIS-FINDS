@@ -12,6 +12,7 @@ const PAGE_GLOW =
   "radial-gradient(50% 26% at 85% 72%, rgba(157,92,255,.20), transparent 60%)," +
   "radial-gradient(60% 26% at 30% 94%, rgba(47,224,245,.14), transparent 60%)," +
   "linear-gradient(180deg, #131A42 0%, #0B1130 30%, #0A0F2A 62%, #090C24 100%)";
+const YELLOW_GLOW = "0 0 20px rgba(255,199,0,.55), 0 0 44px rgba(255,199,0,.28)";
 
 const FEATURES = [
   {
@@ -79,7 +80,7 @@ export default function Home() {
                 background: YELLOW,
                 borderRadius: "var(--radius-buttons)",
                 padding: "9px 20px",
-                boxShadow: "0 6px 18px rgba(255,199,0,.45)",
+                boxShadow: YELLOW_GLOW,
               }}
             >
               Sign up
@@ -110,6 +111,7 @@ export default function Home() {
               borderRadius: "var(--radius-buttons)",
               padding: "6px 16px",
               marginBottom: 20,
+              boxShadow: YELLOW_GLOW,
             }}
           >
             Aesthetic &amp; Practical Picks for Everyday Living
@@ -152,7 +154,7 @@ export default function Home() {
               background: YELLOW,
               borderRadius: "var(--radius-buttons)",
               padding: "12px 26px",
-              boxShadow: "0 10px 26px rgba(255,199,0,.5)",
+              boxShadow: YELLOW_GLOW,
             }}
           >
             Explore The Collection
@@ -178,25 +180,6 @@ export default function Home() {
           className="hero-float-card"
           style={{
             position: "absolute",
-            top: 32,
-            left: 32,
-            fontFamily: "var(--font-display)",
-            fontWeight: 800,
-            fontSize: 32,
-            letterSpacing: "-0.01em",
-            background: "linear-gradient(90deg, #FF3DAE, #9D5CFF 55%, #2FE0F5)",
-            WebkitBackgroundClip: "text",
-            backgroundClip: "text",
-            color: "transparent",
-          }}
-        >
-          Aesthetics
-        </div>
-
-        <div
-          className="hero-float-card"
-          style={{
-            position: "absolute",
             bottom: 32,
             right: 32,
             gap: 18,
@@ -205,19 +188,33 @@ export default function Home() {
             fontSize: 12,
             letterSpacing: "0.05em",
             textTransform: "uppercase",
-            color: "#EAEDFF",
           }}
         >
-          {[
-            { label: "Home Finds", c: "#2FE0F5" },
-            { label: "Fashion Finds", c: "#FF3DAE" },
-            { label: "Tech Finds", c: "#16E3A6" },
-          ].map((t) => (
-            <span key={t.label} style={{ display: "inline-flex", alignItems: "center", gap: 6, marginLeft: 18 }}>
-              <span style={{ width: 8, height: 8, borderRadius: "50%", background: t.c, boxShadow: `0 0 10px ${t.c}` }} />
-              {t.label}
+          {["Personal Care", "Home Finds", "Tech"].map((label, i) => (
+            <span
+              key={label}
+              style={{
+                marginLeft: i === 0 ? 0 : 18,
+                paddingLeft: i === 0 ? 0 : 18,
+                borderLeft: i === 0 ? "none" : "1px solid rgba(234,237,255,.25)",
+                background: "linear-gradient(90deg, #FF3DAE, #9D5CFF 55%, #2FE0F5)",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              {label}
             </span>
           ))}
+        </div>
+
+        {/* Coffee mug prop */}
+        <div className="hero-float-card" style={{ position: "absolute", top: 6, left: "42%", width: 44, opacity: 0.9 }}>
+          <svg viewBox="0 0 24 24" fill="none" stroke={LIGHT} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 8h13v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8z" />
+            <path d="M17 9.5h1.5a2.5 2.5 0 0 1 0 5H17" />
+            <path d="M8 4.5c0 1-1 1-1 2M12 4.5c0 1-1 1-1 2" />
+          </svg>
         </div>
 
         <div
@@ -272,59 +269,74 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Browser-style dashboard preview */}
-          <div
-            style={{
-              position: "relative",
-              width: "min(560px, 92vw)",
-              background: "#fff",
-              borderRadius: 24,
-              boxShadow: "0 30px 60px rgba(10,25,47,.2)",
-              overflow: "hidden",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "14px 18px", borderBottom: "1px solid #F3EBC0" }}>
-              <span style={{ width: 9, height: 9, borderRadius: "50%", background: YELLOW }} />
-              <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#F3EBC0" }} />
-              <span style={{ width: 9, height: 9, borderRadius: "50%", background: "#F3EBC0" }} />
-              <div style={{ flex: 1, background: PAGE_TINT, borderRadius: 999, height: 22, marginLeft: 10 }} />
-            </div>
-            <div style={{ display: "flex" }}>
-              <div style={{ width: 56, background: YELLOW, display: "flex", flexDirection: "column", alignItems: "center", gap: 16, padding: "18px 0" }}>
-                {[0, 1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    style={{
-                      width: 24,
-                      height: 24,
-                      borderRadius: 8,
-                      background: i === 0 ? NAVY : "rgba(10,25,47,.14)",
-                    }}
-                  />
-                ))}
-              </div>
-              <div style={{ flex: 1, background: PAGE_TINT, padding: 20, display: "flex", flexDirection: "column", gap: 12 }}>
-                <div style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 12.5, color: NAVY }}>
-                  Good afternoon! Here&apos;s your team at work.
+          {/* Laptop mockup */}
+          <div style={{ width: "min(560px, 92vw)" }}>
+            <div
+              style={{
+                background: NAVY,
+                borderRadius: "20px 20px 4px 4px",
+                padding: "14px 14px 10px",
+                boxShadow: "0 30px 60px rgba(10,25,47,.35), 0 0 50px -12px rgba(157,92,255,.4)",
+              }}
+            >
+              <div style={{ background: "#fff", borderRadius: 12, overflow: "hidden", display: "flex" }}>
+                <div style={{ width: 56, background: YELLOW, display: "flex", flexDirection: "column", alignItems: "center", gap: 16, padding: "18px 0" }}>
+                  {[0, 1, 2, 3].map((i) => (
+                    <div
+                      key={i}
+                      style={{
+                        width: 24,
+                        height: 24,
+                        borderRadius: 8,
+                        background: i === 0 ? NAVY : "rgba(10,25,47,.14)",
+                      }}
+                    />
+                  ))}
                 </div>
-                {[
-                  { i: "NN", n: "Nailah Nectar", c: "#22C55E", t: "found 4 new brands that fit your niche" },
-                  { i: "OS", n: "Ollie Sta.Ana", c: "#6B21A8", t: "drafted a pitch for Acme Outdoor" },
-                  { i: "TB", n: "Tomi Ballesteros", c: "#64748B", t: "wrote a proposal for Verve Media" },
-                ].map((a) => (
-                  <div key={a.n} style={{ display: "flex", alignItems: "center", gap: 10, background: "#fff", borderRadius: 12, padding: "8px 12px" }}>
-                    <div style={{ width: 28, height: 28, borderRadius: "50%", background: a.c, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-body)", fontWeight: 700, fontSize: 10, flexShrink: 0 }}>
-                      {a.i}
-                    </div>
-                    <div style={{ minWidth: 0 }}>
-                      <div style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 11.5, color: NAVY }}>{a.n}</div>
-                      <div style={{ fontFamily: "var(--font-body)", fontSize: 10.5, color: "#8a8a5f", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        {a.t}
+                <div style={{ flex: 1, background: PAGE_TINT, padding: 20, display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 12.5, color: NAVY }}>
+                    Good afternoon! Here&apos;s your team at work.
+                  </div>
+                  {[
+                    { i: "NN", n: "Nailah Nectar", c: "#22C55E", t: "found 4 new brands that fit your niche" },
+                    { i: "OS", n: "Ollie Sta.Ana", c: "#6B21A8", t: "drafted a pitch for Acme Outdoor" },
+                    { i: "TB", n: "Tomi Ballesteros", c: "#64748B", t: "wrote a proposal for Verve Media" },
+                  ].map((a) => (
+                    <div key={a.n} style={{ display: "flex", alignItems: "center", gap: 10, background: "#fff", borderRadius: 12, padding: "8px 12px" }}>
+                      <div style={{ width: 28, height: 28, borderRadius: "50%", background: a.c, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-body)", fontWeight: 700, fontSize: 10, flexShrink: 0 }}>
+                        {a.i}
+                      </div>
+                      <div style={{ minWidth: 0 }}>
+                        <div style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: 11.5, color: NAVY }}>{a.n}</div>
+                        <div style={{ fontFamily: "var(--font-body)", fontSize: 10.5, color: "#8a8a5f", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          {a.t}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            {/* Keyboard */}
+            <div
+              style={{
+                background: "linear-gradient(180deg, #16233C, #0A192F)",
+                borderRadius: "0 0 14px 14px",
+                padding: "10px 12%",
+                boxShadow: "0 20px 40px -18px rgba(10,25,47,.5)",
+              }}
+            >
+              <div style={{ display: "flex", gap: "3%", marginBottom: "8%" }}>
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <div key={i} style={{ flex: 1, aspectRatio: "2.4", background: "rgba(255,255,255,.08)", borderRadius: 2 }} />
                 ))}
               </div>
+              <div style={{ display: "flex", gap: "3%", marginBottom: "8%" }}>
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <div key={i} style={{ flex: 1, aspectRatio: "2.4", background: "rgba(255,255,255,.08)", borderRadius: 2 }} />
+                ))}
+              </div>
+              <div style={{ height: 12, background: "rgba(255,255,255,.06)", borderRadius: 5, margin: "0 24%" }} />
             </div>
           </div>
         </div>
@@ -414,6 +426,7 @@ export default function Home() {
                     alignItems: "center",
                     justifyContent: "center",
                     marginBottom: 16,
+                    boxShadow: YELLOW_GLOW,
                   }}
                 >
                   {i + 1}
@@ -462,7 +475,7 @@ export default function Home() {
                     fontWeight: 700,
                     fontSize: 13,
                     marginBottom: 14,
-                    boxShadow: "0 0 20px -4px rgba(255,199,0,.6)",
+                    boxShadow: YELLOW_GLOW,
                   }}
                 >
                   {s.n}
@@ -528,7 +541,7 @@ export default function Home() {
               background: YELLOW,
               borderRadius: "var(--radius-buttons)",
               padding: "12px 28px",
-              boxShadow: "0 10px 26px rgba(255,199,0,.35)",
+              boxShadow: YELLOW_GLOW,
             }}
           >
             Sign up free
