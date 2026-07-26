@@ -20,10 +20,10 @@ const FEATURES = [
 ];
 
 const STEPS = [
-  { n: "01", title: "Tell us who you are", body: "Fill in your niche, audience, platforms, and rates once — every agent grounds its work in it." },
-  { n: "02", title: "Meet your team", body: "Five ready-made agents, each with one job, or build your own and group them into a team." },
-  { n: "03", title: "Let them work your brands", body: "Agents find, research, pitch, price, and follow up — you stay in control at every step that matters." },
-  { n: "04", title: "You approve, they execute", body: "Discovered brands wait for your sign-off, drafts wait in your inbox — nothing goes out without you." },
+  { n: "01", title: "Search & Filter", body: "We scan top platforms for trending items across home, fashion, tech, and daily essentials with verified high ratings." },
+  { n: "02", title: "Quality Check", body: "We review real buyer feedback, durability, and practical function to ensure zero fake hype or low-quality traps." },
+  { n: "03", title: "Spot the Best Deals", body: "We track price drops and official vouchers so you get the best value for your hard-earned money." },
+  { n: "04", title: "Shop via Direct Links", body: "Tap verified product links to order straight from trusted sellers with smooth checkout and reliable shipping." },
 ];
 
 function Blob({ style }: { style: React.CSSProperties }) {
@@ -391,7 +391,7 @@ export default function Home() {
               color: NAVY,
             }}
           >
-            How it works
+            How We Curate Your Finds
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 28 }}>
             {STEPS.map((s) => (
