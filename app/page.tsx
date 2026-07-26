@@ -159,14 +159,65 @@ export default function Home() {
           position: "relative",
           overflow: "hidden",
           maxWidth: 1440,
-          margin: "0 auto",
-          width: "100%",
+          margin: "40px auto 0",
+          width: "calc(100% - 52px)",
+          borderRadius: 32,
           padding: "50px 26px 100px",
+          background:
+            "radial-gradient(45% 45% at 15% 15%, rgba(157,92,255,.35), transparent 60%)," +
+            "radial-gradient(45% 45% at 90% 85%, rgba(47,224,245,.22), transparent 60%)," +
+            "radial-gradient(60% 60% at 50% 100%, rgba(255,61,174,.12), transparent 60%)," +
+            "linear-gradient(160deg, #131A42 0%, #0B1130 55%, #090C24 100%)",
         }}
       >
-        <Blob style={{ width: 260, height: 260, background: YELLOW, opacity: 0.25, top: 0, left: -80 }} />
-        <Blob style={{ width: 180, height: 180, background: YELLOW, opacity: 0.3, bottom: -40, right: 40 }} />
-        <Blob style={{ width: 100, height: 100, background: NAVY, opacity: 0.05, top: 60, right: 160 }} />
+        <Blob style={{ width: 260, height: 260, background: YELLOW, opacity: 0.15, top: 0, left: -80 }} />
+        <Blob style={{ width: 180, height: 180, background: YELLOW, opacity: 0.18, bottom: -40, right: 40 }} />
+
+        <div
+          className="hero-float-card"
+          style={{
+            position: "absolute",
+            top: 32,
+            left: 32,
+            fontFamily: "var(--font-display)",
+            fontWeight: 800,
+            fontSize: 32,
+            letterSpacing: "-0.01em",
+            background: "linear-gradient(90deg, #FF3DAE, #9D5CFF 55%, #2FE0F5)",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            color: "transparent",
+          }}
+        >
+          Aesthetics
+        </div>
+
+        <div
+          className="hero-float-card"
+          style={{
+            position: "absolute",
+            bottom: 32,
+            right: 32,
+            gap: 18,
+            fontFamily: "var(--font-body)",
+            fontWeight: 700,
+            fontSize: 12,
+            letterSpacing: "0.05em",
+            textTransform: "uppercase",
+            color: "#EAEDFF",
+          }}
+        >
+          {[
+            { label: "Home Finds", c: "#2FE0F5" },
+            { label: "Fashion Finds", c: "#FF3DAE" },
+            { label: "Tech Finds", c: "#16E3A6" },
+          ].map((t) => (
+            <span key={t.label} style={{ display: "inline-flex", alignItems: "center", gap: 6, marginLeft: 18 }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: t.c, boxShadow: `0 0 10px ${t.c}` }} />
+              {t.label}
+            </span>
+          ))}
+        </div>
 
         <div
           style={{
