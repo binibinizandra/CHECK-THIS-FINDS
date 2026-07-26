@@ -1,15 +1,12 @@
 "use client";
 import { useState } from "react";
 
-const NAVY = "#0A192F";
-
 type Product = {
   name: string;
   cat: string[];
   rating: number;
   reviews: number;
-  tint: string;
-  icon: React.ReactNode;
+  image: string;
 };
 
 const PRODUCTS: Product[] = [
@@ -18,106 +15,49 @@ const PRODUCTS: Product[] = [
     cat: ["home", "top"],
     rating: 4.8,
     reviews: 312,
-    tint: "linear-gradient(150deg,#FFF3D6,#FFE6A6)",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="4" y="4" width="16" height="10" rx="1.5" />
-        <path d="M2 18h20l-2 3H4z" />
-      </svg>
-    ),
+    image: "https://images.unsplash.com/photo-1652198145075-b41c363792d3?q=80&w=600&auto=format&fit=crop",
   },
   {
     name: "Ceramic Pour-Over Coffee Dripper",
     cat: ["kitchen", "top"],
     rating: 4.9,
     reviews: 501,
-    tint: "linear-gradient(150deg,#F3ECE2,#E3D5C0)",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M18 8H13v6a4 4 0 0 1-8 0V8H4" />
-        <path d="M8 8V5h8v3" />
-        <path d="M6 20h12" />
-      </svg>
-    ),
+    image: "https://images.unsplash.com/photo-1620051524370-66b4d4ad141b?q=80&w=600&auto=format&fit=crop",
   },
   {
-    name: "Stackable Foldable Storage Bins",
+    name: "Woven Storage Basket",
     cat: ["home"],
     rating: 4.6,
     reviews: 189,
-    tint: "linear-gradient(150deg,#EAF1EA,#D3E4D2)",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="4" y="9" width="16" height="11" rx="1.5" />
-        <path d="M4 9l3-5h10l3 5" />
-      </svg>
-    ),
+    image: "https://images.unsplash.com/photo-1455669175216-9017c9b02fc6?q=80&w=600&auto=format&fit=crop",
   },
   {
     name: "Minimalist LED Desk Lamp",
     cat: ["home", "top"],
     rating: 4.7,
     reviews: 264,
-    tint: "linear-gradient(150deg,#EFEAF7,#DCD2EE)",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M6 21h8M10 21v-6" />
-        <path d="M4 9l6-6 8 8-6 4-8-6z" />
-      </svg>
-    ),
+    image: "https://images.unsplash.com/photo-1582356630861-61bb9b41f541?q=80&w=600&auto=format&fit=crop",
   },
   {
-    name: "Reusable Silicone Food Bags (Set of 6)",
+    name: "Bamboo Cutting Board",
     cat: ["kitchen"],
     rating: 4.5,
     reviews: 148,
-    tint: "linear-gradient(150deg,#E7F3F1,#CDE7E2)",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M7 4h10l1 6a8 8 0 0 1-12 0z" />
-        <path d="M9 4V2M15 4V2" />
-      </svg>
-    ),
+    image: "https://images.unsplash.com/photo-1617695615794-a5abcece0f48?q=80&w=600&auto=format&fit=crop",
   },
   {
     name: "Bamboo Drawer Organizer Set",
     cat: ["home"],
     rating: 4.6,
     reviews: 97,
-    tint: "linear-gradient(150deg,#F7EFE4,#EBDBC2)",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="6" width="8" height="8" rx="1" />
-        <rect x="13" y="6" width="8" height="8" rx="1" />
-        <rect x="3" y="16" width="18" height="4" rx="1" />
-      </svg>
-    ),
+    image: "https://images.unsplash.com/photo-1678108040468-0cc9addd984d?q=80&w=600&auto=format&fit=crop",
   },
   {
-    name: "Electric Milk Frother",
+    name: "Electric Kettle",
     cat: ["kitchen", "top"],
     rating: 4.8,
     reviews: 356,
-    tint: "linear-gradient(150deg,#FDECE7,#F8D4C7)",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="9" y="2" width="6" height="4" rx="1" />
-        <path d="M12 6v6M8 12h8l-1 8H9z" />
-      </svg>
-    ),
-  },
-  {
-    name: "Under-Sink Sliding Storage Rack",
-    cat: ["kitchen"],
-    rating: 4.5,
-    reviews: 121,
-    tint: "linear-gradient(150deg,#EAF0F6,#D2E0EE)",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="4" width="18" height="16" rx="1.5" />
-        <path d="M3 12h18M9 4v16" />
-      </svg>
-    ),
+    image: "https://images.unsplash.com/photo-1643114786355-ff9e52736eab?q=80&w=600&auto=format&fit=crop",
   },
 ];
 
@@ -143,6 +83,7 @@ function Stars({ rating }: { rating: number }) {
 export default function Home() {
   const [filter, setFilter] = useState("all");
   const visible = filter === "all" ? PRODUCTS : PRODUCTS.filter((p) => p.cat.includes(filter));
+  const featured = PRODUCTS[0];
 
   return (
     <>
@@ -157,8 +98,8 @@ export default function Home() {
 
         .sf-featured { padding: 28px 0 8px; }
         .sf-featured-label { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-gold-deep); background: rgba(255, 199, 0, 0.15); border-radius: 999px; padding: 5px 12px; margin-bottom: 12px; }
-        .sf-hero-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; background: linear-gradient(150deg,#FFF3D6,#FFE6A6); display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 40px -20px rgba(10,25,47,.3); }
-        .sf-hero-frame svg { width: 34%; max-width: 180px; opacity: .9; }
+        .sf-hero-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 16px; overflow: hidden; background: var(--sf-border); box-shadow: 0 18px 40px -20px rgba(10,25,47,.3); }
+        .sf-hero-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .sf-featured-cta-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
         .sf-featured-name { font-size: 15px; font-weight: 700; color: var(--sf-ink); }
         .sf-featured-sub { font-size: 12.5px; color: var(--sf-ink-muted); margin-top: 2px; }
@@ -175,8 +116,8 @@ export default function Home() {
         @media (min-width: 720px) { .sf-product-grid { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
 
         .sf-card { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
-        .sf-card-media { position: relative; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
-        .sf-card-media svg { width: 38%; height: 38%; opacity: .85; }
+        .sf-card-media { position: relative; aspect-ratio: 1; background: var(--sf-border); }
+        .sf-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .sf-quality-badge { position: absolute; top: 10px; left: 10px; display: inline-flex; align-items: center; gap: 4px; background: rgba(10,25,47,.85); color: var(--sf-gold); font-size: 9.5px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; padding: 5px 9px; border-radius: 999px; }
         .sf-quality-badge svg { width: 10px; height: 10px; }
         .sf-card-body { padding: 12px 12px 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
@@ -228,14 +169,11 @@ export default function Home() {
           <section className="sf-featured">
             <span className="sf-featured-label">Featured Find</span>
             <div className="sf-hero-frame">
-              <svg viewBox="0 0 24 24" fill="none" stroke={NAVY} strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="4" y="4" width="16" height="10" rx="1.5" />
-                <path d="M2 18h20l-2 3H4z" />
-              </svg>
+              <img src={featured.image} alt={featured.name} />
             </div>
             <div className="sf-featured-cta-row">
               <div>
-                <div className="sf-featured-name">Adjustable Aluminum Laptop Stand</div>
+                <div className="sf-featured-name">{featured.name}</div>
                 <div className="sf-featured-sub">Tested and approved — grab it below</div>
               </div>
               <a className="sf-btn-buy-now" href="#">
@@ -267,14 +205,14 @@ export default function Home() {
             <div className="sf-product-grid">
               {visible.map((p) => (
                 <article key={p.name} className="sf-card">
-                  <div className="sf-card-media" style={{ background: p.tint }}>
+                  <div className="sf-card-media">
                     <span className="sf-quality-badge">
                       <svg viewBox="0 0 20 20" fill="currentColor">
                         <path d="M10 1l2.6 5.6L19 7.3l-4.5 4.2 1.1 6.2L10 14.8l-5.6 2.9 1.1-6.2L1 7.3l6.4-.7z" />
                       </svg>
                       Tested Quality
                     </span>
-                    {p.icon}
+                    <img src={p.image} alt={p.name} loading="lazy" />
                   </div>
                   <div className="sf-card-body">
                     <div className="sf-card-name">{p.name}</div>
