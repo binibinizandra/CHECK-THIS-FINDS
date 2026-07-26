@@ -7,6 +7,8 @@ type Product = {
   rating: number;
   reviews: number;
   image: string;
+  shopeeLink: string;
+  tiktokLink: string;
 };
 
 const CATEGORIES: Record<string, string> = {
@@ -16,23 +18,41 @@ const CATEGORIES: Record<string, string> = {
   food: "Food & Treats",
 };
 
+// ============================================================
+// AFFILIATE LINKS: replace SHOPEE_LINK_HERE / TIKTOK_LINK_HERE
+// below with your real links. Each product is labeled so you
+// can find it fast — search this file for "PRODUCT" by number.
+// ============================================================
 const PRODUCTS: Product[] = [
-  { name: "Woven Storage Basket", cat: "home", rating: 4.6, reviews: 189, image: "https://images.unsplash.com/photo-1455669175216-9017c9b02fc6?q=80&w=600&auto=format&fit=crop" },
-  { name: "Minimalist LED Desk Lamp", cat: "home", rating: 4.7, reviews: 264, image: "https://images.unsplash.com/photo-1582356630861-61bb9b41f541?q=80&w=600&auto=format&fit=crop" },
-  { name: "Bamboo Drawer Organizer Set", cat: "home", rating: 4.6, reviews: 97, image: "https://images.unsplash.com/photo-1678108040468-0cc9addd984d?q=80&w=600&auto=format&fit=crop" },
-  { name: "Electric Kettle", cat: "home", rating: 4.8, reviews: 356, image: "https://images.unsplash.com/photo-1643114786355-ff9e52736eab?q=80&w=600&auto=format&fit=crop" },
+  // PRODUCT 1: Woven Storage Basket
+  { name: "Woven Storage Basket", cat: "home", rating: 4.6, reviews: 189, image: "https://images.unsplash.com/photo-1455669175216-9017c9b02fc6?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
+  // PRODUCT 2: Minimalist LED Desk Lamp
+  { name: "Minimalist LED Desk Lamp", cat: "home", rating: 4.7, reviews: 264, image: "https://images.unsplash.com/photo-1582356630861-61bb9b41f541?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
+  // PRODUCT 3: Bamboo Drawer Organizer Set
+  { name: "Bamboo Drawer Organizer Set", cat: "home", rating: 4.6, reviews: 97, image: "https://images.unsplash.com/photo-1678108040468-0cc9addd984d?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
+  // PRODUCT 4: Electric Kettle
+  { name: "Electric Kettle", cat: "home", rating: 4.8, reviews: 356, image: "https://images.unsplash.com/photo-1643114786355-ff9e52736eab?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
 
-  { name: "Adjustable Aluminum Laptop Stand", cat: "digital", rating: 4.8, reviews: 312, image: "https://images.unsplash.com/photo-1652198145075-b41c363792d3?q=80&w=600&auto=format&fit=crop" },
-  { name: "Wireless Earbuds", cat: "digital", rating: 4.7, reviews: 428, image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?q=80&w=600&auto=format&fit=crop" },
-  { name: "Portable Power Bank", cat: "digital", rating: 4.6, reviews: 203, image: "https://images.unsplash.com/photo-1706275399524-813e89914e43?q=80&w=600&auto=format&fit=crop" },
+  // PRODUCT 5: Adjustable Aluminum Laptop Stand
+  { name: "Adjustable Aluminum Laptop Stand", cat: "digital", rating: 4.8, reviews: 312, image: "https://images.unsplash.com/photo-1652198145075-b41c363792d3?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
+  // PRODUCT 6: Wireless Earbuds
+  { name: "Wireless Earbuds", cat: "digital", rating: 4.7, reviews: 428, image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
+  // PRODUCT 7: Portable Power Bank
+  { name: "Portable Power Bank", cat: "digital", rating: 4.6, reviews: 203, image: "https://images.unsplash.com/photo-1706275399524-813e89914e43?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
 
-  { name: "Electric Toothbrush", cat: "care", rating: 4.7, reviews: 275, image: "https://images.unsplash.com/photo-1559591939-c2d3c204f6da?q=80&w=600&auto=format&fit=crop" },
-  { name: "LED Makeup Mirror", cat: "care", rating: 4.5, reviews: 162, image: "https://images.unsplash.com/photo-1701421052815-a66c64693978?q=80&w=600&auto=format&fit=crop" },
-  { name: "Compact Hair Dryer", cat: "care", rating: 4.6, reviews: 141, image: "https://images.unsplash.com/photo-1715220169023-c1d5c8d2be37?q=80&w=600&auto=format&fit=crop" },
+  // PRODUCT 8: Electric Toothbrush
+  { name: "Electric Toothbrush", cat: "care", rating: 4.7, reviews: 275, image: "https://images.unsplash.com/photo-1559591939-c2d3c204f6da?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
+  // PRODUCT 9: LED Makeup Mirror
+  { name: "LED Makeup Mirror", cat: "care", rating: 4.5, reviews: 162, image: "https://images.unsplash.com/photo-1701421052815-a66c64693978?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
+  // PRODUCT 10: Compact Hair Dryer
+  { name: "Compact Hair Dryer", cat: "care", rating: 4.6, reviews: 141, image: "https://images.unsplash.com/photo-1715220169023-c1d5c8d2be37?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
 
-  { name: "Bamboo Cutting Board", cat: "food", rating: 4.5, reviews: 148, image: "https://images.unsplash.com/photo-1617695615794-a5abcece0f48?q=80&w=600&auto=format&fit=crop" },
-  { name: "Ceramic Pour-Over Coffee Dripper", cat: "food", rating: 4.9, reviews: 501, image: "https://images.unsplash.com/photo-1620051524370-66b4d4ad141b?q=80&w=600&auto=format&fit=crop" },
-  { name: "Glass Airtight Food Storage Jar", cat: "food", rating: 4.7, reviews: 118, image: "https://images.unsplash.com/photo-1615174111664-cbe2de69ed9d?q=80&w=600&auto=format&fit=crop" },
+  // PRODUCT 11: Bamboo Cutting Board
+  { name: "Bamboo Cutting Board", cat: "food", rating: 4.5, reviews: 148, image: "https://images.unsplash.com/photo-1617695615794-a5abcece0f48?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
+  // PRODUCT 12: Ceramic Pour-Over Coffee Dripper
+  { name: "Ceramic Pour-Over Coffee Dripper", cat: "food", rating: 4.9, reviews: 501, image: "https://images.unsplash.com/photo-1620051524370-66b4d4ad141b?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
+  // PRODUCT 13: Glass Airtight Food Storage Jar
+  { name: "Glass Airtight Food Storage Jar", cat: "food", rating: 4.7, reviews: 118, image: "https://images.unsplash.com/photo-1615174111664-cbe2de69ed9d?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
 ];
 
 const TABS = [
@@ -74,12 +94,12 @@ function ProductCard({ p }: { p: Product }) {
           <span className="sf-rating-num">{p.rating.toFixed(1)}</span>
         </div>
         <div className="sf-card-actions">
-          <button className="sf-btn-store sf-btn-shopee" type="button">
+          <a className="sf-btn-store sf-btn-shopee" href={p.shopeeLink} target="_blank" rel="noopener noreferrer">
             Shopee
-          </button>
-          <button className="sf-btn-store sf-btn-tiktok" type="button">
+          </a>
+          <a className="sf-btn-store sf-btn-tiktok" href={p.tiktokLink} target="_blank" rel="noopener noreferrer">
             TikTok
-          </button>
+          </a>
         </div>
       </div>
     </article>
