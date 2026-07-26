@@ -130,7 +130,7 @@ export default function Home() {
               color: NAVY,
             }}
           >
-            Brand deals, worked while you create.
+            Smart finds for a space you&apos;ll love.
           </h1>
           <p
             style={{
@@ -143,8 +143,8 @@ export default function Home() {
               maxWidth: 580,
             }}
           >
-            Check This Finds does the work — finds brands, pitches them in your own voice, prices the proposal,
-            follows up, and books the call — so you spend your time creating, not chasing deals.
+            Check This Finds brings you handpicked, high-quality home and lifestyle items — tested for durability,
+            designed for function, and worth every peso.
           </p>
           <a
             href="/sign-up"
@@ -160,7 +160,7 @@ export default function Home() {
               boxShadow: "0 10px 26px rgba(255,199,0,.5)",
             }}
           >
-            Get started free
+            Explore The Collection
           </a>
         </div>
       </section>
