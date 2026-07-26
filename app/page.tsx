@@ -439,13 +439,12 @@ export default function Home() {
               color: "#ffffff",
             }}
           >
-            Built for creators managing their own deals
+            Everyday essentials, carefully curated.
           </h2>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 17, lineHeight: 1.55, color: "rgba(255,255,255,.75)" }}>
-            If you&apos;re a content creator who wants brand partnerships but doesn&apos;t have a manager
-            chasing them for you, this is your team. It grounds every pitch, brief, and proposal in
-            your real audience and your real rates — so the work sounds like you, because it&apos;s
-            built entirely on who you are.
+            From home finds and personal care to trending fashion and smart gadgets — Check This Finds
+            brings together clean, high-quality recommendations so you can discover items that upgrade
+            your daily life without the endless scrolling.
           </p>
         </div>
       </section>
