@@ -12,6 +12,8 @@ export interface ProductRecord {
   imageUrl: string;
   shopeeLink: string | null;
   tiktokLink: string | null;
+  pros: string | null;
+  cons: string | null;
   sortOrder: number;
 }
 
@@ -25,6 +27,8 @@ function toRecord(r: typeof products.$inferSelect): ProductRecord {
     imageUrl: r.imageUrl,
     shopeeLink: r.shopeeLink,
     tiktokLink: r.tiktokLink,
+    pros: r.pros,
+    cons: r.cons,
     sortOrder: r.sortOrder,
   };
 }
@@ -59,6 +63,17 @@ export interface ProductInput {
   imageUrl: string;
   shopeeLink: string | null;
   tiktokLink: string | null;
+  pros: string | null;
+  cons: string | null;
+}
+
+// Used by the public product detail page, which has no logged-in visitor.
+export async function getProduct(id: string): Promise<ProductRecord | null> {
+  if (!isDbConfigured()) return null;
+  const db = getDb();
+  if (!db) return null;
+  const rows = await db.select().from(products).where(eq(products.id, id)).limit(1);
+  return rows[0] ? toRecord(rows[0]) : null;
 }
 
 export async function createProduct(userId: string, data: ProductInput): Promise<void> {

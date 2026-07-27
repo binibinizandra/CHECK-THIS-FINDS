@@ -256,6 +256,8 @@ export const products = pgTable(
     imageUrl: text("image_url").notNull(),
     shopeeLink: text("shopee_link"),
     tiktokLink: text("tiktok_link"),
+    pros: text("pros"),
+    cons: text("cons"),
     sortOrder: integer("sort_order").notNull().default(0),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),

@@ -20,6 +20,8 @@ const EMPTY_FORM = {
   imageUrl: "",
   shopeeLink: "",
   tiktokLink: "",
+  pros: "",
+  cons: "",
 };
 
 export default function ProductManager({ initialProducts }: { initialProducts: ProductRecord[] }) {
@@ -41,6 +43,8 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
       imageUrl: p.imageUrl,
       shopeeLink: p.shopeeLink ?? "",
       tiktokLink: p.tiktokLink ?? "",
+      pros: p.pros ?? "",
+      cons: p.cons ?? "",
     });
     setSaved(false);
     setError("");
@@ -84,6 +88,8 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
         imageUrl: form.imageUrl,
         shopeeLink: form.shopeeLink.trim() || null,
         tiktokLink: form.tiktokLink.trim() || null,
+        pros: form.pros.trim() || null,
+        cons: form.cons.trim() || null,
       });
       if ("error" in result) {
         setError(result.error);
@@ -94,7 +100,7 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
         setProducts((prev) =>
           prev.map((p) =>
             p.id === form.id
-              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, tiktokLink: form.tiktokLink || null }
+              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, tiktokLink: form.tiktokLink || null, pros: form.pros || null, cons: form.cons || null }
               : p
           )
         );
@@ -110,6 +116,8 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
             imageUrl: form.imageUrl,
             shopeeLink: form.shopeeLink || null,
             tiktokLink: form.tiktokLink || null,
+            pros: form.pros || null,
+            cons: form.cons || null,
             sortOrder: prev.length,
           },
         ]);
@@ -210,6 +218,17 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
             <div>
               <label className="am-label">TikTok Shop link</label>
               <input className="am-input" value={form.tiktokLink} onChange={(e) => setForm({ ...form, tiktokLink: e.target.value })} placeholder="https://vt.tiktok.com/..." />
+            </div>
+          </div>
+
+          <div className="am-row am-field">
+            <div>
+              <label className="am-label">Pros (one per line)</label>
+              <textarea className="am-input" rows={4} value={form.pros} onChange={(e) => setForm({ ...form, pros: e.target.value })} placeholder={"Lightweight and portable\nFast charging\nGreat battery life"} />
+            </div>
+            <div>
+              <label className="am-label">Cons (one per line)</label>
+              <textarea className="am-input" rows={4} value={form.cons} onChange={(e) => setForm({ ...form, cons: e.target.value })} placeholder={"A bit pricier than similar items\nOnly one color available"} />
             </div>
           </div>
 

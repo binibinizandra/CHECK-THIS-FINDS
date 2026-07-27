@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import type { ProductRecord } from "@/lib/products/store";
 
 const CATEGORIES: Record<string, string> = {
@@ -32,29 +33,31 @@ function Stars({ rating }: { rating: number }) {
 function ProductCard({ p }: { p: ProductRecord }) {
   return (
     <article className="sf-card">
-      <div className="sf-card-media">
-        <span className="sf-quality-badge">
-          <svg viewBox="0 0 20 20" fill="currentColor">
-            <path d="M10 1l2.6 5.6L19 7.3l-4.5 4.2 1.1 6.2L10 14.8l-5.6 2.9 1.1-6.2L1 7.3l6.4-.7z" />
-          </svg>
-          Tested
-        </span>
-        <img src={p.imageUrl} alt={p.name} loading="lazy" />
-      </div>
-      <div className="sf-card-body">
-        <div className="sf-card-name">{p.name}</div>
-        <div className="sf-rating-row">
-          <Stars rating={p.rating} />
-          <span className="sf-rating-num">{p.rating.toFixed(1)}</span>
+      <Link href={`/product/${p.id}`} className="sf-card-link">
+        <div className="sf-card-media">
+          <span className="sf-quality-badge">
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 1l2.6 5.6L19 7.3l-4.5 4.2 1.1 6.2L10 14.8l-5.6 2.9 1.1-6.2L1 7.3l6.4-.7z" />
+            </svg>
+            Tested
+          </span>
+          <img src={p.imageUrl} alt={p.name} loading="lazy" />
         </div>
-        <div className="sf-card-actions">
-          <a className="sf-btn-store sf-btn-shopee" href={p.shopeeLink || "#"} target="_blank" rel="noopener noreferrer">
-            Shopee
-          </a>
-          <a className="sf-btn-store sf-btn-tiktok" href={p.tiktokLink || "#"} target="_blank" rel="noopener noreferrer">
-            TikTok
-          </a>
+        <div className="sf-card-body">
+          <div className="sf-card-name">{p.name}</div>
+          <div className="sf-rating-row">
+            <Stars rating={p.rating} />
+            <span className="sf-rating-num">{p.rating.toFixed(1)}</span>
+          </div>
         </div>
+      </Link>
+      <div className="sf-card-actions">
+        <a className="sf-btn-store sf-btn-shopee" href={p.shopeeLink || "#"} target="_blank" rel="noopener noreferrer">
+          Shopee
+        </a>
+        <a className="sf-btn-store sf-btn-tiktok" href={p.tiktokLink || "#"} target="_blank" rel="noopener noreferrer">
+          TikTok
+        </a>
       </div>
     </article>
   );
@@ -100,6 +103,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         .sf-card { background: var(--sf-card); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 8px -2px rgba(0,0,0,.06); transition: box-shadow .15s ease, transform .15s ease; }
         @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 10px 20px -4px rgba(0,0,0,.1); transform: translateY(-2px); } }
+        .sf-card-link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; min-width: 0; }
         .sf-card-media { position: relative; aspect-ratio: 1; background: var(--sf-border); }
         .sf-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .sf-quality-badge { position: absolute; top: 6px; left: 6px; display: inline-flex; align-items: center; gap: 2px; background: var(--sf-gold); color: var(--sf-ink); font-size: 7px; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; padding: 3px 5px; border-radius: 999px; }
@@ -110,7 +114,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-stars-fill { position: absolute; inset: 0; overflow: hidden; color: var(--sf-star); white-space: nowrap; }
         .sf-rating-row { display: flex; align-items: center; gap: 4px; }
         .sf-rating-num { font-size: 9px; font-weight: 700; color: var(--sf-ink-muted); font-variant-numeric: tabular-nums; }
-        .sf-card-actions { display: flex; flex-direction: column; gap: 4px; margin-top: auto; }
+        .sf-card-actions { display: flex; flex-direction: column; gap: 4px; padding: 0 7px 7px; }
         .sf-btn-store { display: flex; align-items: center; justify-content: center; gap: 3px; font-size: 9px; font-weight: 700; padding: 6px 4px; border-radius: 6px; border: none; color: #fff; cursor: pointer; }
         .sf-btn-shopee { background: var(--sf-shopee); }
         .sf-btn-tiktok { background: var(--sf-tiktok); }
