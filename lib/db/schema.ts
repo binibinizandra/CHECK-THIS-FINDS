@@ -1,4 +1,4 @@
-import { pgTable, text, jsonb, timestamp, integer, boolean, primaryKey, uuid, index, serial } from "drizzle-orm/pg-core";
+import { pgTable, text, jsonb, timestamp, integer, boolean, primaryKey, uuid, index, serial, doublePrecision } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(),
@@ -242,4 +242,23 @@ export const messages = pgTable(
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [index("messages_user_id_idx").on(t.userId, t.id)]
+);
+
+export const products = pgTable(
+  "products",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id").notNull().references(() => users.id),
+    name: text("name").notNull(),
+    category: text("category").notNull(),
+    rating: doublePrecision("rating").notNull().default(5),
+    reviews: integer("reviews").notNull().default(0),
+    imageUrl: text("image_url").notNull(),
+    shopeeLink: text("shopee_link"),
+    tiktokLink: text("tiktok_link"),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("products_user_category_idx").on(t.userId, t.category)]
 );
