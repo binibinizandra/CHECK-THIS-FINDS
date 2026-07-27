@@ -118,12 +118,34 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         .sf-empty { text-align: center; padding: 60px 20px; color: var(--sf-muted); font-size: 14px; }
 
+        .sf-petals { position: fixed; inset: 0; pointer-events: none; z-index: 3; overflow: hidden; }
+        .sf-petal { position: absolute; top: -6vh; left: var(--sf-petal-left); width: var(--sf-petal-size); height: var(--sf-petal-size); border-radius: 50% 0 50% 50%; background: linear-gradient(135deg, var(--sf-pink), #F6DEE4); opacity: .5; }
+        @media (prefers-reduced-motion: no-preference) {
+          .sf-petal { animation: sf-fall var(--sf-petal-duration) linear infinite; animation-delay: var(--sf-petal-delay); }
+        }
+        @keyframes sf-fall {
+          0% { transform: translateY(0) translateX(0) rotate(0deg); }
+          100% { transform: translateY(112vh) translateX(24px) rotate(300deg); }
+        }
+        .sf-petal:nth-child(1) { --sf-petal-left: 4%; --sf-petal-size: 10px; --sf-petal-duration: 13s; --sf-petal-delay: 0s; }
+        .sf-petal:nth-child(2) { --sf-petal-left: 14%; --sf-petal-size: 14px; --sf-petal-duration: 17s; --sf-petal-delay: 2s; }
+        .sf-petal:nth-child(3) { --sf-petal-left: 24%; --sf-petal-size: 9px; --sf-petal-duration: 11s; --sf-petal-delay: 5s; }
+        .sf-petal:nth-child(4) { --sf-petal-left: 36%; --sf-petal-size: 16px; --sf-petal-duration: 19s; --sf-petal-delay: 1s; }
+        .sf-petal:nth-child(5) { --sf-petal-left: 48%; --sf-petal-size: 11px; --sf-petal-duration: 14s; --sf-petal-delay: 7s; }
+        .sf-petal:nth-child(6) { --sf-petal-left: 58%; --sf-petal-size: 13px; --sf-petal-duration: 16s; --sf-petal-delay: 3s; }
+        .sf-petal:nth-child(7) { --sf-petal-left: 68%; --sf-petal-size: 10px; --sf-petal-duration: 12s; --sf-petal-delay: 6s; }
+        .sf-petal:nth-child(8) { --sf-petal-left: 78%; --sf-petal-size: 15px; --sf-petal-duration: 18s; --sf-petal-delay: 4s; }
+        .sf-petal:nth-child(9) { --sf-petal-left: 88%; --sf-petal-size: 9px; --sf-petal-duration: 15s; --sf-petal-delay: 8s; }
+        .sf-petal:nth-child(10) { --sf-petal-left: 94%; --sf-petal-size: 12px; --sf-petal-duration: 20s; --sf-petal-delay: 0.5s; }
+        .sf-petal:nth-child(11) { --sf-petal-left: 20%; --sf-petal-size: 8px; --sf-petal-duration: 22s; --sf-petal-delay: 9s; }
+        .sf-petal:nth-child(12) { --sf-petal-left: 62%; --sf-petal-size: 8px; --sf-petal-duration: 21s; --sf-petal-delay: 10s; }
+
         :root {
           --sf-bg: #F5F1F3;
           --sf-card: #FFFFFF;
           --sf-border: #EDE3E7;
-          --sf-ink: #332E38;
-          --sf-muted: #8C8590;
+          --sf-ink: #1B2A4E;
+          --sf-muted: #5C6C8C;
           --sf-pink: #D99AA8;
           --sf-white: #FFFFFF;
         }
@@ -135,8 +157,15 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
           background: "var(--sf-bg)",
           color: "var(--sf-ink)",
           minHeight: "100dvh",
+          position: "relative",
         }}
       >
+        <div className="sf-petals" aria-hidden="true">
+          {Array.from({ length: 12 }).map((_, i) => (
+            <span className="sf-petal" key={i} />
+          ))}
+        </div>
+
         <div className="sf-banner">
           <header className="sf-header">
             <div className="sf-wrap sf-header-row">

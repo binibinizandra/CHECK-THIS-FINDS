@@ -65,8 +65,8 @@ export default function ProductDetail({ product }: { product: ProductRecord }) {
           --sf-bg: #F5F1F3;
           --sf-card: #FFFFFF;
           --sf-border: #EDE3E7;
-          --sf-ink: #332E38;
-          --sf-muted: #8C8590;
+          --sf-ink: #1B2A4E;
+          --sf-muted: #5C6C8C;
           --sf-pink: #D99AA8;
           --sf-white: #FFFFFF;
         }
