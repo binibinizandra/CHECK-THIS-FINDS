@@ -2,9 +2,16 @@
 import { useRef, useState, useTransition } from "react";
 import { UserButton } from "@clerk/nextjs";
 import { uploadProductImage, saveProduct, removeProduct } from "@/lib/products/actions";
-import { chatWithOps } from "@/lib/ai/actions";
-import type { ChatMessage, DraftProduct } from "@/lib/ai/actions";
 import type { ProductRecord } from "@/lib/products/store";
+
+interface DraftJson {
+  name?: string;
+  category?: string;
+  rating?: number | string;
+  reviews?: number | string;
+  pros?: string[] | string;
+  cons?: string[] | string;
+}
 
 const CATEGORIES = [
   { key: "home", label: "Home Needs & Appliances" },
@@ -35,44 +42,32 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
   const [pending, startTransition] = useTransition();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
-  const [chatInput, setChatInput] = useState("");
-  const [chatPending, setChatPending] = useState(false);
-  const [chatError, setChatError] = useState("");
-  const [latestDraft, setLatestDraft] = useState<DraftProduct | null>(null);
+  const [pasteText, setPasteText] = useState("");
+  const [pasteError, setPasteError] = useState("");
 
-  async function sendChat(text: string) {
-    const trimmed = text.trim();
-    if (!trimmed || chatPending) return;
-    const nextHistory: ChatMessage[] = [...chatMessages, { role: "user", content: trimmed }];
-    setChatMessages(nextHistory);
-    setChatInput("");
-    setChatPending(true);
-    setChatError("");
-    const result = await chatWithOps(nextHistory);
-    setChatPending(false);
-    if ("error" in result) {
-      setChatError(result.error);
+  function fillFromJson() {
+    setPasteError("");
+    let parsed: DraftJson;
+    try {
+      parsed = JSON.parse(pasteText);
+    } catch {
+      setPasteError("That doesn't look like valid JSON. Copy the whole block Claude gave you, curly braces included.");
       return;
     }
-    setChatMessages((prev) => [...prev, { role: "assistant", content: result.reply }]);
-    if (result.draft) setLatestDraft(result.draft);
-  }
-
-  function applyDraft(draft: DraftProduct) {
+    const toLines = (v: string[] | string | undefined) => (Array.isArray(v) ? v.join("\n") : v ?? "");
     setForm({
       id: null,
-      name: draft.name,
-      category: draft.category,
-      rating: String(draft.rating),
-      reviews: String(draft.reviews),
+      name: parsed.name ?? "",
+      category: parsed.category && CATEGORIES.some((c) => c.key === parsed.category) ? parsed.category : "home",
+      rating: parsed.rating != null ? String(parsed.rating) : "4.8",
+      reviews: parsed.reviews != null ? String(parsed.reviews) : "0",
       imageUrl: "",
       shopeeLink: "",
       tiktokLink: "",
-      pros: draft.pros.join("\n"),
-      cons: draft.cons.join("\n"),
+      pros: toLines(parsed.pros),
+      cons: toLines(parsed.cons),
     });
-    setLatestDraft(null);
+    setPasteText("");
     setSaved(false);
     setError("");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -208,22 +203,11 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
 
         .ops-card { background: #14120D; color: #F5F1E8; border-radius: 16px; padding: 18px; margin-bottom: 24px; }
         .ops-title { font-weight: 800; font-size: 15px; }
-        .ops-sub { font-size: 11.5px; color: #B4AA95; margin-top: 2px; margin-bottom: 14px; }
-        .ops-body { display: flex; flex-direction: column; gap: 10px; max-height: 320px; overflow-y: auto; margin-bottom: 10px; }
-        .ops-msg { max-width: 88%; font-size: 13px; line-height: 1.5; padding: 9px 12px; border-radius: 12px; white-space: pre-wrap; }
-        .ops-msg-user { align-self: flex-end; background: #FFC700; color: #1F1B12; font-weight: 600; border-bottom-right-radius: 4px; }
-        .ops-msg-assistant { align-self: flex-start; background: #201C14; border: 1px solid #332C1E; border-bottom-left-radius: 4px; }
-        .ops-empty { font-size: 12.5px; color: #B4AA95; }
-        .ops-input-row { display: flex; gap: 8px; }
-        .ops-input { flex: 1; background: #201C14; border: 1px solid #332C1E; border-radius: 999px; padding: 10px 14px; color: #F5F1E8; font-size: 13px; }
-        .ops-input::placeholder { color: #7A7264; }
-        .ops-send { background: #FFC700; color: #1F1B12; border: none; border-radius: 999px; padding: 10px 18px; font-size: 12.5px; font-weight: 800; cursor: pointer; }
-        .ops-send:disabled { background: #332C1E; color: #7A7264; cursor: default; }
-        .ops-shortcut { background: transparent; color: #B4AA95; border: 1px solid #332C1E; border-radius: 999px; padding: 6px 12px; font-size: 11.5px; font-weight: 600; cursor: pointer; margin-top: 8px; }
-        .ops-draft { margin-top: 12px; background: #201C14; border: 1px solid #332C1E; border-radius: 12px; padding: 14px; }
-        .ops-draft-name { font-weight: 700; font-size: 13.5px; margin-bottom: 8px; }
-        .ops-draft-list { font-size: 12px; color: #B4AA95; margin: 4px 0; padding-left: 16px; }
-        .ops-use-btn { margin-top: 10px; background: #FFC700; color: #1F1B12; border: none; border-radius: 8px; padding: 9px 16px; font-size: 12.5px; font-weight: 800; cursor: pointer; }
+        .ops-sub { font-size: 11.5px; color: #B4AA95; margin-top: 2px; margin-bottom: 14px; line-height: 1.5; }
+        .ops-textarea { width: 100%; background: #201C14; border: 1px solid #332C1E; border-radius: 10px; padding: 10px 12px; color: #F5F1E8; font-size: 12.5px; font-family: "SFMono-Regular", Consolas, monospace; resize: vertical; }
+        .ops-textarea::placeholder { color: #7A7264; }
+        .ops-fill-btn { margin-top: 10px; background: #FFC700; color: #1F1B12; border: none; border-radius: 8px; padding: 9px 18px; font-size: 12.5px; font-weight: 800; cursor: pointer; }
+        .ops-fill-btn:disabled { background: #332C1E; color: #7A7264; cursor: default; }
         .ops-error { color: #EE4D2D; font-size: 12.5px; margin-top: 8px; }
       `}</style>
 
@@ -240,58 +224,21 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
         </div>
 
         <div className="ops-card">
-          <div className="ops-title">Operations Room</div>
-          <div className="ops-sub">Paste a product link or name — I&apos;ll draft the name, category, pros/cons, and rating for you to review.</div>
-
-          <div className="ops-body">
-            {chatMessages.length === 0 && (
-              <div className="ops-empty">No messages yet. Try: &ldquo;Rechargeable neck fan, 3-speed, quiet motor — draft this&rdquo;</div>
-            )}
-            {chatMessages.map((m, i) => (
-              <div key={i} className={`ops-msg ${m.role === "user" ? "ops-msg-user" : "ops-msg-assistant"}`}>
-                {m.content}
-              </div>
-            ))}
-            {chatPending && <div className="ops-msg ops-msg-assistant">Thinking…</div>}
+          <div className="ops-title">Paste from Claude</div>
+          <div className="ops-sub">
+            Sa Claude chat, ibigay mo ang product link/name — ipapasa niya sa iyo ang JSON block. I-paste dito, tapos i-click ang &ldquo;Fill form&rdquo; para awtomatikong mapuno ang pangalan, category, rating, at pros/cons sa ibaba. Wala itong bayad — hindi ito kumokonekta sa anumang AI API.
           </div>
-
-          {latestDraft && (
-            <div className="ops-draft">
-              <div className="ops-draft-name">{latestDraft.name}</div>
-              <div style={{ fontSize: 11.5, color: "#7A7264", marginBottom: 6 }}>
-                {CATEGORIES.find((c) => c.key === latestDraft.category)?.label ?? latestDraft.category} · {latestDraft.rating.toFixed(1)}★ ({latestDraft.reviews})
-              </div>
-              <ul className="ops-draft-list">
-                {latestDraft.pros.map((p, i) => <li key={`p${i}`}>{p}</li>)}
-              </ul>
-              <ul className="ops-draft-list">
-                {latestDraft.cons.map((c, i) => <li key={`c${i}`}>{c}</li>)}
-              </ul>
-              <button type="button" className="ops-use-btn" onClick={() => applyDraft(latestDraft)}>
-                Use this draft ↑
-              </button>
-            </div>
-          )}
-
-          <div className="ops-input-row" style={{ marginTop: 10 }}>
-            <input
-              className="ops-input"
-              value={chatInput}
-              onChange={(e) => setChatInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") sendChat(chatInput);
-              }}
-              placeholder="Paste a product link or name…"
-              disabled={chatPending}
-            />
-            <button type="button" className="ops-send" onClick={() => sendChat(chatInput)} disabled={chatPending || !chatInput.trim()}>
-              Send
-            </button>
-          </div>
-          <button type="button" className="ops-shortcut" onClick={() => sendChat("Give me 3 TikTok caption ideas for the last product we discussed.")}>
-            3 TikTok caption ideas
+          <textarea
+            className="ops-textarea"
+            rows={6}
+            value={pasteText}
+            onChange={(e) => setPasteText(e.target.value)}
+            placeholder={'{\n  "name": "Rechargeable Neck Fan",\n  "category": "digital",\n  "rating": 4.7,\n  "reviews": 128,\n  "pros": ["Hands-free cooling", "3 speeds"],\n  "cons": ["Weaker than a handheld fan"]\n}'}
+          />
+          <button type="button" className="ops-fill-btn" onClick={fillFromJson} disabled={!pasteText.trim()}>
+            Fill form ↓
           </button>
-          {chatError && <div className="ops-error">{chatError}</div>}
+          {pasteError && <div className="ops-error">{pasteError}</div>}
         </div>
 
         <div className="am-card">
