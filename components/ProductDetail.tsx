@@ -57,7 +57,7 @@ export default function ProductDetail({ product }: { product: ProductRecord }) {
         .pd-col-icon { flex-shrink: 0; margin-top: 2px; }
 
         .pd-cta-row { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
-        .pd-btn-store { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; font-weight: 600; padding: 13px 24px; border-radius: 999px; border: none; color: #fff; cursor: pointer; background: var(--sf-pink-deep); }
+        .pd-btn-store { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; font-weight: 700; padding: 13px 24px; border-radius: 999px; border: none; color: var(--sf-ink); cursor: pointer; background: var(--sf-yellow); }
         @media (prefers-reduced-motion: no-preference) { .pd-btn-store { transition: opacity .15s ease; } .pd-btn-store:hover { opacity: .85; } }
 
         .pd-footer { margin-top: 24px; border-top: 1px solid rgba(255,255,255,.7); padding: 28px 0 40px; }
@@ -70,6 +70,8 @@ export default function ProductDetail({ product }: { product: ProductRecord }) {
           --sf-pearl: #F8F6F7;
           --sf-card: #FFFFFF;
           --sf-ink: #4A4046;
+          --sf-yellow: #F5D98B;
+          --sf-yellow-deep: #E0B84F;
         }
       `}</style>
 

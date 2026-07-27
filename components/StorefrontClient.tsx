@@ -38,10 +38,6 @@ function ProductCard({ p }: { p: ProductRecord }) {
     <article className="sf-card">
       <Link href={`/product/${p.id}`} className="sf-card-link">
         <div className="sf-card-media">
-          <span className="sf-badge-cluster">
-            <span className="sf-badge sf-badge-shopee">Shopee</span>
-            <span className="sf-badge sf-badge-tiktok">TikTok</span>
-          </span>
           <img src={p.imageUrl} alt={p.name} loading="lazy" />
         </div>
         <div className="sf-card-body">
@@ -107,10 +103,6 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-card-link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; min-width: 0; }
         .sf-card-media { position: relative; aspect-ratio: 1; background: rgba(229,215,220,.5); }
         .sf-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .sf-badge-cluster { position: absolute; top: 8px; left: 8px; display: flex; gap: 4px; z-index: 1; }
-        .sf-badge { font-size: 7px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; padding: 3px 6px; border-radius: 999px; color: #fff; backdrop-filter: blur(6px); }
-        .sf-badge-shopee { background: rgba(238,110,50,.92); }
-        .sf-badge-tiktok { background: rgba(20,18,20,.92); }
         .sf-card-body { padding: 10px 10px 8px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
         .sf-card-name { font-size: 10.5px; font-weight: 500; line-height: 1.3; color: var(--sf-ink); min-height: 27px; }
         .sf-stars { position: relative; display: inline-block; font-size: 9px; line-height: 1; letter-spacing: 1px; color: rgba(181,165,176,.4); }
@@ -118,7 +110,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-rating-row { display: flex; align-items: center; gap: 4px; }
         .sf-rating-num { font-size: 9px; font-weight: 600; color: var(--sf-mauve); font-variant-numeric: tabular-nums; }
         .sf-card-actions { display: flex; flex-direction: column; gap: 5px; padding: 0 10px 10px; }
-        .sf-btn-store { display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; padding: 7px 4px; border-radius: 999px; border: none; color: #fff; cursor: pointer; background: var(--sf-pink-deep); }
+        .sf-btn-store { display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; padding: 7px 4px; border-radius: 999px; border: none; color: var(--sf-ink); cursor: pointer; background: var(--sf-yellow); }
         @media (prefers-reduced-motion: no-preference) { .sf-btn-store { transition: opacity .15s ease; } .sf-btn-store:hover { opacity: .85; } }
 
         .sf-footer { margin-top: 24px; border-top: 1px solid rgba(255,255,255,.7); padding: 28px 0 44px; }
@@ -134,6 +126,8 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
           --sf-pearl: #F8F6F7;
           --sf-card: #FFFFFF;
           --sf-ink: #4A4046;
+          --sf-yellow: #F5D98B;
+          --sf-yellow-deep: #E0B84F;
         }
       `}</style>
 
