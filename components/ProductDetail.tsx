@@ -30,16 +30,16 @@ export default function ProductDetail({ product }: { product: ProductRecord }) {
         .pd-header { position: sticky; top: 0; z-index: 20; background: var(--sf-red); border-bottom: 1px solid rgba(255,255,255,.25); }
         .pd-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; }
         .pd-brand { font-weight: 700; font-size: 20px; letter-spacing: -0.01em; color: var(--sf-white); }
-        .pd-back { font-size: 12.5px; font-weight: 600; color: var(--sf-red); background: var(--sf-white); border: none; border-radius: 999px; padding: 7px 16px; }
+        .pd-back { font-size: 12.5px; font-weight: 600; color: var(--sf-red); background: var(--sf-gold); border: none; border-radius: 999px; padding: 7px 16px; }
 
         .pd-main { padding: 30px 0 40px; }
         .pd-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
         @media (min-width: 760px) { .pd-grid { grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; } }
 
-        .pd-media { position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 24px; overflow: hidden; background: var(--sf-gold); box-shadow: 0 8px 32px -8px rgba(0,0,0,.35); border: 3px solid var(--sf-white); }
+        .pd-media { position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 24px; overflow: hidden; background: var(--sf-white); box-shadow: 0 8px 32px -8px rgba(0,0,0,.35); border: 3px solid var(--sf-gold); }
         .pd-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        .pd-cat { display: inline-flex; font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-red); background: var(--sf-gold); border-radius: 999px; padding: 6px 14px; margin-bottom: 12px; }
+        .pd-cat { display: inline-flex; font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-red); background: var(--sf-white); border-radius: 999px; padding: 6px 14px; margin-bottom: 12px; }
         .pd-name { font-size: 24px; font-weight: 700; color: var(--sf-white); line-height: 1.25; }
         .pd-rating-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
         .pd-stars { position: relative; display: inline-block; font-size: 18px; line-height: 1; letter-spacing: 2px; color: rgba(255,255,255,.35); }
@@ -48,14 +48,14 @@ export default function ProductDetail({ product }: { product: ProductRecord }) {
 
         .pd-cols { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 24px; }
         @media (min-width: 480px) { .pd-cols { grid-template-columns: 1fr 1fr; } }
-        .pd-col-card { background: var(--sf-gold); border-radius: 20px; padding: 18px; box-shadow: 0 6px 20px -4px rgba(0,0,0,.25); }
+        .pd-col-card { background: var(--sf-white); border-radius: 20px; padding: 18px; box-shadow: 0 6px 20px -4px rgba(0,0,0,.25); }
         .pd-col-title { font-size: 12px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 10px; color: var(--sf-red); }
         .pd-col-list { display: flex; flex-direction: column; gap: 8px; }
-        .pd-col-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13.5px; color: var(--sf-white); line-height: 1.4; font-weight: 500; }
-        .pd-col-icon { flex-shrink: 0; margin-top: 2px; color: var(--sf-white); }
+        .pd-col-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13.5px; color: var(--sf-red); line-height: 1.4; font-weight: 500; }
+        .pd-col-icon { flex-shrink: 0; margin-top: 2px; color: var(--sf-red); }
 
         .pd-cta-row { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
-        .pd-btn-store { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; font-weight: 700; padding: 13px 24px; border-radius: 999px; border: none; color: var(--sf-red); cursor: pointer; background: var(--sf-white); }
+        .pd-btn-store { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; font-weight: 700; padding: 13px 24px; border-radius: 999px; border: none; color: var(--sf-red); cursor: pointer; background: var(--sf-gold); }
         @media (prefers-reduced-motion: no-preference) { .pd-btn-store { transition: opacity .15s ease; } .pd-btn-store:hover { opacity: .85; } }
 
         .pd-footer { margin-top: 24px; border-top: 1px solid rgba(255,255,255,.25); padding: 28px 0 40px; }
