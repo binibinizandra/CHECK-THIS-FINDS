@@ -79,7 +79,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         .sf-featured { padding: 22px 0 6px; }
         .sf-featured-label { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-gold-deep); background: rgba(255, 199, 0, 0.15); border-radius: 999px; padding: 5px 12px; margin-bottom: 10px; }
-        .sf-hero-frame { position: relative; width: 100%; aspect-ratio: 1 / 1; max-height: 420px; border-radius: 16px; overflow: hidden; background: var(--sf-border); box-shadow: 0 14px 32px -18px rgba(0,0,0,.18); border: 1px solid var(--sf-border); }
+        .sf-hero-frame { position: relative; width: 100%; aspect-ratio: 1 / 1; max-height: 420px; border-radius: 16px; overflow: hidden; background: var(--sf-card); box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 20px -6px rgba(0,0,0,.1); }
         .sf-hero-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .sf-featured-cta-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
         .sf-featured-name { font-size: 14px; font-weight: 700; color: var(--sf-ink); }
@@ -98,8 +98,8 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @media (min-width: 600px) { .sf-product-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; } }
         @media (min-width: 900px) { .sf-product-grid { grid-template-columns: repeat(6, 1fr); gap: 12px; } }
 
-        .sf-card { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 1px 4px rgba(0,0,0,.05); transition: box-shadow .15s ease, transform .15s ease; }
-        @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 6px 16px rgba(0,0,0,.09); transform: translateY(-1px); } }
+        .sf-card { background: var(--sf-card); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 8px -2px rgba(0,0,0,.06); transition: box-shadow .15s ease, transform .15s ease; }
+        @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 10px 20px -4px rgba(0,0,0,.1); transform: translateY(-2px); } }
         .sf-card-media { position: relative; aspect-ratio: 1; background: var(--sf-border); }
         .sf-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .sf-quality-badge { position: absolute; top: 6px; left: 6px; display: inline-flex; align-items: center; gap: 2px; background: var(--sf-gold); color: var(--sf-ink); font-size: 7px; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; padding: 3px 5px; border-radius: 999px; }
@@ -123,7 +123,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-empty { text-align: center; padding: 60px 20px; color: var(--sf-ink-faint); font-size: 14px; }
 
         :root {
-          --sf-paper: #FFFFFF;
+          --sf-paper: #FAFAF9;
           --sf-card: #FFFFFF;
           --sf-ink: #1F1B12;
           --sf-ink-muted: #6B6355;
