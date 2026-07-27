@@ -10,6 +10,7 @@
     "db:migrate": "node scripts/with-system-ca.mjs node --env-file=.env.local scripts/migrate.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.115.0",
     "@clerk/nextjs": "^6",
     "@neondatabase/serverless": "^1.1.0",
     "@vercel/blob": "^2.6.1",

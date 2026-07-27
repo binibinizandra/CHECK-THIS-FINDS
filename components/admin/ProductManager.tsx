@@ -2,6 +2,8 @@
 import { useRef, useState, useTransition } from "react";
 import { UserButton } from "@clerk/nextjs";
 import { uploadProductImage, saveProduct, removeProduct } from "@/lib/products/actions";
+import { chatWithOps } from "@/lib/ai/actions";
+import type { ChatMessage, DraftProduct } from "@/lib/ai/actions";
 import type { ProductRecord } from "@/lib/products/store";
 
 const CATEGORIES = [
@@ -32,6 +34,49 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
   const [saved, setSaved] = useState(false);
   const [pending, startTransition] = useTransition();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const [chatInput, setChatInput] = useState("");
+  const [chatPending, setChatPending] = useState(false);
+  const [chatError, setChatError] = useState("");
+  const [latestDraft, setLatestDraft] = useState<DraftProduct | null>(null);
+
+  async function sendChat(text: string) {
+    const trimmed = text.trim();
+    if (!trimmed || chatPending) return;
+    const nextHistory: ChatMessage[] = [...chatMessages, { role: "user", content: trimmed }];
+    setChatMessages(nextHistory);
+    setChatInput("");
+    setChatPending(true);
+    setChatError("");
+    const result = await chatWithOps(nextHistory);
+    setChatPending(false);
+    if ("error" in result) {
+      setChatError(result.error);
+      return;
+    }
+    setChatMessages((prev) => [...prev, { role: "assistant", content: result.reply }]);
+    if (result.draft) setLatestDraft(result.draft);
+  }
+
+  function applyDraft(draft: DraftProduct) {
+    setForm({
+      id: null,
+      name: draft.name,
+      category: draft.category,
+      rating: String(draft.rating),
+      reviews: String(draft.reviews),
+      imageUrl: "",
+      shopeeLink: "",
+      tiktokLink: "",
+      pros: draft.pros.join("\n"),
+      cons: draft.cons.join("\n"),
+    });
+    setLatestDraft(null);
+    setSaved(false);
+    setError("");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   function startEdit(p: ProductRecord) {
     setForm({
@@ -160,6 +205,26 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
         .am-list-meta { font-size: 11.5px; color: #8B92A3; }
         .am-list-actions { display: flex; gap: 6px; margin-left: auto; }
         .am-list-actions button { font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 6px; border: 1px solid #ECE7DC; background: #fff; cursor: pointer; }
+
+        .ops-card { background: #14120D; color: #F5F1E8; border-radius: 16px; padding: 18px; margin-bottom: 24px; }
+        .ops-title { font-weight: 800; font-size: 15px; }
+        .ops-sub { font-size: 11.5px; color: #B4AA95; margin-top: 2px; margin-bottom: 14px; }
+        .ops-body { display: flex; flex-direction: column; gap: 10px; max-height: 320px; overflow-y: auto; margin-bottom: 10px; }
+        .ops-msg { max-width: 88%; font-size: 13px; line-height: 1.5; padding: 9px 12px; border-radius: 12px; white-space: pre-wrap; }
+        .ops-msg-user { align-self: flex-end; background: #FFC700; color: #1F1B12; font-weight: 600; border-bottom-right-radius: 4px; }
+        .ops-msg-assistant { align-self: flex-start; background: #201C14; border: 1px solid #332C1E; border-bottom-left-radius: 4px; }
+        .ops-empty { font-size: 12.5px; color: #B4AA95; }
+        .ops-input-row { display: flex; gap: 8px; }
+        .ops-input { flex: 1; background: #201C14; border: 1px solid #332C1E; border-radius: 999px; padding: 10px 14px; color: #F5F1E8; font-size: 13px; }
+        .ops-input::placeholder { color: #7A7264; }
+        .ops-send { background: #FFC700; color: #1F1B12; border: none; border-radius: 999px; padding: 10px 18px; font-size: 12.5px; font-weight: 800; cursor: pointer; }
+        .ops-send:disabled { background: #332C1E; color: #7A7264; cursor: default; }
+        .ops-shortcut { background: transparent; color: #B4AA95; border: 1px solid #332C1E; border-radius: 999px; padding: 6px 12px; font-size: 11.5px; font-weight: 600; cursor: pointer; margin-top: 8px; }
+        .ops-draft { margin-top: 12px; background: #201C14; border: 1px solid #332C1E; border-radius: 12px; padding: 14px; }
+        .ops-draft-name { font-weight: 700; font-size: 13.5px; margin-bottom: 8px; }
+        .ops-draft-list { font-size: 12px; color: #B4AA95; margin: 4px 0; padding-left: 16px; }
+        .ops-use-btn { margin-top: 10px; background: #FFC700; color: #1F1B12; border: none; border-radius: 8px; padding: 9px 16px; font-size: 12.5px; font-weight: 800; cursor: pointer; }
+        .ops-error { color: #EE4D2D; font-size: 12.5px; margin-top: 8px; }
       `}</style>
 
       <div className="am-wrap">
@@ -172,6 +237,61 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
             <a className="am-back" href="/">View live site</a>
             <UserButton afterSignOutUrl="/" />
           </div>
+        </div>
+
+        <div className="ops-card">
+          <div className="ops-title">Operations Room</div>
+          <div className="ops-sub">Paste a product link or name — I&apos;ll draft the name, category, pros/cons, and rating for you to review.</div>
+
+          <div className="ops-body">
+            {chatMessages.length === 0 && (
+              <div className="ops-empty">No messages yet. Try: &ldquo;Rechargeable neck fan, 3-speed, quiet motor — draft this&rdquo;</div>
+            )}
+            {chatMessages.map((m, i) => (
+              <div key={i} className={`ops-msg ${m.role === "user" ? "ops-msg-user" : "ops-msg-assistant"}`}>
+                {m.content}
+              </div>
+            ))}
+            {chatPending && <div className="ops-msg ops-msg-assistant">Thinking…</div>}
+          </div>
+
+          {latestDraft && (
+            <div className="ops-draft">
+              <div className="ops-draft-name">{latestDraft.name}</div>
+              <div style={{ fontSize: 11.5, color: "#7A7264", marginBottom: 6 }}>
+                {CATEGORIES.find((c) => c.key === latestDraft.category)?.label ?? latestDraft.category} · {latestDraft.rating.toFixed(1)}★ ({latestDraft.reviews})
+              </div>
+              <ul className="ops-draft-list">
+                {latestDraft.pros.map((p, i) => <li key={`p${i}`}>{p}</li>)}
+              </ul>
+              <ul className="ops-draft-list">
+                {latestDraft.cons.map((c, i) => <li key={`c${i}`}>{c}</li>)}
+              </ul>
+              <button type="button" className="ops-use-btn" onClick={() => applyDraft(latestDraft)}>
+                Use this draft ↑
+              </button>
+            </div>
+          )}
+
+          <div className="ops-input-row" style={{ marginTop: 10 }}>
+            <input
+              className="ops-input"
+              value={chatInput}
+              onChange={(e) => setChatInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") sendChat(chatInput);
+              }}
+              placeholder="Paste a product link or name…"
+              disabled={chatPending}
+            />
+            <button type="button" className="ops-send" onClick={() => sendChat(chatInput)} disabled={chatPending || !chatInput.trim()}>
+              Send
+            </button>
+          </div>
+          <button type="button" className="ops-shortcut" onClick={() => sendChat("Give me 3 TikTok caption ideas for the last product we discussed.")}>
+            3 TikTok caption ideas
+          </button>
+          {chatError && <div className="ops-error">{chatError}</div>}
         </div>
 
         <div className="am-card">
