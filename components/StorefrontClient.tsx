@@ -60,7 +60,7 @@ function ProductCard({ p }: { p: ProductRecord }) {
   );
 }
 
-export default function StorefrontClient({ products }: { products: ProductRecord[] }) {
+export default function StorefrontClient({ products, isAdmin }: { products: ProductRecord[]; isAdmin: boolean }) {
   const [filter, setFilter] = useState("all");
   const featured = products[0];
 
@@ -145,7 +145,7 @@ export default function StorefrontClient({ products }: { products: ProductRecord
               <span className="sf-brand-name">Check This Finds</span>
               <span className="sf-brand-tagline">Only Tested &amp; High-Quality Items</span>
             </div>
-            <a href="/admin" className="sf-admin-link">Manage</a>
+            {isAdmin && <a href="/admin" className="sf-admin-link">Manage</a>}
           </div>
         </header>
 
