@@ -74,6 +74,7 @@ export default function StorefrontClient({ products }: { products: ProductRecord
         .sf-brand-block { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
         .sf-brand-name { font-weight: 800; font-size: 17px; letter-spacing: -0.01em; color: var(--sf-ink); }
         .sf-brand-tagline { font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--sf-ink-faint); }
+        .sf-admin-link { flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--sf-ink-muted); border: 1px solid var(--sf-border); border-radius: 999px; padding: 6px 14px; }
 
         .sf-featured { padding: 22px 0 6px; }
         .sf-featured-label { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-gold-deep); background: rgba(255, 199, 0, 0.15); border-radius: 999px; padding: 5px 12px; margin-bottom: 10px; }
@@ -143,6 +144,7 @@ export default function StorefrontClient({ products }: { products: ProductRecord
               <span className="sf-brand-name">Check This Finds</span>
               <span className="sf-brand-tagline">Only Tested &amp; High-Quality Items</span>
             </div>
+            <a href="/admin" className="sf-admin-link">Manage</a>
           </div>
         </header>
 
