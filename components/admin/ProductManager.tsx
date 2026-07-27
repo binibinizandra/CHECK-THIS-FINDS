@@ -4,15 +4,6 @@ import { UserButton } from "@clerk/nextjs";
 import { uploadProductImage, saveProduct, removeProduct } from "@/lib/products/actions";
 import type { ProductRecord } from "@/lib/products/store";
 
-interface DraftJson {
-  name?: string;
-  category?: string;
-  rating?: number | string;
-  reviews?: number | string;
-  pros?: string[] | string;
-  cons?: string[] | string;
-}
-
 const CATEGORIES = [
   { key: "home", label: "Home Needs & Appliances" },
   { key: "digital", label: "Digital Finds" },
@@ -41,37 +32,6 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
   const [saved, setSaved] = useState(false);
   const [pending, startTransition] = useTransition();
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const [pasteText, setPasteText] = useState("");
-  const [pasteError, setPasteError] = useState("");
-
-  function fillFromJson() {
-    setPasteError("");
-    let parsed: DraftJson;
-    try {
-      parsed = JSON.parse(pasteText);
-    } catch {
-      setPasteError("That doesn't look like valid JSON. Copy the whole block Claude gave you, curly braces included.");
-      return;
-    }
-    const toLines = (v: string[] | string | undefined) => (Array.isArray(v) ? v.join("\n") : v ?? "");
-    setForm({
-      id: null,
-      name: parsed.name ?? "",
-      category: parsed.category && CATEGORIES.some((c) => c.key === parsed.category) ? parsed.category : "home",
-      rating: parsed.rating != null ? String(parsed.rating) : "4.8",
-      reviews: parsed.reviews != null ? String(parsed.reviews) : "0",
-      imageUrl: "",
-      shopeeLink: "",
-      tiktokLink: "",
-      pros: toLines(parsed.pros),
-      cons: toLines(parsed.cons),
-    });
-    setPasteText("");
-    setSaved(false);
-    setError("");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
 
   function startEdit(p: ProductRecord) {
     setForm({
@@ -200,15 +160,6 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
         .am-list-meta { font-size: 11.5px; color: #8B92A3; }
         .am-list-actions { display: flex; gap: 6px; margin-left: auto; }
         .am-list-actions button { font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 6px; border: 1px solid #ECE7DC; background: #fff; cursor: pointer; }
-
-        .ops-card { background: #14120D; color: #F5F1E8; border-radius: 16px; padding: 18px; margin-bottom: 24px; }
-        .ops-title { font-weight: 800; font-size: 15px; }
-        .ops-sub { font-size: 11.5px; color: #B4AA95; margin-top: 2px; margin-bottom: 14px; line-height: 1.5; }
-        .ops-textarea { width: 100%; background: #201C14; border: 1px solid #332C1E; border-radius: 10px; padding: 10px 12px; color: #F5F1E8; font-size: 12.5px; font-family: "SFMono-Regular", Consolas, monospace; resize: vertical; }
-        .ops-textarea::placeholder { color: #7A7264; }
-        .ops-fill-btn { margin-top: 10px; background: #FFC700; color: #1F1B12; border: none; border-radius: 8px; padding: 9px 18px; font-size: 12.5px; font-weight: 800; cursor: pointer; }
-        .ops-fill-btn:disabled { background: #332C1E; color: #7A7264; cursor: default; }
-        .ops-error { color: #EE4D2D; font-size: 12.5px; margin-top: 8px; }
       `}</style>
 
       <div className="am-wrap">
@@ -221,24 +172,6 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
             <a className="am-back" href="/">View live site</a>
             <UserButton afterSignOutUrl="/" />
           </div>
-        </div>
-
-        <div className="ops-card">
-          <div className="ops-title">Paste from Claude</div>
-          <div className="ops-sub">
-            Sa Claude chat, ibigay mo ang product link/name — ipapasa niya sa iyo ang JSON block. I-paste dito, tapos i-click ang &ldquo;Fill form&rdquo; para awtomatikong mapuno ang pangalan, category, rating, at pros/cons sa ibaba. Wala itong bayad — hindi ito kumokonekta sa anumang AI API.
-          </div>
-          <textarea
-            className="ops-textarea"
-            rows={6}
-            value={pasteText}
-            onChange={(e) => setPasteText(e.target.value)}
-            placeholder={'{\n  "name": "Rechargeable Neck Fan",\n  "category": "digital",\n  "rating": 4.7,\n  "reviews": 128,\n  "pros": ["Hands-free cooling", "3 speeds"],\n  "cons": ["Weaker than a handheld fan"]\n}'}
-          />
-          <button type="button" className="ops-fill-btn" onClick={fillFromJson} disabled={!pasteText.trim()}>
-            Fill form ↓
-          </button>
-          {pasteError && <div className="ops-error">{pasteError}</div>}
         </div>
 
         <div className="am-card">
