@@ -33,67 +33,6 @@ function Stars({ rating }: { rating: number }) {
   );
 }
 
-function BannerArt() {
-  return (
-    <svg className="sf-banner-art" viewBox="0 0 1200 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <defs>
-        <linearGradient id="petalA" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#F3D9DE" />
-          <stop offset="100%" stopColor="#D9BFCB" />
-        </linearGradient>
-        <linearGradient id="petalB" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#EFC9D2" />
-          <stop offset="100%" stopColor="#C9AEC0" />
-        </linearGradient>
-        <filter id="softBlur" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="1.2" />
-        </filter>
-        <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
-          <feGaussianBlur stdDeviation="6" />
-        </filter>
-      </defs>
-
-      <g opacity="0.9">
-        {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg, i) => (
-          <ellipse
-            key={deg}
-            cx="230"
-            cy="70"
-            rx="120"
-            ry="34"
-            fill={i % 2 === 0 ? "url(#petalA)" : "url(#petalB)"}
-            filter="url(#softBlur)"
-            transform={`rotate(${deg} 230 70)`}
-            opacity="0.55"
-          />
-        ))}
-        <circle cx="230" cy="70" r="30" fill="#FBEFF2" opacity="0.8" />
-      </g>
-
-      <g opacity="0.75">
-        {[0, 40, 80, 120, 160, 200, 240, 280, 320].map((deg, i) => (
-          <ellipse
-            key={deg}
-            cx="880"
-            cy="60"
-            rx="90"
-            ry="26"
-            fill={i % 2 === 0 ? "url(#petalB)" : "url(#petalA)"}
-            filter="url(#softBlur)"
-            transform={`rotate(${deg} 880 60)`}
-            opacity="0.5"
-          />
-        ))}
-        <circle cx="880" cy="60" r="22" fill="#FBEFF2" opacity="0.75" />
-      </g>
-
-      {[[110, 150, 3], [520, 40, 2], [700, 160, 2.5], [980, 130, 3], [340, 180, 2], [1080, 60, 2]].map(([cx, cy, r], i) => (
-        <circle key={i} cx={cx} cy={cy} r={r} fill="#FFFFFF" filter="url(#glow)" opacity="0.9" />
-      ))}
-    </svg>
-  );
-}
-
 function ProductCard({ p }: { p: ProductRecord }) {
   return (
     <article className="sf-card">
@@ -130,8 +69,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
       <style>{`
         .sf-wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
 
-        .sf-banner { position: relative; overflow: hidden; background: linear-gradient(180deg, #EDE7EA 0%, #F3EFF1 100%); }
-        .sf-banner-art { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .sf-banner { position: relative; background-color: #EFE9EC; background-image: url(/images/banner-flowers.png); background-size: cover; background-position: top center; background-repeat: no-repeat; }
         .sf-header { position: relative; z-index: 2; }
         .sf-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0 34px; }
         .sf-brand-block { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
@@ -140,13 +78,11 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-brand-tagline { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-muted); }
         .sf-admin-link { flex-shrink: 0; font-size: 11px; font-weight: 600; color: var(--sf-white); background: var(--sf-pink); border: none; border-radius: 999px; padding: 7px 16px; }
 
-        .sf-featured { padding: 14px 0 8px; }
-        .sf-featured-label { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sf-white); background: var(--sf-pink); border-radius: 999px; padding: 6px 14px; margin-bottom: 12px; }
-        .sf-hero-frame { position: relative; width: 100%; aspect-ratio: 1 / 1; max-height: 420px; border-radius: 24px; overflow: hidden; background: var(--sf-card); box-shadow: 0 10px 28px -10px rgba(60,45,55,.25); }
-        .sf-hero-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .sf-featured-cta-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
-        .sf-featured-name { font-size: 15px; font-weight: 700; color: var(--sf-ink); }
-        .sf-featured-sub { font-size: 11.5px; color: var(--sf-muted); margin-top: 2px; }
+        .sf-featured { padding: 190px 0 8px; }
+        @media (min-width: 700px) { .sf-featured { padding-top: 240px; } }
+        .sf-featured-title-row { display: flex; flex-direction: column; }
+        .sf-featured-name { font-size: 16px; font-weight: 700; color: var(--sf-ink); }
+        .sf-featured-sub { font-size: 12px; color: var(--sf-muted); margin-top: 2px; }
 
         .sf-tabs-section { padding: 18px 0 6px; }
         .sf-tabs-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
@@ -202,7 +138,6 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         }}
       >
         <div className="sf-banner">
-          <BannerArt />
           <header className="sf-header">
             <div className="sf-wrap sf-header-row">
               <div className="sf-brand-block">
@@ -212,43 +147,41 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
               {isAdmin && <a href="/admin" className="sf-admin-link">Manage</a>}
             </div>
           </header>
+
+          {products.length > 0 && (
+            <div className="sf-wrap">
+              {featured && (
+                <section className="sf-featured">
+                  <div className="sf-featured-title-row">
+                    <div className="sf-featured-name">{featured.name}</div>
+                    <div className="sf-featured-sub">Tested and approved</div>
+                  </div>
+                </section>
+              )}
+
+              <section className="sf-tabs-section">
+                <div className="sf-tabs-row" role="tablist" aria-label="Product categories">
+                  {TABS.map((t) => (
+                    <button
+                      key={t.key}
+                      type="button"
+                      className="sf-tab-btn"
+                      aria-pressed={filter === t.key}
+                      onClick={() => setFilter(t.key)}
+                    >
+                      {t.label}
+                    </button>
+                  ))}
+                </div>
+              </section>
+            </div>
+          )}
         </div>
 
         {products.length === 0 ? (
           <div className="sf-empty">No products yet. Check back soon!</div>
         ) : (
           <main className="sf-wrap">
-            {featured && (
-              <section className="sf-featured">
-                <span className="sf-featured-label">Featured Find</span>
-                <div className="sf-hero-frame">
-                  <img src={featured.imageUrl} alt={featured.name} />
-                </div>
-                <div className="sf-featured-cta-row">
-                  <div>
-                    <div className="sf-featured-name">{featured.name}</div>
-                    <div className="sf-featured-sub">Tested and approved</div>
-                  </div>
-                </div>
-              </section>
-            )}
-
-            <section className="sf-tabs-section">
-              <div className="sf-tabs-row" role="tablist" aria-label="Product categories">
-                {TABS.map((t) => (
-                  <button
-                    key={t.key}
-                    type="button"
-                    className="sf-tab-btn"
-                    aria-pressed={filter === t.key}
-                    onClick={() => setFilter(t.key)}
-                  >
-                    {t.label}
-                  </button>
-                ))}
-              </div>
-            </section>
-
             <section className="sf-grid-section">
               {filter === "all"
                 ? Object.keys(CATEGORIES).map((key) => {
