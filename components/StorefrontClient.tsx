@@ -71,12 +71,12 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         .sf-banner { position: relative; background-color: #EFE9EC; background-image: url(/images/banner-flowers.png); background-size: cover; background-position: top center; background-repeat: no-repeat; }
         .sf-header { position: relative; z-index: 2; }
-        .sf-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 0 34px; }
-        .sf-brand-block { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+        .sf-header-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: 16px; padding: 20px 0 34px; }
+        .sf-brand-block { grid-column: 2; display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; text-align: center; }
         .sf-brand-name { font-weight: 700; font-size: 26px; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.1; }
         @media (min-width: 600px) { .sf-brand-name { font-size: 32px; } }
         .sf-brand-tagline { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-muted); }
-        .sf-admin-link { flex-shrink: 0; font-size: 11px; font-weight: 600; color: var(--sf-white); background: var(--sf-pink); border: none; border-radius: 999px; padding: 7px 16px; }
+        .sf-admin-link { grid-column: 3; justify-self: end; flex-shrink: 0; font-size: 11px; font-weight: 600; color: var(--sf-white); background: var(--sf-pink); border: none; border-radius: 999px; padding: 7px 16px; }
 
         .sf-featured { padding: 190px 0 8px; }
         @media (min-width: 700px) { .sf-featured { padding-top: 240px; } }
