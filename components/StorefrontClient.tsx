@@ -72,13 +72,14 @@ export default function StorefrontClient({ products }: { products: ProductRecord
         .sf-header { position: sticky; top: 0; z-index: 20; background: var(--sf-paper); border-bottom: 2px solid var(--sf-gold); }
         .sf-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; }
         .sf-brand-block { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-        .sf-brand-name { font-weight: 800; font-size: 17px; letter-spacing: -0.01em; color: var(--sf-ink); }
+        .sf-brand-name { font-weight: 800; font-size: 28px; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.1; }
+        @media (min-width: 600px) { .sf-brand-name { font-size: 34px; } }
         .sf-brand-tagline { font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--sf-ink-faint); }
         .sf-admin-link { flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--sf-ink-muted); border: 1px solid var(--sf-border); border-radius: 999px; padding: 6px 14px; }
 
         .sf-featured { padding: 22px 0 6px; }
         .sf-featured-label { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-gold-deep); background: rgba(255, 199, 0, 0.15); border-radius: 999px; padding: 5px 12px; margin-bottom: 10px; }
-        .sf-hero-frame { position: relative; width: 100%; aspect-ratio: 21 / 9; border-radius: 16px; overflow: hidden; background: var(--sf-border); box-shadow: 0 14px 32px -18px rgba(0,0,0,.18); border: 1px solid var(--sf-border); }
+        .sf-hero-frame { position: relative; width: 100%; aspect-ratio: 1 / 1; max-height: 420px; border-radius: 16px; overflow: hidden; background: var(--sf-border); box-shadow: 0 14px 32px -18px rgba(0,0,0,.18); border: 1px solid var(--sf-border); }
         .sf-hero-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .sf-featured-cta-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
         .sf-featured-name { font-size: 14px; font-weight: 700; color: var(--sf-ink); }
