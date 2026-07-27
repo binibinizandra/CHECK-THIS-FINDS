@@ -1,7 +1,10 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { Poppins } from "next/font/google";
 import type { ProductRecord } from "@/lib/products/store";
+
+const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 
 const CATEGORIES: Record<string, string> = {
   home: "Home Needs & Appliances",
@@ -35,11 +38,9 @@ function ProductCard({ p }: { p: ProductRecord }) {
     <article className="sf-card">
       <Link href={`/product/${p.id}`} className="sf-card-link">
         <div className="sf-card-media">
-          <span className="sf-quality-badge">
-            <svg viewBox="0 0 20 20" fill="currentColor">
-              <path d="M10 1l2.6 5.6L19 7.3l-4.5 4.2 1.1 6.2L10 14.8l-5.6 2.9 1.1-6.2L1 7.3l6.4-.7z" />
-            </svg>
-            Tested
+          <span className="sf-badge-cluster">
+            <span className="sf-badge sf-badge-shopee">Shopee</span>
+            <span className="sf-badge sf-badge-tiktok">TikTok</span>
           </span>
           <img src={p.imageUrl} alt={p.name} loading="lazy" />
         </div>
@@ -52,11 +53,11 @@ function ProductCard({ p }: { p: ProductRecord }) {
         </div>
       </Link>
       <div className="sf-card-actions">
-        <a className="sf-btn-store sf-btn-shopee" href={p.shopeeLink || "#"} target="_blank" rel="noopener noreferrer">
-          Shopee
+        <a className="sf-btn-store" href={p.shopeeLink || "#"} target="_blank" rel="noopener noreferrer">
+          Buy on Shopee
         </a>
-        <a className="sf-btn-store sf-btn-tiktok" href={p.tiktokLink || "#"} target="_blank" rel="noopener noreferrer">
-          TikTok
+        <a className="sf-btn-store" href={p.tiktokLink || "#"} target="_blank" rel="noopener noreferrer">
+          Buy on TikTok
         </a>
       </div>
     </article>
@@ -72,77 +73,78 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
       <style>{`
         .sf-wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
 
-        .sf-header { position: sticky; top: 0; z-index: 20; background: var(--sf-paper); border-bottom: 2px solid var(--sf-gold); }
-        .sf-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; }
+        .sf-header { position: sticky; top: 0; z-index: 20; background: rgba(248,246,247,.65); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,.7); }
+        .sf-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; }
         .sf-brand-block { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-        .sf-brand-name { font-weight: 800; font-size: 28px; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.1; }
-        @media (min-width: 600px) { .sf-brand-name { font-size: 34px; } }
-        .sf-brand-tagline { font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--sf-ink-faint); }
-        .sf-admin-link { flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--sf-ink-muted); border: 1px solid var(--sf-border); border-radius: 999px; padding: 6px 14px; }
+        .sf-brand-name { font-weight: 700; font-size: 26px; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.1; }
+        @media (min-width: 600px) { .sf-brand-name { font-size: 32px; } }
+        .sf-brand-tagline { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-mauve); }
+        .sf-admin-link { flex-shrink: 0; font-size: 11px; font-weight: 600; color: var(--sf-ink); background: rgba(255,255,255,.5); border: 1px solid rgba(255,255,255,.8); border-radius: 999px; padding: 7px 16px; backdrop-filter: blur(10px); }
 
-        .sf-featured { padding: 22px 0 6px; }
-        .sf-featured-label { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-gold-deep); background: rgba(255, 199, 0, 0.15); border-radius: 999px; padding: 5px 12px; margin-bottom: 10px; }
-        .sf-hero-frame { position: relative; width: 100%; aspect-ratio: 1 / 1; max-height: 420px; border-radius: 16px; overflow: hidden; background: var(--sf-card); box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 8px 20px -6px rgba(0,0,0,.1); }
+        .sf-featured { padding: 26px 0 8px; }
+        .sf-featured-label { display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sf-ink); background: rgba(255,255,255,.55); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.7); border-radius: 999px; padding: 6px 14px; margin-bottom: 12px; }
+        .sf-hero-frame { position: relative; width: 100%; aspect-ratio: 1 / 1; max-height: 420px; border-radius: 24px; overflow: hidden; background: var(--sf-card); box-shadow: 0 8px 32px -8px rgba(181,165,176,.35); border: 1px solid rgba(255,255,255,.6); }
         .sf-hero-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .sf-featured-cta-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
-        .sf-featured-name { font-size: 14px; font-weight: 700; color: var(--sf-ink); }
-        .sf-featured-sub { font-size: 11.5px; color: var(--sf-ink-muted); margin-top: 2px; }
+        .sf-featured-cta-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+        .sf-featured-name { font-size: 15px; font-weight: 600; color: var(--sf-ink); }
+        .sf-featured-sub { font-size: 11.5px; color: var(--sf-mauve); margin-top: 2px; }
 
-        .sf-tabs-section { padding: 16px 0 4px; }
-        .sf-tabs-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+        .sf-tabs-section { padding: 18px 0 6px; }
+        .sf-tabs-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
         .sf-tabs-row::-webkit-scrollbar { display: none; }
-        .sf-tab-btn { flex-shrink: 0; border: 1px solid var(--sf-border); background: var(--sf-card); color: var(--sf-ink-muted); font-weight: 700; font-size: 11.5px; padding: 6px 12px; border-radius: 999px; transition: background .15s ease, color .15s ease, border-color .15s ease; cursor: pointer; }
-        .sf-tab-btn[aria-pressed=true] { background: var(--sf-gold); border-color: var(--sf-gold); color: var(--sf-ink); }
+        .sf-tab-btn { flex-shrink: 0; border: 1px solid rgba(255,255,255,.7); background: rgba(255,255,255,.45); backdrop-filter: blur(10px); color: var(--sf-ink); font-weight: 500; font-size: 11.5px; padding: 8px 16px; border-radius: 999px; transition: background .15s ease, color .15s ease, border-color .15s ease; cursor: pointer; }
+        .sf-tab-btn[aria-pressed=true] { background: var(--sf-pink); border-color: var(--sf-pink); color: #fff; font-weight: 600; }
 
-        .sf-grid-section { padding: 12px 0 30px; }
-        .sf-cat-label { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-ink); margin: 20px 0 10px; padding-left: 8px; border-left: 3px solid var(--sf-gold); }
+        .sf-grid-section { padding: 14px 0 34px; }
+        .sf-cat-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-ink); margin: 22px 0 12px; padding-left: 10px; border-left: 3px solid var(--sf-pink); }
         .sf-cat-label:first-child { margin-top: 0; }
-        .sf-product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        @media (min-width: 600px) { .sf-product-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; } }
-        @media (min-width: 900px) { .sf-product-grid { grid-template-columns: repeat(6, 1fr); gap: 12px; } }
+        .sf-product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        @media (min-width: 600px) { .sf-product-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; } }
+        @media (min-width: 900px) { .sf-product-grid { grid-template-columns: repeat(6, 1fr); gap: 14px; } }
 
-        .sf-card { background: var(--sf-card); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 8px -2px rgba(0,0,0,.06); transition: box-shadow .15s ease, transform .15s ease; }
-        @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 10px 20px -4px rgba(0,0,0,.1); transform: translateY(-2px); } }
+        .sf-card { background: rgba(248,246,247,.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,.7); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 4px 24px -6px rgba(181,165,176,.28); transition: box-shadow .2s ease, transform .2s ease; }
+        @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 10px 32px -6px rgba(181,165,176,.4); transform: translateY(-3px); } }
         .sf-card-link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; min-width: 0; }
-        .sf-card-media { position: relative; aspect-ratio: 1; background: var(--sf-border); }
+        .sf-card-media { position: relative; aspect-ratio: 1; background: rgba(229,215,220,.5); }
         .sf-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .sf-quality-badge { position: absolute; top: 6px; left: 6px; display: inline-flex; align-items: center; gap: 2px; background: var(--sf-gold); color: var(--sf-ink); font-size: 7px; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; padding: 3px 5px; border-radius: 999px; }
-        .sf-quality-badge svg { width: 7px; height: 7px; }
-        .sf-card-body { padding: 7px; display: flex; flex-direction: column; gap: 5px; flex: 1; }
-        .sf-card-name { font-size: 10.5px; font-weight: 700; line-height: 1.25; color: var(--sf-ink); min-height: 26px; }
-        .sf-stars { position: relative; display: inline-block; font-size: 9px; line-height: 1; letter-spacing: 1px; color: var(--sf-star-bg); }
-        .sf-stars-fill { position: absolute; inset: 0; overflow: hidden; color: var(--sf-star); white-space: nowrap; }
+        .sf-badge-cluster { position: absolute; top: 8px; left: 8px; display: flex; gap: 4px; z-index: 1; }
+        .sf-badge { font-size: 7px; font-weight: 700; letter-spacing: 0.02em; text-transform: uppercase; padding: 3px 6px; border-radius: 999px; color: #fff; backdrop-filter: blur(6px); }
+        .sf-badge-shopee { background: rgba(238,110,50,.92); }
+        .sf-badge-tiktok { background: rgba(20,18,20,.92); }
+        .sf-card-body { padding: 10px 10px 8px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+        .sf-card-name { font-size: 10.5px; font-weight: 500; line-height: 1.3; color: var(--sf-ink); min-height: 27px; }
+        .sf-stars { position: relative; display: inline-block; font-size: 9px; line-height: 1; letter-spacing: 1px; color: rgba(181,165,176,.4); }
+        .sf-stars-fill { position: absolute; inset: 0; overflow: hidden; color: var(--sf-pink-deep); white-space: nowrap; }
         .sf-rating-row { display: flex; align-items: center; gap: 4px; }
-        .sf-rating-num { font-size: 9px; font-weight: 700; color: var(--sf-ink-muted); font-variant-numeric: tabular-nums; }
-        .sf-card-actions { display: flex; flex-direction: column; gap: 4px; padding: 0 7px 7px; }
-        .sf-btn-store { display: flex; align-items: center; justify-content: center; gap: 3px; font-size: 9px; font-weight: 700; padding: 6px 4px; border-radius: 6px; border: none; color: #fff; cursor: pointer; }
-        .sf-btn-shopee { background: var(--sf-shopee); }
-        .sf-btn-tiktok { background: var(--sf-tiktok); }
-        @media (prefers-reduced-motion: no-preference) { .sf-btn-store { transition: opacity .15s ease; } .sf-btn-store:hover { opacity: .88; } }
+        .sf-rating-num { font-size: 9px; font-weight: 600; color: var(--sf-mauve); font-variant-numeric: tabular-nums; }
+        .sf-card-actions { display: flex; flex-direction: column; gap: 5px; padding: 0 10px 10px; }
+        .sf-btn-store { display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; padding: 7px 4px; border-radius: 999px; border: none; color: #fff; cursor: pointer; background: var(--sf-pink-deep); }
+        @media (prefers-reduced-motion: no-preference) { .sf-btn-store { transition: opacity .15s ease; } .sf-btn-store:hover { opacity: .85; } }
 
-        .sf-footer { margin-top: 20px; border-top: 1px solid var(--sf-border); padding: 26px 0 40px; }
-        .sf-footer-copy { font-size: 12.5px; color: var(--sf-ink-muted); text-align: center; }
-        .sf-footer-disclosure { font-size: 11.5px; color: var(--sf-ink-faint); text-align: center; max-width: 460px; margin: 8px auto 0; line-height: 1.5; }
+        .sf-footer { margin-top: 24px; border-top: 1px solid rgba(255,255,255,.7); padding: 28px 0 44px; }
+        .sf-footer-copy { font-size: 12.5px; color: var(--sf-ink); text-align: center; }
+        .sf-footer-disclosure { font-size: 11.5px; color: var(--sf-mauve); text-align: center; max-width: 460px; margin: 8px auto 0; line-height: 1.6; }
 
-        .sf-empty { text-align: center; padding: 60px 20px; color: var(--sf-ink-faint); font-size: 14px; }
+        .sf-empty { text-align: center; padding: 60px 20px; color: var(--sf-mauve); font-size: 14px; }
 
         :root {
-          --sf-paper: #FAFAF9;
+          --sf-pink: #E8C5C8;
+          --sf-pink-deep: #D9A5AA;
+          --sf-mauve: #8C7E88;
+          --sf-pearl: #F8F6F7;
           --sf-card: #FFFFFF;
-          --sf-ink: #1F1B12;
-          --sf-ink-muted: #6B6355;
-          --sf-ink-faint: #9C9484;
-          --sf-gold: #FFC700;
-          --sf-gold-deep: #8A6200;
-          --sf-border: #F2E7C4;
-          --sf-shopee: #EE4D2D;
-          --sf-tiktok: #10141C;
-          --sf-star: #FFC700;
-          --sf-star-bg: #EFE6C6;
+          --sf-ink: #4A4046;
         }
       `}</style>
 
-      <div style={{ background: "var(--sf-paper)", color: "var(--sf-ink)", minHeight: "100dvh", fontFamily: "-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" }}>
+      <div
+        className={poppins.className}
+        style={{
+          background: "linear-gradient(160deg, #F8F6F7 0%, #F3E4E6 45%, #E8C5C8 100%)",
+          color: "var(--sf-ink)",
+          minHeight: "100dvh",
+        }}
+      >
         <header className="sf-header">
           <div className="sf-wrap sf-header-row">
             <div className="sf-brand-block">
