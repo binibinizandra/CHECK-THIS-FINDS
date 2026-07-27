@@ -71,18 +71,17 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         .sf-banner { position: relative; background-color: #EFE9EC; background-image: url(/images/banner-flowers.png); background-size: cover; background-position: top center; background-repeat: no-repeat; }
         .sf-header { position: relative; z-index: 2; }
-        .sf-header-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: 16px; padding: 20px 0 34px; }
+        .sf-header-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: 16px; padding: 90px 0 34px; }
         .sf-brand-block { grid-column: 2; display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; text-align: center; }
         .sf-brand-name { font-weight: 700; font-size: 26px; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.1; }
         @media (min-width: 600px) { .sf-brand-name { font-size: 32px; } }
         .sf-brand-tagline { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-muted); }
         .sf-admin-link { grid-column: 3; justify-self: end; flex-shrink: 0; font-size: 11px; font-weight: 600; color: var(--sf-white); background: var(--sf-pink); border: none; border-radius: 999px; padding: 7px 16px; }
 
-        .sf-featured { padding: 190px 0 8px; }
-        @media (min-width: 700px) { .sf-featured { padding-top: 240px; } }
+        .sf-featured { padding: 120px 0 8px; }
+        @media (min-width: 700px) { .sf-featured { padding-top: 170px; } }
         .sf-featured-title-row { display: flex; flex-direction: column; }
-        .sf-featured-name { font-size: 16px; font-weight: 700; color: var(--sf-ink); }
-        .sf-featured-sub { font-size: 12px; color: var(--sf-muted); margin-top: 2px; }
+        .sf-featured-name { font-size: 15px; font-weight: 600; line-height: 1.55; color: var(--sf-ink); max-width: 440px; }
 
         .sf-tabs-section { padding: 18px 0 6px; }
         .sf-tabs-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
@@ -114,7 +113,6 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         .sf-footer { margin-top: 24px; border-top: 1px solid var(--sf-border); padding: 28px 0 44px; }
         .sf-footer-copy { font-size: 12.5px; color: var(--sf-ink); text-align: center; }
-        .sf-footer-disclosure { font-size: 11.5px; color: var(--sf-muted); text-align: center; max-width: 460px; margin: 8px auto 0; line-height: 1.6; }
 
         .sf-empty { text-align: center; padding: 60px 20px; color: var(--sf-muted); font-size: 14px; }
 
@@ -182,8 +180,9 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
               {featured && (
                 <section className="sf-featured">
                   <div className="sf-featured-title-row">
-                    <div className="sf-featured-name">{featured.name}</div>
-                    <div className="sf-featured-sub">Tested and approved</div>
+                    <div className="sf-featured-name">
+                      We do the research so you don&apos;t have to. Enjoy this selection of tested and approved finds.
+                    </div>
                   </div>
                 </section>
               )}
@@ -241,7 +240,6 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         <footer className="sf-footer">
           <div className="sf-wrap">
             <div className="sf-footer-copy">© {new Date().getFullYear()} Check This Finds. All rights reserved.</div>
-            <p className="sf-footer-disclosure">This site contains affiliate links. We may earn a commission at no extra cost to you.</p>
           </div>
         </footer>
       </div>
