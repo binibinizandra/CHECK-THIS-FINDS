@@ -39,6 +39,8 @@ const PRODUCTS: Product[] = [
   { name: "Wireless Earbuds", cat: "digital", rating: 4.7, reviews: 428, image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
   // PRODUCT 7: Portable Power Bank
   { name: "Portable Power Bank", cat: "digital", rating: 4.6, reviews: 203, image: "https://images.unsplash.com/photo-1706275399524-813e89914e43?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
+  // PRODUCT 14: Orashare 20000mAh Power Bank (dual cable, 22.5W)
+  { name: "Orashare 20000mAh Power Bank (Dual Cable, 22.5W)", cat: "digital", rating: 4.8, reviews: 214, image: "https://images.unsplash.com/photo-1706275399494-fb26bbc5da63?q=80&w=600&auto=format&fit=crop", shopeeLink: "https://s.shopee.ph/1LeUFGFaLr", tiktokLink: "TIKTOK_LINK_HERE" },
 
   // PRODUCT 8: Electric Toothbrush
   { name: "Electric Toothbrush", cat: "care", rating: 4.7, reviews: 275, image: "https://images.unsplash.com/photo-1559591939-c2d3c204f6da?q=80&w=600&auto=format&fit=crop", shopeeLink: "SHOPEE_LINK_HERE", tiktokLink: "TIKTOK_LINK_HERE" },
