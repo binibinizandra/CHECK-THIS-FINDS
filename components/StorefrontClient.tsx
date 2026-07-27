@@ -69,7 +69,7 @@ export default function StorefrontClient({ products }: { products: ProductRecord
       <style>{`
         .sf-wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
 
-        .sf-header { position: sticky; top: 0; z-index: 20; background: var(--sf-paper); border-bottom: 1px solid var(--sf-border); }
+        .sf-header { position: sticky; top: 0; z-index: 20; background: var(--sf-paper); border-bottom: 2px solid var(--sf-gold); }
         .sf-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 0; }
         .sf-brand-block { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
         .sf-brand-name { font-weight: 800; font-size: 17px; letter-spacing: -0.01em; color: var(--sf-ink); }
@@ -78,30 +78,30 @@ export default function StorefrontClient({ products }: { products: ProductRecord
 
         .sf-featured { padding: 22px 0 6px; }
         .sf-featured-label { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-gold-deep); background: rgba(255, 199, 0, 0.15); border-radius: 999px; padding: 5px 12px; margin-bottom: 10px; }
-        .sf-hero-frame { position: relative; width: 100%; aspect-ratio: 21 / 9; border-radius: 14px; overflow: hidden; background: var(--sf-border); box-shadow: 0 14px 32px -18px rgba(10,25,47,.3); }
+        .sf-hero-frame { position: relative; width: 100%; aspect-ratio: 21 / 9; border-radius: 16px; overflow: hidden; background: var(--sf-border); box-shadow: 0 14px 32px -18px rgba(0,0,0,.18); border: 1px solid var(--sf-border); }
         .sf-hero-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
         .sf-featured-cta-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; flex-wrap: wrap; }
         .sf-featured-name { font-size: 14px; font-weight: 700; color: var(--sf-ink); }
         .sf-featured-sub { font-size: 11.5px; color: var(--sf-ink-muted); margin-top: 2px; }
-        .sf-btn-buy-now { display: inline-flex; align-items: center; gap: 6px; background: var(--sf-gold); color: var(--sf-ink); font-weight: 800; font-size: 13px; padding: 9px 18px; border-radius: 999px; border: none; box-shadow: 0 8px 18px -8px rgba(255,199,0,.6); flex-shrink: 0; cursor: pointer; }
 
         .sf-tabs-section { padding: 16px 0 4px; }
         .sf-tabs-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
         .sf-tabs-row::-webkit-scrollbar { display: none; }
         .sf-tab-btn { flex-shrink: 0; border: 1px solid var(--sf-border); background: var(--sf-card); color: var(--sf-ink-muted); font-weight: 700; font-size: 11.5px; padding: 6px 12px; border-radius: 999px; transition: background .15s ease, color .15s ease, border-color .15s ease; cursor: pointer; }
-        .sf-tab-btn[aria-pressed=true] { background: var(--sf-ink); border-color: var(--sf-ink); color: var(--sf-gold); }
+        .sf-tab-btn[aria-pressed=true] { background: var(--sf-gold); border-color: var(--sf-gold); color: var(--sf-ink); }
 
         .sf-grid-section { padding: 12px 0 30px; }
-        .sf-cat-label { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-ink-faint); margin: 14px 0 8px; }
+        .sf-cat-label { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-ink); margin: 20px 0 10px; padding-left: 8px; border-left: 3px solid var(--sf-gold); }
         .sf-cat-label:first-child { margin-top: 0; }
         .sf-product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
         @media (min-width: 600px) { .sf-product-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; } }
         @media (min-width: 900px) { .sf-product-grid { grid-template-columns: repeat(6, 1fr); gap: 12px; } }
 
-        .sf-card { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+        .sf-card { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 1px 4px rgba(0,0,0,.05); transition: box-shadow .15s ease, transform .15s ease; }
+        @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 6px 16px rgba(0,0,0,.09); transform: translateY(-1px); } }
         .sf-card-media { position: relative; aspect-ratio: 1; background: var(--sf-border); }
         .sf-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .sf-quality-badge { position: absolute; top: 5px; left: 5px; display: inline-flex; align-items: center; gap: 2px; background: rgba(10,25,47,.85); color: var(--sf-gold); font-size: 7px; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; padding: 3px 5px; border-radius: 999px; }
+        .sf-quality-badge { position: absolute; top: 6px; left: 6px; display: inline-flex; align-items: center; gap: 2px; background: var(--sf-gold); color: var(--sf-ink); font-size: 7px; font-weight: 800; letter-spacing: 0.02em; text-transform: uppercase; padding: 3px 5px; border-radius: 999px; }
         .sf-quality-badge svg { width: 7px; height: 7px; }
         .sf-card-body { padding: 7px; display: flex; flex-direction: column; gap: 5px; flex: 1; }
         .sf-card-name { font-size: 10.5px; font-weight: 700; line-height: 1.25; color: var(--sf-ink); min-height: 26px; }
@@ -124,16 +124,16 @@ export default function StorefrontClient({ products }: { products: ProductRecord
         :root {
           --sf-paper: #FFFFFF;
           --sf-card: #FFFFFF;
-          --sf-ink: #0A192F;
-          --sf-ink-muted: #5B6472;
-          --sf-ink-faint: #8B92A3;
+          --sf-ink: #1F1B12;
+          --sf-ink-muted: #6B6355;
+          --sf-ink-faint: #9C9484;
           --sf-gold: #FFC700;
-          --sf-gold-deep: #A87B00;
-          --sf-border: #ECE7DC;
+          --sf-gold-deep: #8A6200;
+          --sf-border: #F2E7C4;
           --sf-shopee: #EE4D2D;
           --sf-tiktok: #10141C;
           --sf-star: #FFC700;
-          --sf-star-bg: #E4E1D6;
+          --sf-star-bg: #EFE6C6;
         }
       `}</style>
 
@@ -161,14 +161,8 @@ export default function StorefrontClient({ products }: { products: ProductRecord
                 <div className="sf-featured-cta-row">
                   <div>
                     <div className="sf-featured-name">{featured.name}</div>
-                    <div className="sf-featured-sub">Tested and approved — grab it below</div>
+                    <div className="sf-featured-sub">Tested and approved</div>
                   </div>
-                  <a className="sf-btn-buy-now" href={featured.shopeeLink || "#"} target="_blank" rel="noopener noreferrer">
-                    Buy Now
-                    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                      <path d="M5 10h10M11 5l5 5-5 5" />
-                    </svg>
-                  </a>
                 </div>
               </section>
             )}
