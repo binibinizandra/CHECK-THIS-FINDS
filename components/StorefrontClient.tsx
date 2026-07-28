@@ -54,11 +54,6 @@ function ProductCard({ p }: { p: ProductRecord }) {
             Buy on Shopee
           </a>
         )}
-        {p.tiktokLink && (
-          <a className="sf-btn-store" href={p.tiktokLink} target="_blank" rel="noopener noreferrer">
-            Buy on TikTok
-          </a>
-        )}
       </div>
     </article>
   );

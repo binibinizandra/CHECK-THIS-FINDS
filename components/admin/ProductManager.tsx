@@ -19,7 +19,6 @@ const EMPTY_FORM = {
   reviews: "0",
   imageUrl: "",
   shopeeLink: "",
-  tiktokLink: "",
   pros: "",
   cons: "",
 };
@@ -42,7 +41,6 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
       reviews: String(p.reviews),
       imageUrl: p.imageUrl,
       shopeeLink: p.shopeeLink ?? "",
-      tiktokLink: p.tiktokLink ?? "",
       pros: p.pros ?? "",
       cons: p.cons ?? "",
     });
@@ -87,7 +85,7 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
         reviews: Number.isFinite(reviewsNum) ? reviewsNum : 0,
         imageUrl: form.imageUrl,
         shopeeLink: form.shopeeLink.trim() || null,
-        tiktokLink: form.tiktokLink.trim() || null,
+        tiktokLink: null,
         pros: form.pros.trim() || null,
         cons: form.cons.trim() || null,
       });
@@ -100,7 +98,7 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
         setProducts((prev) =>
           prev.map((p) =>
             p.id === form.id
-              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, tiktokLink: form.tiktokLink || null, pros: form.pros || null, cons: form.cons || null }
+              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, pros: form.pros || null, cons: form.cons || null }
               : p
           )
         );
@@ -115,7 +113,7 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
             reviews: reviewsNum,
             imageUrl: form.imageUrl,
             shopeeLink: form.shopeeLink || null,
-            tiktokLink: form.tiktokLink || null,
+            tiktokLink: null,
             pros: form.pros || null,
             cons: form.cons || null,
             sortOrder: prev.length,
@@ -210,15 +208,9 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
             {form.imageUrl && <img className="am-preview" src={form.imageUrl} alt="Preview" />}
           </div>
 
-          <div className="am-row am-field">
-            <div>
-              <label className="am-label">Shopee link</label>
-              <input className="am-input" value={form.shopeeLink} onChange={(e) => setForm({ ...form, shopeeLink: e.target.value })} placeholder="https://shopee.ph/..." />
-            </div>
-            <div>
-              <label className="am-label">TikTok Shop link</label>
-              <input className="am-input" value={form.tiktokLink} onChange={(e) => setForm({ ...form, tiktokLink: e.target.value })} placeholder="https://vt.tiktok.com/..." />
-            </div>
+          <div className="am-field">
+            <label className="am-label">Shopee link</label>
+            <input className="am-input" value={form.shopeeLink} onChange={(e) => setForm({ ...form, shopeeLink: e.target.value })} placeholder="https://shopee.ph/..." />
           </div>
 
           <div className="am-row am-field">

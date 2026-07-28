@@ -1,5 +1,7 @@
 import { Poppins } from "next/font/google";
 import type { ProductRecord } from "@/lib/products/store";
+import type { CommentRecord } from "@/lib/comments/store";
+import ProductComments from "@/components/ProductComments";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 
@@ -18,7 +20,15 @@ function bullets(text: string | null): string[] {
     .filter(Boolean);
 }
 
-export default function ProductDetail({ product }: { product: ProductRecord }) {
+export default function ProductDetail({
+  product,
+  comments,
+  isAdmin,
+}: {
+  product: ProductRecord;
+  comments: CommentRecord[];
+  isAdmin: boolean;
+}) {
   const pros = bullets(product.pros);
   const cons = bullets(product.cons);
   const pct = Math.round((product.rating / 5) * 100);
@@ -57,6 +67,18 @@ export default function ProductDetail({ product }: { product: ProductRecord }) {
         .pd-cta-row { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
         .pd-btn-store { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; font-weight: 700; padding: 13px 24px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-pink); }
         @media (prefers-reduced-motion: no-preference) { .pd-btn-store { transition: opacity .15s ease; } .pd-btn-store:hover { opacity: .85; } }
+
+        .pd-comments { margin-top: 34px; background: var(--sf-card); border-radius: 18px; padding: 18px; box-shadow: 0 4px 16px -6px rgba(60,45,55,.18); }
+        .pd-comment-empty { font-size: 13px; color: var(--sf-muted); }
+        .pd-comment-list { display: flex; flex-direction: column; gap: 10px; }
+        .pd-comment-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; padding: 10px 12px; background: var(--sf-bg); border-radius: 12px; }
+        .pd-comment-body { font-size: 13.5px; color: var(--sf-ink); line-height: 1.5; word-break: break-word; white-space: pre-wrap; }
+        .pd-comment-link { color: var(--sf-pink); font-weight: 600; word-break: break-all; }
+        .pd-comment-delete { flex-shrink: 0; font-size: 11px; font-weight: 600; color: var(--sf-muted); background: none; border: 1px solid var(--sf-border); border-radius: 999px; padding: 4px 10px; cursor: pointer; }
+        .pd-comment-form { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+        .pd-comment-input { width: 100%; font-size: 13.5px; padding: 10px 12px; border: 1px solid var(--sf-border); border-radius: 10px; color: var(--sf-ink); background: var(--sf-bg); resize: vertical; font-family: inherit; }
+        .pd-comment-submit { align-self: flex-start; padding: 9px 20px; font-size: 12.5px; }
+        .pd-comment-error { color: #C0392B; font-size: 12.5px; }
 
         .pd-footer { margin-top: 24px; border-top: 1px solid var(--sf-border); padding: 28px 0 40px; }
         .pd-footer-copy { font-size: 12.5px; color: var(--sf-muted); text-align: center; }
@@ -141,14 +163,11 @@ export default function ProductDetail({ product }: { product: ProductRecord }) {
                     Buy on Shopee
                   </a>
                 )}
-                {product.tiktokLink && (
-                  <a className="pd-btn-store" href={product.tiktokLink} target="_blank" rel="noopener noreferrer">
-                    Buy on TikTok
-                  </a>
-                )}
               </div>
             </div>
           </div>
+
+          <ProductComments productId={product.id} initialComments={comments} isAdmin={isAdmin} />
         </main>
 
         <footer className="pd-footer">

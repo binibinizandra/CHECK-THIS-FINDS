@@ -264,3 +264,16 @@ export const products = pgTable(
   },
   (t) => [index("products_user_category_idx").on(t.userId, t.category)]
 );
+
+export const comments = pgTable(
+  "comments",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    productId: uuid("product_id")
+      .notNull()
+      .references(() => products.id, { onDelete: "cascade" }),
+    body: text("body").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("comments_product_id_idx").on(t.productId)]
+);
