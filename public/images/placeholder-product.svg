@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#F5F1F3"/>
+  <rect x="0" y="0" width="400" height="400" fill="#EDE3E7" opacity="0.6"/>
+  <g transform="translate(200,170)">
+    <rect x="-46" y="-32" width="92" height="64" rx="10" fill="none" stroke="#D99AA8" stroke-width="6"/>
+    <circle cx="0" cy="-4" r="16" fill="none" stroke="#D99AA8" stroke-width="6"/>
+    <rect x="-18" y="-46" width="36" height="12" rx="4" fill="#D99AA8"/>
+  </g>
+  <text x="200" y="250" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#5C6C8C">Photo coming soon</text>
+</svg>
