@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
   <rect width="400" height="400" fill="#F5F1F3"/>
   <rect x="0" y="0" width="400" height="400" fill="#EDE3E7" opacity="0.6"/>
   <g transform="translate(200,170)">
