@@ -59,6 +59,29 @@ function ProductCard({ p }: { p: ProductRecord }) {
   );
 }
 
+const PAGE_SIZE = 6;
+
+function ProductGrid({ items }: { items: ProductRecord[] }) {
+  const [visible, setVisible] = useState(PAGE_SIZE);
+  const shown = items.slice(0, visible);
+  const remaining = items.length - shown.length;
+
+  return (
+    <>
+      <div className="sf-product-grid">
+        {shown.map((p) => (
+          <ProductCard key={p.id} p={p} />
+        ))}
+      </div>
+      {remaining > 0 && (
+        <button type="button" className="sf-load-more" onClick={() => setVisible((v) => v + PAGE_SIZE)}>
+          Load more ({remaining} more)
+        </button>
+      )}
+    </>
+  );
+}
+
 export default function StorefrontClient({ products, isAdmin }: { products: ProductRecord[]; isAdmin: boolean }) {
   const [filter, setFilter] = useState("all");
   const featured = products[0];
@@ -94,6 +117,9 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         @media (min-width: 600px) { .sf-product-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; } }
         @media (min-width: 900px) { .sf-product-grid { grid-template-columns: repeat(6, 1fr); gap: 14px; } }
+
+        .sf-load-more { display: block; margin: 14px auto 0; font-size: 12px; font-weight: 600; color: var(--sf-pink); background: var(--sf-card); border: 1px solid var(--sf-pink); border-radius: 999px; padding: 8px 20px; cursor: pointer; }
+        @media (prefers-reduced-motion: no-preference) { .sf-load-more { transition: background .15s ease, color .15s ease; } .sf-load-more:hover { background: var(--sf-pink); color: var(--sf-white); } }
 
         .sf-card { background: var(--sf-card); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 4px 16px -6px rgba(60,45,55,.18); transition: box-shadow .2s ease, transform .2s ease; }
         @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 10px 24px -6px rgba(60,45,55,.25); transform: translateY(-3px); } }
@@ -217,21 +243,11 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                     return (
                       <div key={key}>
                         <div className="sf-cat-label">{CATEGORIES[key]}</div>
-                        <div className="sf-product-grid">
-                          {items.map((p) => (
-                            <ProductCard key={p.id} p={p} />
-                          ))}
-                        </div>
+                        <ProductGrid items={items} />
                       </div>
                     );
                   })
-                : (
-                  <div className="sf-product-grid">
-                    {products.filter((p) => p.category === filter).map((p) => (
-                      <ProductCard key={p.id} p={p} />
-                    ))}
-                  </div>
-                )}
+                : <ProductGrid items={products.filter((p) => p.category === filter)} />}
             </section>
           </main>
         )}
