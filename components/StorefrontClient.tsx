@@ -49,12 +49,16 @@ function ProductCard({ p }: { p: ProductRecord }) {
         </div>
       </Link>
       <div className="sf-card-actions">
-        <a className="sf-btn-store" href={p.shopeeLink || "#"} target="_blank" rel="noopener noreferrer">
-          Buy on Shopee
-        </a>
-        <a className="sf-btn-store" href={p.tiktokLink || "#"} target="_blank" rel="noopener noreferrer">
-          Buy on TikTok
-        </a>
+        {p.shopeeLink && (
+          <a className="sf-btn-store" href={p.shopeeLink} target="_blank" rel="noopener noreferrer">
+            Buy on Shopee
+          </a>
+        )}
+        {p.tiktokLink && (
+          <a className="sf-btn-store" href={p.tiktokLink} target="_blank" rel="noopener noreferrer">
+            Buy on TikTok
+          </a>
+        )}
       </div>
     </article>
   );

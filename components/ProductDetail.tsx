@@ -136,12 +136,16 @@ export default function ProductDetail({ product }: { product: ProductRecord }) {
               )}
 
               <div className="pd-cta-row">
-                <a className="pd-btn-store" href={product.shopeeLink || "#"} target="_blank" rel="noopener noreferrer">
-                  Buy on Shopee
-                </a>
-                <a className="pd-btn-store" href={product.tiktokLink || "#"} target="_blank" rel="noopener noreferrer">
-                  Buy on TikTok
-                </a>
+                {product.shopeeLink && (
+                  <a className="pd-btn-store" href={product.shopeeLink} target="_blank" rel="noopener noreferrer">
+                    Buy on Shopee
+                  </a>
+                )}
+                {product.tiktokLink && (
+                  <a className="pd-btn-store" href={product.tiktokLink} target="_blank" rel="noopener noreferrer">
+                    Buy on TikTok
+                  </a>
+                )}
               </div>
             </div>
           </div>
