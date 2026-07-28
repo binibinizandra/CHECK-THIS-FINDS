@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 import { put } from "@vercel/blob";
 import { currentUserId } from "@/lib/auth/currentUser";
 import { isOwner } from "@/lib/auth/owner";
-import { listProducts, createProduct, updateProduct, deleteProduct } from "@/lib/products/store";
+import { listProducts, createProduct, updateProduct, deleteProduct, setProductPublished } from "@/lib/products/store";
 import type { ProductRecord, ProductInput } from "@/lib/products/store";
 
 export async function fetchProducts(): Promise<ProductRecord[]> {
@@ -58,4 +58,13 @@ export async function removeProduct(id: string): Promise<void> {
   await deleteProduct(userId, id);
   revalidatePath("/");
   revalidatePath("/admin");
+}
+
+export async function togglePublished(id: string, published: boolean): Promise<void> {
+  const userId = await currentUserId();
+  if (!isOwner(userId)) return;
+  await setProductPublished(userId, id, published);
+  revalidatePath("/");
+  revalidatePath("/admin");
+  revalidatePath(`/product/${id}`);
 }

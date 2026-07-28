@@ -258,6 +258,7 @@ export const products = pgTable(
     tiktokLink: text("tiktok_link"),
     pros: text("pros"),
     cons: text("cons"),
+    published: boolean("published").notNull().default(true),
     sortOrder: integer("sort_order").notNull().default(0),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),

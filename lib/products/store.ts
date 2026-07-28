@@ -14,6 +14,7 @@ export interface ProductRecord {
   tiktokLink: string | null;
   pros: string | null;
   cons: string | null;
+  published: boolean;
   sortOrder: number;
 }
 
@@ -29,6 +30,7 @@ function toRecord(r: typeof products.$inferSelect): ProductRecord {
     tiktokLink: r.tiktokLink,
     pros: r.pros,
     cons: r.cons,
+    published: r.published,
     sortOrder: r.sortOrder,
   };
 }
@@ -46,12 +48,17 @@ export async function listProducts(userId: string): Promise<ProductRecord[]> {
 }
 
 // Used by the public storefront, which has no logged-in visitor —
-// this is a single-owner site, so we show every product in the table.
+// only published products are shown; unpublished ones wait for the
+// owner to swap in a real photo before going live.
 export async function listAllProducts(): Promise<ProductRecord[]> {
   if (!isDbConfigured()) return [];
   const db = getDb();
   if (!db) return [];
-  const rows = await db.select().from(products).orderBy(asc(products.sortOrder), asc(products.createdAt));
+  const rows = await db
+    .select()
+    .from(products)
+    .where(eq(products.published, true))
+    .orderBy(asc(products.sortOrder), asc(products.createdAt));
   return rows.map(toRecord);
 }
 
@@ -65,6 +72,7 @@ export interface ProductInput {
   tiktokLink: string | null;
   pros: string | null;
   cons: string | null;
+  published: boolean;
 }
 
 // Used by the public product detail page, which has no logged-in visitor.
@@ -98,4 +106,14 @@ export async function deleteProduct(userId: string, id: string): Promise<void> {
   const db = getDb();
   if (!db) return;
   await db.delete(products).where(and(eq(products.id, id), eq(products.userId, userId)));
+}
+
+export async function setProductPublished(userId: string, id: string, published: boolean): Promise<void> {
+  if (!isDbConfigured()) return;
+  const db = getDb();
+  if (!db) return;
+  await db
+    .update(products)
+    .set({ published, updatedAt: new Date() })
+    .where(and(eq(products.id, id), eq(products.userId, userId)));
 }

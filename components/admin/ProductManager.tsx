@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState, useTransition } from "react";
 import { UserButton } from "@clerk/nextjs";
-import { uploadProductImage, saveProduct, removeProduct } from "@/lib/products/actions";
+import { uploadProductImage, saveProduct, removeProduct, togglePublished } from "@/lib/products/actions";
 import type { ProductRecord } from "@/lib/products/store";
 
 const CATEGORIES = [
@@ -21,6 +21,7 @@ const EMPTY_FORM = {
   shopeeLink: "",
   pros: "",
   cons: "",
+  published: true,
 };
 
 export default function ProductManager({ initialProducts }: { initialProducts: ProductRecord[] }) {
@@ -43,6 +44,7 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
       shopeeLink: p.shopeeLink ?? "",
       pros: p.pros ?? "",
       cons: p.cons ?? "",
+      published: p.published,
     });
     setSaved(false);
     setError("");
@@ -88,6 +90,7 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
         tiktokLink: null,
         pros: form.pros.trim() || null,
         cons: form.cons.trim() || null,
+        published: form.published,
       });
       if ("error" in result) {
         setError(result.error);
@@ -98,7 +101,7 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
         setProducts((prev) =>
           prev.map((p) =>
             p.id === form.id
-              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, pros: form.pros || null, cons: form.cons || null }
+              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, pros: form.pros || null, cons: form.cons || null, published: form.published }
               : p
           )
         );
@@ -116,6 +119,7 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
             tiktokLink: null,
             pros: form.pros || null,
             cons: form.cons || null,
+            published: form.published,
             sortOrder: prev.length,
           },
         ]);
@@ -129,6 +133,14 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
     startTransition(async () => {
       await removeProduct(id);
       setProducts((prev) => prev.filter((p) => p.id !== id));
+    });
+  }
+
+  function handleTogglePublished(p: ProductRecord) {
+    const next = !p.published;
+    startTransition(async () => {
+      await togglePublished(p.id, next);
+      setProducts((prev) => prev.map((x) => (x.id === p.id ? { ...x, published: next } : x)));
     });
   }
 
@@ -158,6 +170,9 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
         .am-list-meta { font-size: 11.5px; color: #8B92A3; }
         .am-list-actions { display: flex; gap: 6px; margin-left: auto; }
         .am-list-actions button { font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 6px; border: 1px solid #ECE7DC; background: #fff; cursor: pointer; }
+        .am-checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #0A192F; cursor: pointer; }
+        .am-hint { font-size: 11.5px; color: #8B92A3; margin-top: 4px; }
+        .am-badge-hidden { display: inline-block; font-size: 10px; font-weight: 700; color: #A87B00; background: #FFF3D6; border-radius: 999px; padding: 2px 8px; margin-left: 6px; vertical-align: middle; }
       `}</style>
 
       <div className="am-wrap">
@@ -224,6 +239,14 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
             </div>
           </div>
 
+          <div className="am-field">
+            <label className="am-checkbox-label">
+              <input type="checkbox" checked={form.published} onChange={(e) => setForm({ ...form, published: e.target.checked })} />
+              Visible on public site
+            </label>
+            {!form.published && <div className="am-hint">Hidden from visitors until you check this back on.</div>}
+          </div>
+
           <div style={{ display: "flex", gap: 10, alignItems: "center", marginTop: 4 }}>
             <button className="am-btn am-btn-primary" type="button" onClick={handleSave} disabled={pending || uploading || !form.name.trim() || !form.imageUrl}>
               {pending ? "Saving…" : form.id ? "Save changes" : "Add product"}
@@ -248,12 +271,15 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
           <div className="am-list-item" key={p.id}>
             <img src={p.imageUrl} alt={p.name} />
             <div style={{ minWidth: 0 }}>
-              <div className="am-list-name">{p.name}</div>
+              <div className="am-list-name">
+                {p.name} {!p.published && <span className="am-badge-hidden">Hidden</span>}
+              </div>
               <div className="am-list-meta">
                 {CATEGORIES.find((c) => c.key === p.category)?.label ?? p.category} · {p.rating.toFixed(1)}★ ({p.reviews})
               </div>
             </div>
             <div className="am-list-actions">
+              <button type="button" onClick={() => handleTogglePublished(p)}>{p.published ? "Hide" : "Publish"}</button>
               <button type="button" onClick={() => startEdit(p)}>Edit</button>
               <button type="button" onClick={() => handleDelete(p.id)}>Delete</button>
             </div>

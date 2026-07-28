@@ -38,6 +38,8 @@ export default async function ProductPage({ params }: { params: { id: string } }
   if (!product) notFound();
 
   const [comments, userId] = await Promise.all([listComments(product.id), currentUserId()]);
+  const isAdmin = isOwner(userId);
+  if (!product.published && !isAdmin) notFound();
 
-  return <ProductDetail product={product} comments={comments} isAdmin={isOwner(userId)} />;
+  return <ProductDetail product={product} comments={comments} isAdmin={isAdmin} />;
 }
