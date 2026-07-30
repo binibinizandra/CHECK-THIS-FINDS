@@ -28,10 +28,12 @@ export default function ProductManager({
   initialProducts,
   pageViews,
   productClicks,
+  productViews,
 }: {
   initialProducts: ProductRecord[];
   pageViews: number;
   productClicks: Record<string, number>;
+  productViews: Record<string, number>;
 }) {
   const [products, setProducts] = useState(initialProducts);
   const [form, setForm] = useState(EMPTY_FORM);
@@ -294,7 +296,7 @@ export default function ProductManager({
               <div className="am-list-meta">
                 {CATEGORIES.find((c) => c.key === p.category)?.label ?? p.category} · {p.rating.toFixed(1)}★ ({p.reviews})
               </div>
-              <div className="am-list-clicks">{productClicks[p.id] ?? 0} Shopee clicks</div>
+              <div className="am-list-clicks">{productViews[p.id] ?? 0} views · {productClicks[p.id] ?? 0} Shopee clicks</div>
             </div>
             <div className="am-list-actions">
               <button type="button" onClick={() => handleTogglePublished(p)}>{p.published ? "Hide" : "Publish"}</button>

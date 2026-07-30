@@ -24,18 +24,26 @@ export async function getPageViewCount(): Promise<number> {
   return rows[0]?.value ?? 0;
 }
 
-export async function getProductClickCounts(): Promise<Record<string, number>> {
+async function getProductEventCounts(type: "product_click" | "product_view"): Promise<Record<string, number>> {
   if (!isDbConfigured()) return {};
   const db = getDb();
   if (!db) return {};
   const rows = await db
     .select({ productId: analyticsEvents.productId, value: count() })
     .from(analyticsEvents)
-    .where(eq(analyticsEvents.type, "product_click"))
+    .where(eq(analyticsEvents.type, type))
     .groupBy(analyticsEvents.productId);
   const map: Record<string, number> = {};
   for (const r of rows) {
     if (r.productId) map[r.productId] = r.value;
   }
   return map;
+}
+
+export function getProductClickCounts(): Promise<Record<string, number>> {
+  return getProductEventCounts("product_click");
+}
+
+export function getProductViewCounts(): Promise<Record<string, number>> {
+  return getProductEventCounts("product_view");
 }
