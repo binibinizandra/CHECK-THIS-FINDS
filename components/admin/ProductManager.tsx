@@ -175,34 +175,34 @@ export default function ProductManager({
       <style>{`
         .am-wrap { max-width: 720px; margin: 0 auto; padding: 24px 20px 80px; font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
         .am-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
-        .am-title { font-weight: 800; font-size: 20px; color: #0A192F; }
-        .am-sub { font-size: 12.5px; color: #5B6472; margin-top: 2px; }
-        .am-back { font-size: 13px; font-weight: 600; color: #A87B00; }
-        .am-card { background: #fff; border: 1px solid #ECE7DC; border-radius: 14px; padding: 20px; margin-bottom: 24px; }
+        .am-title { font-weight: 800; font-size: 20px; color: #1F2937; }
+        .am-sub { font-size: 12.5px; color: #6B7280; margin-top: 2px; }
+        .am-back { font-size: 13px; font-weight: 600; color: #0B6B57; }
+        .am-card { background: #fff; border: 1px solid #E7E3D9; border-radius: 14px; padding: 20px; margin-bottom: 24px; }
         .am-field { margin-bottom: 14px; }
-        .am-label { display: block; font-size: 12.5px; font-weight: 700; color: #0A192F; margin-bottom: 5px; }
-        .am-input, .am-select { width: 100%; font-size: 14px; padding: 9px 11px; border: 1px solid #ECE7DC; border-radius: 8px; color: #0A192F; background: #FFFCF6; }
+        .am-label { display: block; font-size: 12.5px; font-weight: 700; color: #1F2937; margin-bottom: 5px; }
+        .am-input, .am-select { width: 100%; font-size: 14px; padding: 9px 11px; border: 1px solid #E7E3D9; border-radius: 8px; color: #1F2937; background: #FAFAF7; }
         .am-row { display: flex; gap: 12px; }
         .am-row > * { flex: 1; }
-        .am-preview { width: 100px; height: 100px; border-radius: 10px; object-fit: cover; border: 1px solid #ECE7DC; margin-top: 8px; }
+        .am-preview { width: 100px; height: 100px; border-radius: 10px; object-fit: cover; border: 1px solid #E7E3D9; margin-top: 8px; }
         .am-btn { font-weight: 700; font-size: 13.5px; padding: 10px 18px; border-radius: 999px; border: none; cursor: pointer; }
-        .am-btn-primary { background: #FFC700; color: #0A192F; }
-        .am-btn-ghost { background: #fff; color: #5B6472; border: 1px solid #ECE7DC; }
-        .am-error { color: #EE4D2D; font-size: 13px; margin-top: 8px; }
-        .am-saved { color: #1a7a3c; font-size: 13px; margin-top: 8px; }
-        .am-list-item { display: flex; align-items: center; gap: 12px; padding: 10px; border: 1px solid #ECE7DC; border-radius: 10px; margin-bottom: 8px; }
+        .am-btn-primary { background: #0B6B57; color: #FFFFFF; }
+        .am-btn-ghost { background: #fff; color: #6B7280; border: 1px solid #E7E3D9; }
+        .am-error { color: #B4483A; font-size: 13px; margin-top: 8px; }
+        .am-saved { color: #0B6B57; font-size: 13px; margin-top: 8px; }
+        .am-list-item { display: flex; align-items: center; gap: 12px; padding: 10px; border: 1px solid #E7E3D9; border-radius: 10px; margin-bottom: 8px; }
         .am-list-item img { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; flex-shrink: 0; }
-        .am-list-name { font-weight: 700; font-size: 13.5px; color: #0A192F; }
-        .am-list-meta { font-size: 11.5px; color: #8B92A3; }
+        .am-list-name { font-weight: 700; font-size: 13.5px; color: #1F2937; }
+        .am-list-meta { font-size: 11.5px; color: #6B7280; }
         .am-list-actions { display: flex; gap: 6px; margin-left: auto; }
-        .am-list-actions button { font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 6px; border: 1px solid #ECE7DC; background: #fff; cursor: pointer; }
-        .am-checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #0A192F; cursor: pointer; }
-        .am-hint { font-size: 11.5px; color: #8B92A3; margin-top: 4px; }
-        .am-badge-hidden { display: inline-block; font-size: 10px; font-weight: 700; color: #A87B00; background: #FFF3D6; border-radius: 999px; padding: 2px 8px; margin-left: 6px; vertical-align: middle; }
-        .am-stats-card { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #ECE7DC; border-radius: 14px; padding: 14px 18px; margin-bottom: 20px; }
-        .am-stats-num { font-weight: 800; font-size: 22px; color: #0A192F; }
-        .am-stats-label { font-size: 12px; color: #8B92A3; font-weight: 600; }
-        .am-list-clicks { font-size: 11px; font-weight: 700; color: #A87B00; }
+        .am-list-actions button { font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 6px; border: 1px solid #E7E3D9; background: #fff; cursor: pointer; }
+        .am-checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #1F2937; cursor: pointer; }
+        .am-hint { font-size: 11.5px; color: #6B7280; margin-top: 4px; }
+        .am-badge-hidden { display: inline-block; font-size: 10px; font-weight: 700; color: #8A6D1F; background: #F5EAC8; border-radius: 999px; padding: 2px 8px; margin-left: 6px; vertical-align: middle; }
+        .am-stats-card { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #E7E3D9; border-radius: 14px; padding: 14px 18px; margin-bottom: 20px; }
+        .am-stats-num { font-weight: 800; font-size: 22px; color: #1F2937; }
+        .am-stats-label { font-size: 12px; color: #6B7280; font-weight: 600; }
+        .am-list-clicks { font-size: 11px; font-weight: 700; color: #0F766E; }
       `}</style>
 
       <div className="am-wrap">
@@ -223,7 +223,7 @@ export default function ProductManager({
         </div>
 
         <div className="am-card">
-          <div style={{ fontWeight: 700, fontSize: 14, color: "#0A192F", marginBottom: 12 }}>
+          <div style={{ fontWeight: 700, fontSize: 14, color: "#1F2937", marginBottom: 12 }}>
             {form.id ? "Edit product" : "Add a product"}
           </div>
 
@@ -254,7 +254,7 @@ export default function ProductManager({
           <div className="am-field">
             <label className="am-label">Product photo</label>
             <input ref={fileInputRef} className="am-input" type="file" accept="image/*" onChange={handleFileChange} disabled={uploading} />
-            {uploading && <div style={{ fontSize: 12.5, color: "#5B6472", marginTop: 6 }}>Uploading…</div>}
+            {uploading && <div style={{ fontSize: 12.5, color: "#6B7280", marginTop: 6 }}>Uploading…</div>}
             {form.imageUrl && <img className="am-preview" src={form.imageUrl} alt="Preview" />}
           </div>
 
@@ -317,11 +317,11 @@ export default function ProductManager({
           {error && <div className="am-error">{error}</div>}
         </div>
 
-        <div style={{ fontWeight: 700, fontSize: 14, color: "#0A192F", marginBottom: 12 }}>
+        <div style={{ fontWeight: 700, fontSize: 14, color: "#1F2937", marginBottom: 12 }}>
           Current products ({products.length})
         </div>
         {products.length === 0 && (
-          <div style={{ fontSize: 13, color: "#8B92A3" }}>No products yet — add your first one above.</div>
+          <div style={{ fontSize: 13, color: "#6B7280" }}>No products yet — add your first one above.</div>
         )}
         {products.map((p) => (
           <div className="am-list-item" key={p.id}>

@@ -1,59 +1,72 @@
-import { Poppins } from "next/font/google";
+import { Poppins, Playfair_Display } from "next/font/google";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
+const playfair = Playfair_Display({ subsets: ["latin"], weight: ["600", "700", "800"] });
+
+function LogoMark({ size = 32 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <circle cx="20" cy="20" r="16.25" stroke="#0B6B57" strokeWidth="3" />
+      <path d="M20.5 3.75A16.25 16.25 0 0 1 34.9 13.1" stroke="#D4AF37" strokeWidth="3" strokeLinecap="round" />
+      <path d="M13 20.5l4.5 4.5 9.5-10.5" stroke="#0B6B57" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
 export default function About() {
   return (
     <>
       <style>{`
-        .ab-wrap { max-width: 780px; margin: 0 auto; padding: 0 16px; }
-        .ab-header { position: sticky; top: 0; z-index: 20; background: rgba(245,241,243,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--sf-border); }
+        .ab-wrap { max-width: 780px; margin: 0 auto; padding: 0 20px; }
+        .ab-header { position: sticky; top: 0; z-index: 20; background: rgba(250,250,247,.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--sf-border); }
         .ab-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; }
-        .ab-brand { font-weight: 700; font-size: 20px; letter-spacing: -0.01em; color: var(--sf-ink); }
-        .ab-back { font-size: 12.5px; font-weight: 600; color: var(--sf-white); background: var(--sf-pink); border: none; border-radius: 999px; padding: 7px 16px; }
+        .ab-brand { display: flex; align-items: center; gap: 9px; font-family: ${playfair.style.fontFamily}; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; color: var(--sf-ink); text-decoration: none; }
+        .ab-back { font-size: 12.5px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 8px 18px; text-decoration: none; }
 
-        .ab-main { padding: 40px 0 40px; }
-        .ab-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-pink); margin-bottom: 8px; }
-        .ab-title { font-size: 28px; font-weight: 800; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.2; margin: 0 0 18px; }
-        .ab-intro { font-size: 14.5px; line-height: 1.75; color: var(--sf-ink); }
+        .ab-main { padding: 44px 0 40px; }
+        .ab-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sf-primary); margin-bottom: 10px; }
+        .ab-title { font-family: ${playfair.style.fontFamily}; font-size: 30px; font-weight: 800; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.2; margin: 0 0 20px; }
+        .ab-intro { font-size: 14px; line-height: 1.8; color: var(--sf-ink); }
         .ab-intro p { margin: 0 0 16px; }
         .ab-intro p:last-child { margin-bottom: 0; }
 
-        .ab-mv-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 34px 0; }
+        .ab-mv-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 36px 0; }
         @media (min-width: 600px) { .ab-mv-grid { grid-template-columns: 1fr 1fr; } }
-        .ab-mv-card { background: var(--sf-card); border-radius: 18px; padding: 22px; box-shadow: 0 4px 16px -6px rgba(60,45,55,.18); }
-        .ab-mv-title { font-size: 12px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--sf-pink); margin-bottom: 10px; }
+        .ab-mv-card { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 20px; padding: 24px; }
+        .ab-mv-title { font-size: 11.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-primary); margin-bottom: 12px; }
         .ab-mv-text { font-size: 13.5px; line-height: 1.7; color: var(--sf-ink); margin: 0; }
 
-        .ab-curator { display: flex; align-items: flex-start; gap: 16px; background: var(--sf-card); border-radius: 18px; padding: 22px; margin: 0 0 34px; box-shadow: 0 4px 16px -6px rgba(60,45,55,.18); }
-        .ab-curator-avatar { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; background: var(--sf-pink); color: var(--sf-white); font-weight: 800; font-size: 14px; }
-        .ab-curator-name { font-size: 13.5px; font-weight: 800; color: var(--sf-ink); margin-bottom: 6px; }
+        .ab-curator { display: flex; align-items: flex-start; gap: 16px; background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 20px; padding: 24px; margin: 0 0 36px; }
+        .ab-curator-avatar { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--sf-primary); color: var(--sf-white); font-weight: 800; font-size: 14px; }
+        .ab-curator-name { font-size: 14px; font-weight: 800; color: var(--sf-ink); margin-bottom: 6px; }
         .ab-curator-text { font-size: 13.5px; line-height: 1.7; color: var(--sf-ink); margin: 0; }
-        .ab-curator-linkedin { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 12px; font-weight: 600; color: var(--sf-muted); text-decoration: none; }
+        .ab-curator-linkedin { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 12px; font-weight: 700; color: var(--sf-primary); text-decoration: none; }
         .ab-curator-linkedin svg { width: 14px; height: 14px; flex-shrink: 0; }
         .ab-curator-linkedin:hover { color: #0A66C2; }
 
-        .ab-faq-title { font-size: 12px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--sf-ink); margin: 0 0 14px; padding-left: 10px; border-left: 3px solid var(--sf-pink); }
-        .ab-faq-item { background: var(--sf-card); border-radius: 14px; padding: 4px 18px; margin-bottom: 10px; box-shadow: 0 4px 16px -6px rgba(60,45,55,.14); }
-        .ab-faq-item summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; font-size: 13.5px; font-weight: 700; color: var(--sf-ink); cursor: pointer; }
+        .ab-faq-title { font-family: ${playfair.style.fontFamily}; font-size: 19px; font-weight: 800; color: var(--sf-ink); margin: 0 0 16px; }
+        .ab-faq-item { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 16px; padding: 4px 20px; margin-bottom: 10px; }
+        .ab-faq-item summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 0; font-size: 13.5px; font-weight: 700; color: var(--sf-ink); cursor: pointer; }
         .ab-faq-item summary::-webkit-details-marker { display: none; }
-        .ab-faq-item summary::after { content: "+"; flex-shrink: 0; font-size: 18px; font-weight: 400; color: var(--sf-pink); transition: transform .15s ease; }
+        .ab-faq-item summary::after { content: "+"; flex-shrink: 0; font-size: 19px; font-weight: 400; color: var(--sf-primary); transition: transform .15s ease; }
         .ab-faq-item[open] summary::after { transform: rotate(45deg); }
         .ab-faq-item p { margin: 0 0 16px; font-size: 13px; line-height: 1.65; color: var(--sf-muted); }
 
         .ab-footer { margin-top: 24px; border-top: 1px solid var(--sf-border); padding: 28px 0 40px; }
         .ab-footer-links { display: flex; justify-content: center; margin-bottom: 10px; }
-        .ab-footer-link { font-size: 12.5px; font-weight: 600; color: var(--sf-pink); text-decoration: none; }
+        .ab-footer-link { font-size: 12.5px; font-weight: 700; color: var(--sf-primary); text-decoration: none; }
         .ab-footer-link:hover { text-decoration: underline; }
-        .ab-footer-copy { font-size: 12.5px; color: var(--sf-muted); text-align: center; }
+        .ab-footer-copy { font-size: 12px; color: var(--sf-muted); text-align: center; }
 
         :root {
-          --sf-bg: #F5F1F3;
+          --sf-bg: #FAFAF7;
           --sf-card: #FFFFFF;
-          --sf-border: #EDE3E7;
-          --sf-ink: #1B2A4E;
-          --sf-muted: #5C6C8C;
-          --sf-pink: #D99AA8;
+          --sf-border: #E7E3D9;
+          --sf-ink: #1F2937;
+          --sf-muted: #6B7280;
+          --sf-primary: #0B6B57;
+          --sf-secondary: #0F766E;
+          --sf-accent: #D4AF37;
           --sf-white: #FFFFFF;
         }
       `}</style>
@@ -68,7 +81,10 @@ export default function About() {
       >
         <header className="ab-header">
           <div className="ab-wrap ab-header-row">
-            <a href="/" className="ab-brand">Check This Finds</a>
+            <a href="/" className="ab-brand">
+              <LogoMark size={26} />
+              Check This Finds
+            </a>
             <a href="/" className="ab-back">Back to all finds</a>
           </div>
         </header>
