@@ -45,7 +45,7 @@ function ProductCard({ p }: { p: ProductRecord }) {
           <div className="sf-card-name">{p.name}</div>
           <div className="sf-rating-row">
             <Stars rating={p.rating} />
-            <span className="sf-rating-num">{p.rating.toFixed(1)}</span>
+            <span className="sf-rating-num">{p.rating.toFixed(1)} ({p.reviews})</span>
           </div>
         </div>
       </Link>
