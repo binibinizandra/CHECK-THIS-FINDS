@@ -106,7 +106,7 @@ export default function ProductDetail({
           minHeight: "100dvh",
         }}
       >
-        <ProductViewTracker productId={product.id} />
+        <ProductViewTracker productId={product.id} isAdmin={isAdmin} />
 
         <header className="pd-header">
           <div className="pd-wrap pd-header-row">
@@ -170,7 +170,7 @@ export default function ProductDetail({
               )}
 
               <div className="pd-cta-row">
-                {product.shopeeLink && <TrackedBuyButton productId={product.id} shopeeLink={product.shopeeLink} />}
+                {product.shopeeLink && <TrackedBuyButton productId={product.id} shopeeLink={product.shopeeLink} isAdmin={isAdmin} />}
               </div>
             </div>
           </div>

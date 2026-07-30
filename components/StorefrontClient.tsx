@@ -34,7 +34,7 @@ function Stars({ rating }: { rating: number }) {
   );
 }
 
-function ProductCard({ p }: { p: ProductRecord }) {
+function ProductCard({ p, isAdmin }: { p: ProductRecord; isAdmin: boolean }) {
   return (
     <article className="sf-card">
       <Link href={`/product/${p.id}`} className="sf-card-link">
@@ -57,7 +57,7 @@ function ProductCard({ p }: { p: ProductRecord }) {
             href={p.shopeeLink}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => track("product_click", p.id)}
+            onClick={() => { if (!isAdmin) track("product_click", p.id); }}
           >
             Buy on Shopee
           </a>
@@ -69,7 +69,7 @@ function ProductCard({ p }: { p: ProductRecord }) {
 
 const PAGE_SIZE = 6;
 
-function ProductGrid({ items }: { items: ProductRecord[] }) {
+function ProductGrid({ items, isAdmin }: { items: ProductRecord[]; isAdmin: boolean }) {
   const [visible, setVisible] = useState(PAGE_SIZE);
   const shown = items.slice(0, visible);
   const remaining = items.length - shown.length;
@@ -78,7 +78,7 @@ function ProductGrid({ items }: { items: ProductRecord[] }) {
     <>
       <div className="sf-product-grid">
         {shown.map((p) => (
-          <ProductCard key={p.id} p={p} />
+          <ProductCard key={p.id} p={p} isAdmin={isAdmin} />
         ))}
       </div>
       {remaining > 0 && (
@@ -96,8 +96,8 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
   const featured = products[0];
 
   useEffect(() => {
-    track("page_view");
-  }, []);
+    if (!isAdmin) track("page_view");
+  }, [isAdmin]);
 
   const searchQuery = search.trim().toLowerCase();
   const searchActive = searchQuery.length > 0;
@@ -328,7 +328,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
             <section className="sf-grid-section">
               {searchActive ? (
                 searchResults.length > 0 ? (
-                  <ProductGrid items={searchResults} />
+                  <ProductGrid items={searchResults} isAdmin={isAdmin} />
                 ) : (
                   <div className="sf-empty">No products match &quot;{search}&quot;.</div>
                 )
@@ -339,12 +339,12 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                   return (
                     <div key={key}>
                       <div className="sf-cat-label">{CATEGORIES[key]}</div>
-                      <ProductGrid items={items} />
+                      <ProductGrid items={items} isAdmin={isAdmin} />
                     </div>
                   );
                 })
               ) : (
-                <ProductGrid items={products.filter((p) => p.category === filter)} />
+                <ProductGrid items={products.filter((p) => p.category === filter)} isAdmin={isAdmin} />
               )}
             </section>
           </main>
