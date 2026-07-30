@@ -259,6 +259,7 @@ export const products = pgTable(
     pros: text("pros"),
     cons: text("cons"),
     voucherNote: text("voucher_note"),
+    badge: text("badge"),
     published: boolean("published").notNull().default(true),
     sortOrder: integer("sort_order").notNull().default(0),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
@@ -290,3 +291,9 @@ export const analyticsEvents = pgTable(
   },
   (t) => [index("analytics_events_type_idx").on(t.type), index("analytics_events_product_idx").on(t.productId)]
 );
+
+export const newsletterSubscribers = pgTable("newsletter_subscribers", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  email: text("email").notNull().unique(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});

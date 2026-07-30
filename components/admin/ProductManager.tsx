@@ -11,6 +11,14 @@ const CATEGORIES = [
   { key: "food", label: "Food & Treats" },
 ];
 
+const BADGES = [
+  { key: "", label: "No badge" },
+  { key: "best_pick", label: "Best Pick" },
+  { key: "trending", label: "Trending" },
+  { key: "editors_choice", label: "Editor's Choice" },
+  { key: "worth_every_peso", label: "Worth Every Peso" },
+];
+
 const EMPTY_FORM = {
   id: null as string | null,
   name: "",
@@ -22,6 +30,7 @@ const EMPTY_FORM = {
   pros: "",
   cons: "",
   voucherNote: "",
+  badge: "",
   published: true,
 };
 
@@ -56,6 +65,7 @@ export default function ProductManager({
       pros: p.pros ?? "",
       cons: p.cons ?? "",
       voucherNote: p.voucherNote ?? "",
+      badge: p.badge ?? "",
       published: p.published,
     });
     setSaved(false);
@@ -103,6 +113,7 @@ export default function ProductManager({
         pros: form.pros.trim() || null,
         cons: form.cons.trim() || null,
         voucherNote: form.voucherNote.trim() || null,
+        badge: form.badge || null,
         published: form.published,
       });
       if ("error" in result) {
@@ -114,7 +125,7 @@ export default function ProductManager({
         setProducts((prev) =>
           prev.map((p) =>
             p.id === form.id
-              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, pros: form.pros || null, cons: form.cons || null, voucherNote: form.voucherNote || null, published: form.published }
+              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, pros: form.pros || null, cons: form.cons || null, voucherNote: form.voucherNote || null, badge: form.badge || null, published: form.published }
               : p
           )
         );
@@ -133,6 +144,7 @@ export default function ProductManager({
             pros: form.pros || null,
             cons: form.cons || null,
             voucherNote: form.voucherNote || null,
+            badge: form.badge || null,
             published: form.published,
             sortOrder: prev.length,
           },
@@ -249,6 +261,16 @@ export default function ProductManager({
           <div className="am-field">
             <label className="am-label">Shopee link</label>
             <input className="am-input" value={form.shopeeLink} onChange={(e) => setForm({ ...form, shopeeLink: e.target.value })} placeholder="https://shopee.ph/..." />
+          </div>
+
+          <div className="am-field">
+            <label className="am-label">Badge (optional)</label>
+            <select className="am-select" value={form.badge} onChange={(e) => setForm({ ...form, badge: e.target.value })}>
+              {BADGES.map((b) => (
+                <option key={b.key} value={b.key}>{b.label}</option>
+              ))}
+            </select>
+            <div className="am-hint">Only tag a product as Best Pick / Trending / etc. if it genuinely earns it.</div>
           </div>
 
           <div className="am-field">

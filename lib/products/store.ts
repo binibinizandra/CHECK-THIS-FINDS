@@ -15,6 +15,7 @@ export interface ProductRecord {
   pros: string | null;
   cons: string | null;
   voucherNote: string | null;
+  badge: string | null;
   published: boolean;
   sortOrder: number;
 }
@@ -32,6 +33,7 @@ function toRecord(r: typeof products.$inferSelect): ProductRecord {
     pros: r.pros,
     cons: r.cons,
     voucherNote: r.voucherNote,
+    badge: r.badge,
     published: r.published,
     sortOrder: r.sortOrder,
   };
@@ -75,6 +77,7 @@ export interface ProductInput {
   pros: string | null;
   cons: string | null;
   voucherNote: string | null;
+  badge: string | null;
   published: boolean;
 }
 
