@@ -21,6 +21,7 @@ const EMPTY_FORM = {
   shopeeLink: "",
   pros: "",
   cons: "",
+  voucherNote: "",
   published: true,
 };
 
@@ -54,6 +55,7 @@ export default function ProductManager({
       shopeeLink: p.shopeeLink ?? "",
       pros: p.pros ?? "",
       cons: p.cons ?? "",
+      voucherNote: p.voucherNote ?? "",
       published: p.published,
     });
     setSaved(false);
@@ -100,6 +102,7 @@ export default function ProductManager({
         tiktokLink: null,
         pros: form.pros.trim() || null,
         cons: form.cons.trim() || null,
+        voucherNote: form.voucherNote.trim() || null,
         published: form.published,
       });
       if ("error" in result) {
@@ -111,7 +114,7 @@ export default function ProductManager({
         setProducts((prev) =>
           prev.map((p) =>
             p.id === form.id
-              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, pros: form.pros || null, cons: form.cons || null, published: form.published }
+              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, pros: form.pros || null, cons: form.cons || null, voucherNote: form.voucherNote || null, published: form.published }
               : p
           )
         );
@@ -129,6 +132,7 @@ export default function ProductManager({
             tiktokLink: null,
             pros: form.pros || null,
             cons: form.cons || null,
+            voucherNote: form.voucherNote || null,
             published: form.published,
             sortOrder: prev.length,
           },
@@ -245,6 +249,17 @@ export default function ProductManager({
           <div className="am-field">
             <label className="am-label">Shopee link</label>
             <input className="am-input" value={form.shopeeLink} onChange={(e) => setForm({ ...form, shopeeLink: e.target.value })} placeholder="https://shopee.ph/..." />
+          </div>
+
+          <div className="am-field">
+            <label className="am-label">Voucher / promo (optional)</label>
+            <input
+              className="am-input"
+              value={form.voucherNote}
+              onChange={(e) => setForm({ ...form, voucherNote: e.target.value })}
+              placeholder="e.g. ₱50 off voucher on this listing"
+            />
+            <div className="am-hint">Only fill this in if there&apos;s a real, currently active voucher on the actual Shopee listing.</div>
           </div>
 
           <div className="am-row am-field">

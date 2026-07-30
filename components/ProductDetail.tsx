@@ -65,6 +65,9 @@ export default function ProductDetail({
         .pd-col-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13.5px; color: var(--sf-ink); line-height: 1.4; font-weight: 500; }
         .pd-col-icon { flex-shrink: 0; margin-top: 2px; color: var(--sf-pink); }
 
+        .pd-voucher { margin-top: 20px; font-size: 13px; color: var(--sf-ink); font-weight: 600; background: #FBEAE8; border: 1px dashed #E8635A; border-radius: 12px; padding: 10px 14px; }
+        .pd-voucher-tag { display: inline-block; font-size: 10px; font-weight: 800; color: var(--sf-white); background: #E8635A; border-radius: 999px; padding: 2px 8px; margin-right: 6px; vertical-align: middle; }
+
         .pd-cta-row { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
         .pd-btn-store { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; font-weight: 700; padding: 13px 24px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-pink); }
         @media (prefers-reduced-motion: no-preference) { .pd-btn-store { transition: opacity .15s ease; } .pd-btn-store:hover { opacity: .85; } }
@@ -157,6 +160,12 @@ export default function ProductDetail({
                       </div>
                     </div>
                   )}
+                </div>
+              )}
+
+              {product.voucherNote && (
+                <div className="pd-voucher">
+                  <span className="pd-voucher-tag">Voucher</span> {product.voucherNote}
                 </div>
               )}
 

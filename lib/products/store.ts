@@ -14,6 +14,7 @@ export interface ProductRecord {
   tiktokLink: string | null;
   pros: string | null;
   cons: string | null;
+  voucherNote: string | null;
   published: boolean;
   sortOrder: number;
 }
@@ -30,6 +31,7 @@ function toRecord(r: typeof products.$inferSelect): ProductRecord {
     tiktokLink: r.tiktokLink,
     pros: r.pros,
     cons: r.cons,
+    voucherNote: r.voucherNote,
     published: r.published,
     sortOrder: r.sortOrder,
   };
@@ -72,6 +74,7 @@ export interface ProductInput {
   tiktokLink: string | null;
   pros: string | null;
   cons: string | null;
+  voucherNote: string | null;
   published: boolean;
 }
 

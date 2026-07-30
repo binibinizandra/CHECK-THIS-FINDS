@@ -40,6 +40,7 @@ function ProductCard({ p }: { p: ProductRecord }) {
       <Link href={`/product/${p.id}`} className="sf-card-link">
         <div className="sf-card-media">
           <img src={p.imageUrl} alt={p.name} loading="lazy" />
+          {p.voucherNote && <span className="sf-voucher-badge">Voucher</span>}
         </div>
         <div className="sf-card-body">
           <div className="sf-card-name">{p.name}</div>
@@ -148,6 +149,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-card-link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; min-width: 0; }
         .sf-card-media { position: relative; aspect-ratio: 1; background: var(--sf-border); }
         .sf-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .sf-voucher-badge { position: absolute; top: 6px; left: 6px; font-size: 8.5px; font-weight: 800; letter-spacing: 0.02em; color: var(--sf-white); background: #E8635A; border-radius: 999px; padding: 3px 8px; }
         .sf-card-body { padding: 10px 10px 8px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
         .sf-card-name { font-size: 10.5px; font-weight: 700; line-height: 1.3; color: var(--sf-ink); min-height: 27px; }
         .sf-stars { position: relative; display: inline-block; font-size: 9px; line-height: 1; letter-spacing: 1px; color: var(--sf-border); }
