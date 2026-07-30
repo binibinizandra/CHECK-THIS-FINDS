@@ -20,12 +20,12 @@ export default function About() {
         .ab-wrap { max-width: 780px; margin: 0 auto; padding: 0 20px; }
         .ab-header { position: sticky; top: 0; z-index: 20; background: rgba(250,250,247,.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--sf-border); }
         .ab-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; }
-        .ab-brand { display: flex; align-items: center; gap: 9px; font-family: ${playfair.style.fontFamily}; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; color: var(--sf-ink); text-decoration: none; }
+        .ab-brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; color: var(--sf-ink); text-decoration: none; }
         .ab-back { font-size: 12.5px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 8px 18px; text-decoration: none; }
 
         .ab-main { padding: 44px 0 40px; }
         .ab-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sf-primary); margin-bottom: 10px; }
-        .ab-title { font-family: ${playfair.style.fontFamily}; font-size: 30px; font-weight: 800; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.2; margin: 0 0 20px; }
+        .ab-title { font-size: 30px; font-weight: 800; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.2; margin: 0 0 20px; }
         .ab-intro { font-size: 14px; line-height: 1.8; color: var(--sf-ink); }
         .ab-intro p { margin: 0 0 16px; }
         .ab-intro p:last-child { margin-bottom: 0; }
@@ -44,7 +44,7 @@ export default function About() {
         .ab-curator-linkedin svg { width: 14px; height: 14px; flex-shrink: 0; }
         .ab-curator-linkedin:hover { color: #0A66C2; }
 
-        .ab-faq-title { font-family: ${playfair.style.fontFamily}; font-size: 19px; font-weight: 800; color: var(--sf-ink); margin: 0 0 16px; }
+        .ab-faq-title { font-size: 19px; font-weight: 800; color: var(--sf-ink); margin: 0 0 16px; }
         .ab-faq-item { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 16px; padding: 4px 20px; margin-bottom: 10px; }
         .ab-faq-item summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 0; font-size: 13.5px; font-weight: 700; color: var(--sf-ink); cursor: pointer; }
         .ab-faq-item summary::-webkit-details-marker { display: none; }
@@ -81,7 +81,7 @@ export default function About() {
       >
         <header className="ab-header">
           <div className="ab-wrap ab-header-row">
-            <a href="/" className="ab-brand">
+            <a href="/" className={`ab-brand ${playfair.className}`}>
               <LogoMark size={26} />
               Check This Finds
             </a>
@@ -91,7 +91,7 @@ export default function About() {
 
         <main className="ab-wrap ab-main">
           <span className="ab-eyebrow">About Check This Finds</span>
-          <h1 className="ab-title">Welcome to Check This Finds</h1>
+          <h1 className={`ab-title ${playfair.className}`}>Welcome to Check This Finds</h1>
 
           <div className="ab-intro">
             <p>
@@ -150,7 +150,7 @@ export default function About() {
           </div>
 
           <section>
-            <div className="ab-faq-title">Frequently Asked Questions</div>
+            <div className={`ab-faq-title ${playfair.className}`}>Frequently Asked Questions</div>
 
             <details className="ab-faq-item">
               <summary>How does purchasing work on this site?</summary>

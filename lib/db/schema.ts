@@ -260,6 +260,7 @@ export const products = pgTable(
     cons: text("cons"),
     voucherNote: text("voucher_note"),
     badge: text("badge"),
+    price: doublePrecision("price"),
     published: boolean("published").notNull().default(true),
     sortOrder: integer("sort_order").notNull().default(0),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),

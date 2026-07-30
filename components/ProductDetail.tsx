@@ -59,7 +59,7 @@ export default function ProductDetail({
         .pd-wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
         .pd-header { position: sticky; top: 0; z-index: 20; background: rgba(250,250,247,.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--sf-border); }
         .pd-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; }
-        .pd-brand { display: flex; align-items: center; gap: 9px; font-family: ${playfair.style.fontFamily}; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; color: var(--sf-ink); text-decoration: none; }
+        .pd-brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; color: var(--sf-ink); text-decoration: none; }
         .pd-back { font-size: 12.5px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 8px 18px; text-decoration: none; }
 
         .pd-main { padding: 32px 0 40px; }
@@ -71,7 +71,7 @@ export default function ProductDetail({
         .pd-media-badge { position: absolute; top: 14px; left: 14px; font-size: 11px; font-weight: 800; letter-spacing: 0.02em; border-radius: 999px; padding: 6px 13px; box-shadow: 0 3px 12px -3px rgba(0,0,0,.35); }
 
         .pd-cat { display: inline-flex; font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-white); background: var(--sf-primary); border-radius: 999px; padding: 6px 14px; margin-bottom: 14px; }
-        .pd-name { font-family: ${playfair.style.fontFamily}; font-size: 25px; font-weight: 800; color: var(--sf-ink); line-height: 1.25; }
+        .pd-name { font-size: 25px; font-weight: 800; color: var(--sf-ink); line-height: 1.25; }
         .pd-rating-row { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
         .pd-stars { position: relative; display: inline-block; font-size: 18px; line-height: 1; letter-spacing: 2px; color: var(--sf-border); }
         .pd-stars-fill { position: absolute; inset: 0; overflow: hidden; color: var(--sf-accent); white-space: nowrap; }
@@ -132,7 +132,7 @@ export default function ProductDetail({
 
         <header className="pd-header">
           <div className="pd-wrap pd-header-row">
-            <a href="/" className="pd-brand">
+            <a href="/" className={`pd-brand ${playfair.className}`}>
               <LogoMark size={24} />
               Check This Finds
             </a>
@@ -153,7 +153,7 @@ export default function ProductDetail({
 
             <div>
               <span className="pd-cat">{CATEGORIES[product.category] ?? product.category}</span>
-              <h1 className="pd-name">{product.name}</h1>
+              <h1 className={`pd-name ${playfair.className}`}>{product.name}</h1>
               <div className="pd-rating-row">
                 <span className="pd-stars" aria-hidden="true">
                   ★★★★★

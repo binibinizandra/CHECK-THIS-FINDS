@@ -27,6 +27,7 @@ const EMPTY_FORM = {
   reviews: "0",
   imageUrl: "",
   shopeeLink: "",
+  price: "",
   pros: "",
   cons: "",
   voucherNote: "",
@@ -62,6 +63,7 @@ export default function ProductManager({
       reviews: String(p.reviews),
       imageUrl: p.imageUrl,
       shopeeLink: p.shopeeLink ?? "",
+      price: p.price != null ? String(p.price) : "",
       pros: p.pros ?? "",
       cons: p.cons ?? "",
       voucherNote: p.voucherNote ?? "",
@@ -101,6 +103,7 @@ export default function ProductManager({
     setSaved(false);
     const ratingNum = parseFloat(form.rating);
     const reviewsNum = parseInt(form.reviews, 10);
+    const priceNum = form.price.trim() ? parseFloat(form.price) : null;
     startTransition(async () => {
       const result = await saveProduct(form.id, {
         name: form.name.trim(),
@@ -110,6 +113,7 @@ export default function ProductManager({
         imageUrl: form.imageUrl,
         shopeeLink: form.shopeeLink.trim() || null,
         tiktokLink: null,
+        price: priceNum != null && Number.isFinite(priceNum) ? priceNum : null,
         pros: form.pros.trim() || null,
         cons: form.cons.trim() || null,
         voucherNote: form.voucherNote.trim() || null,
@@ -125,7 +129,7 @@ export default function ProductManager({
         setProducts((prev) =>
           prev.map((p) =>
             p.id === form.id
-              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, pros: form.pros || null, cons: form.cons || null, voucherNote: form.voucherNote || null, badge: form.badge || null, published: form.published }
+              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, price: priceNum, pros: form.pros || null, cons: form.cons || null, voucherNote: form.voucherNote || null, badge: form.badge || null, published: form.published }
               : p
           )
         );
@@ -141,6 +145,7 @@ export default function ProductManager({
             imageUrl: form.imageUrl,
             shopeeLink: form.shopeeLink || null,
             tiktokLink: null,
+            price: priceNum,
             pros: form.pros || null,
             cons: form.cons || null,
             voucherNote: form.voucherNote || null,
@@ -264,6 +269,20 @@ export default function ProductManager({
           </div>
 
           <div className="am-field">
+            <label className="am-label">Price (₱, optional)</label>
+            <input
+              className="am-input"
+              type="number"
+              min="0"
+              step="0.01"
+              value={form.price}
+              onChange={(e) => setForm({ ...form, price: e.target.value })}
+              placeholder="e.g. 699"
+            />
+            <div className="am-hint">Use the real, current price on the Shopee listing.</div>
+          </div>
+
+          <div className="am-field">
             <label className="am-label">Badge (optional)</label>
             <select className="am-select" value={form.badge} onChange={(e) => setForm({ ...form, badge: e.target.value })}>
               {BADGES.map((b) => (
@@ -332,6 +351,7 @@ export default function ProductManager({
               </div>
               <div className="am-list-meta">
                 {CATEGORIES.find((c) => c.key === p.category)?.label ?? p.category} · {p.rating.toFixed(1)}★ ({p.reviews})
+                {p.price != null && ` · ₱${p.price.toLocaleString()}`}
               </div>
               <div className="am-list-clicks">{productViews[p.id] ?? 0} views · {productClicks[p.id] ?? 0} Shopee clicks</div>
             </div>

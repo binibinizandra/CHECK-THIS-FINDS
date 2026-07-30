@@ -25,10 +25,10 @@ const TABS = [
 ];
 
 const BADGE_INFO: Record<string, { label: string; bg: string; color: string; icon: (p: { className?: string }) => JSX.Element }> = {
-  best_pick: { label: "Best Pick", bg: "var(--sf-accent)", color: "#1F2937", icon: StarIcon },
+  best_pick: { label: "Best Pick", bg: "var(--sf-primary)", color: "#FFFFFF", icon: BadgeCheckIcon },
   trending: { label: "Trending", bg: "#C6603F", color: "#FFFFFF", icon: FlameIcon },
-  editors_choice: { label: "Editor's Choice", bg: "var(--sf-secondary)", color: "#FFFFFF", icon: BadgeCheckIcon },
-  worth_every_peso: { label: "Worth Every Peso", bg: "var(--sf-primary)", color: "#FFFFFF", icon: CoinIcon },
+  editors_choice: { label: "Editor's Choice", bg: "var(--sf-accent)", color: "#1F2937", icon: StarIcon },
+  worth_every_peso: { label: "Worth Every Peso", bg: "var(--sf-secondary)", color: "#FFFFFF", icon: CoinIcon },
 };
 
 function LogoMark({ size = 40 }: { size?: number }) {
@@ -54,6 +54,36 @@ function SparkleIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M12 2l1.7 6.3L20 10l-6.3 1.7L12 18l-1.7-6.3L4 10l6.3-1.7L12 2z" />
+    </svg>
+  );
+}
+
+function ChevronIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M5 7.5l5 5 5-5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function BagIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M5 8h14l-1.2 12.5a2 2 0 0 1-2 1.5H8.2a2 2 0 0 1-2-1.5L5 8z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+      <path d="M8.5 8V6a3.5 3.5 0 0 1 7 0v2" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function HeartIcon({ className, filled }: { className?: string; filled?: boolean }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill={filled ? "currentColor" : "none"} aria-hidden="true">
+      <path
+        d="M12 20.5s-7.5-4.6-9.9-9.1C.6 7.7 2.3 4 6 4c2.1 0 3.6 1.2 6 3.6C14.4 5.2 15.9 4 18 4c3.7 0 5.4 3.7 3.9 7.4C19.5 15.9 12 20.5 12 20.5z"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -116,7 +146,7 @@ function FlameIcon({ className }: { className?: string }) {
 function BadgeCheckIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 2.5l6.5 2.8v5.4c0 4.6-2.9 8.2-6.5 10-3.6-1.8-6.5-5.4-6.5-10V5.3L12 2.5z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" fill="currentColor" fillOpacity="0.0" />
+      <path d="M12 2.5l6.5 2.8v5.4c0 4.6-2.9 8.2-6.5 10-3.6-1.8-6.5-5.4-6.5-10V5.3L12 2.5z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
       <path d="M9 12l2.2 2.2L15.5 9.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
@@ -148,6 +178,16 @@ function HandshakeIcon({ className }: { className?: string }) {
   );
 }
 
+function LockIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="5" y="11" width="14" height="10" rx="2.5" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M8 11V7.5a4 4 0 0 1 8 0V11" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+      <circle cx="12" cy="16" r="1.6" fill="currentColor" />
+    </svg>
+  );
+}
+
 const CATEGORY_ICON: Record<string, (p: { className?: string }) => JSX.Element> = {
   home: HomeIcon,
   digital: DigitalIcon,
@@ -156,11 +196,70 @@ const CATEGORY_ICON: Record<string, (p: { className?: string }) => JSX.Element> 
 };
 
 const TRUST_ITEMS = [
-  { icon: BadgeCheckIcon, title: "Personally Curated", text: "Every item hand-checked before it's featured here." },
-  { icon: StarIcon, title: "Top Rated", text: "Only high-rated, well-reviewed products make the cut." },
-  { icon: CoinIcon, title: "Worth Every Peso", text: "Real value — no overpriced hype, just proven finds." },
-  { icon: HandshakeIcon, title: "Honest Recommendations", text: "No fake hype, no paid placements — just what's actually good." },
+  { icon: BadgeCheckIcon, title: "Personally Curated", text: "Every product is carefully researched and selected by me." },
+  { icon: StarIcon, title: "Top Rated", text: "Only highly rated and recommended products make it here." },
+  { icon: CoinIcon, title: "Worth Every Peso", text: "Great value, quality, and performance you can count on." },
+  { icon: HandshakeIcon, title: "Honest Recommendations", text: "No hype, no push — just real reviews and honest opinions." },
+  { icon: LockIcon, title: "Safe & Trusted", text: "Your trust is my priority. Shop with confidence every time." },
 ];
+
+function HeroIllustration() {
+  return (
+    <svg viewBox="0 0 520 420" fill="none" aria-hidden="true" className="sf-hero-illustration">
+      <defs>
+        <linearGradient id="sfWaveGrad2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#0B6B57" />
+          <stop offset="100%" stopColor="#D4AF37" />
+        </linearGradient>
+        <radialGradient id="sfPlatform" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#E7E3D9" stopOpacity="0.8" />
+          <stop offset="100%" stopColor="#E7E3D9" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+
+      <path d="M10 110 C 120 50, 200 150, 320 70 S 500 30, 510 5" stroke="url(#sfWaveGrad2)" strokeWidth="2" opacity="0.2" fill="none" />
+      <ellipse cx="270" cy="378" rx="220" ry="28" fill="url(#sfPlatform)" />
+
+      <g transform="translate(15,225)" stroke="#0B6B57" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none">
+        <path d="M0 0h16l13 88h95" />
+        <rect x="29" y="0" width="112" height="60" rx="4" />
+        <circle cx="55" cy="112" r="9" fill="#FAFAF7" />
+        <circle cx="118" cy="112" r="9" fill="#FAFAF7" />
+      </g>
+
+      <g transform="translate(175,175)">
+        <rect x="0" y="58" width="128" height="88" rx="6" fill="#C9A876" />
+        <line x1="0" y1="88" x2="128" y2="88" stroke="#A9895E" strokeWidth="2" />
+        <rect x="14" y="0" width="100" height="68" rx="6" fill="#D8B98C" />
+        <line x1="14" y1="28" x2="114" y2="28" stroke="#B79968" strokeWidth="2" />
+        <circle cx="64" cy="6" r="25" fill="#0B6B57" />
+        <path d="M53 6l7.5 7.5L75 -2" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        <text x="64" y="40" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#0B6B57" letterSpacing="0.5">
+          CHECKED
+        </text>
+      </g>
+
+      <g transform="translate(140,258)">
+        <path d="M-12 42h44l-6 32h-30z" fill="#FAFAF7" stroke="#E7E3D9" strokeWidth="2" />
+        <path d="M10 42C10 8 -12 -4 -24 -16" stroke="#0F766E" strokeWidth="4" fill="none" strokeLinecap="round" />
+        <path d="M10 42C10 2 22 -8 34 -18" stroke="#0B6B57" strokeWidth="4" fill="none" strokeLinecap="round" />
+        <path d="M10 42C10 14 4 -8 -2 -22" stroke="#0F766E" strokeWidth="4" fill="none" strokeLinecap="round" />
+      </g>
+
+      <g transform="translate(355,145)">
+        <path d="M8 42h104l11 128H-3z" fill="#0B6B57" />
+        <path d="M28 42C28 15 44 0 60 0s32 15 32 42" stroke="#0B6B57" strokeWidth="5" fill="none" />
+        <circle cx="60" cy="100" r="23" fill="#D4AF37" />
+        <path d="M50 100l7 7 13-15" stroke="#1F2937" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+      </g>
+
+      <circle cx="465" cy="65" r="2.5" fill="#D4AF37" opacity="0.7" />
+      <circle cx="420" cy="35" r="1.8" fill="#D4AF37" opacity="0.5" />
+      <circle cx="55" cy="55" r="2" fill="#D4AF37" opacity="0.5" />
+      <circle cx="480" cy="200" r="1.8" fill="#0B6B57" opacity="0.35" />
+    </svg>
+  );
+}
 
 function Stars({ rating }: { rating: number }) {
   const pct = Math.round((rating / 5) * 100);
@@ -174,26 +273,52 @@ function Stars({ rating }: { rating: number }) {
   );
 }
 
-function ProductCard({ p, isAdmin }: { p: ProductRecord; isAdmin: boolean }) {
+function ProductCard({
+  p,
+  isAdmin,
+  wishlisted,
+  onToggleWishlist,
+}: {
+  p: ProductRecord;
+  isAdmin: boolean;
+  wishlisted: boolean;
+  onToggleWishlist: (id: string) => void;
+}) {
   const badge = p.badge ? BADGE_INFO[p.badge] : null;
   return (
     <article className="sf-card">
       <Link href={`/product/${p.id}`} className="sf-card-link">
         <div className="sf-card-media">
           <img src={p.imageUrl} alt={p.name} loading="lazy" />
-          {badge && (
-            <span className="sf-badge" style={{ background: badge.bg, color: badge.color }}>
-              <badge.icon className="sf-badge-icon" />
-              {badge.label}
-            </span>
-          )}
-          {p.voucherNote && <span className="sf-voucher-badge">Voucher</span>}
+          <div className="sf-badge-stack">
+            {badge && (
+              <span className="sf-badge" style={{ background: badge.bg, color: badge.color }}>
+                <badge.icon className="sf-badge-icon" />
+                {badge.label}
+              </span>
+            )}
+            {p.voucherNote && <span className="sf-voucher-badge">Voucher</span>}
+          </div>
+          <button
+            type="button"
+            className="sf-wishlist-btn"
+            aria-pressed={wishlisted}
+            aria-label={wishlisted ? "Remove from wishlist" : "Save to wishlist"}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onToggleWishlist(p.id);
+            }}
+          >
+            <HeartIcon filled={wishlisted} />
+          </button>
         </div>
         <div className="sf-card-body">
           <div className="sf-card-name">{p.name}</div>
           <div className="sf-rating-row">
             <Stars rating={p.rating} />
             <span className="sf-rating-num">{p.rating.toFixed(1)} ({p.reviews})</span>
+            {p.price != null && <span className="sf-card-price">₱{p.price.toLocaleString()}</span>}
           </div>
         </div>
       </Link>
@@ -216,7 +341,17 @@ function ProductCard({ p, isAdmin }: { p: ProductRecord; isAdmin: boolean }) {
 
 const PAGE_SIZE = 6;
 
-function ProductGrid({ items, isAdmin }: { items: ProductRecord[]; isAdmin: boolean }) {
+function ProductGrid({
+  items,
+  isAdmin,
+  wishlist,
+  onToggleWishlist,
+}: {
+  items: ProductRecord[];
+  isAdmin: boolean;
+  wishlist: Set<string>;
+  onToggleWishlist: (id: string) => void;
+}) {
   const [visible, setVisible] = useState(PAGE_SIZE);
   const shown = items.slice(0, visible);
   const remaining = items.length - shown.length;
@@ -225,7 +360,7 @@ function ProductGrid({ items, isAdmin }: { items: ProductRecord[]; isAdmin: bool
     <>
       <div className="sf-product-grid">
         {shown.map((p) => (
-          <ProductCard key={p.id} p={p} isAdmin={isAdmin} />
+          <ProductCard key={p.id} p={p} isAdmin={isAdmin} wishlisted={wishlist.has(p.id)} onToggleWishlist={onToggleWishlist} />
         ))}
       </div>
       {remaining > 0 && (
@@ -280,54 +415,110 @@ function NewsletterForm() {
   );
 }
 
+const WISHLIST_KEY = "ctf_wishlist";
+
 export default function StorefrontClient({ products, isAdmin }: { products: ProductRecord[]; isAdmin: boolean }) {
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
+  const [dealsOnly, setDealsOnly] = useState(false);
+  const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [wishlist, setWishlist] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (!isAdmin) track("page_view");
   }, [isAdmin]);
 
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(WISHLIST_KEY) || "[]");
+      setWishlist(new Set(saved));
+    } catch {}
+  }, []);
+
+  function toggleWishlist(id: string) {
+    setWishlist((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      try {
+        localStorage.setItem(WISHLIST_KEY, JSON.stringify(Array.from(next)));
+      } catch {}
+      return next;
+    });
+  }
+
   const searchQuery = search.trim().toLowerCase();
   const searchActive = searchQuery.length > 0;
   const searchResults = searchActive ? products.filter((p) => p.name.toLowerCase().includes(searchQuery)) : [];
+  const dealsResults = dealsOnly ? products.filter((p) => p.voucherNote) : [];
+
+  function goToProducts() {
+    document.getElementById("sf-products")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
   function goToCategory(key: string) {
     setFilter(key);
     setSearch("");
-    document.getElementById("sf-products")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setDealsOnly(false);
+    setCategoriesOpen(false);
+    goToProducts();
+  }
+
+  function focusSearch() {
+    const el = document.getElementById("sf-hero-search") as HTMLInputElement | null;
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+    el?.focus();
   }
 
   return (
     <>
       <style>{`
-        .sf-wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+        .sf-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
         .sf-hero { position: relative; overflow: hidden; }
-        .sf-hero-waves { position: absolute; top: 0; right: 0; width: min(720px, 90vw); height: 320px; pointer-events: none; }
 
-        .sf-header-row { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 26px 0 8px; }
-        .sf-brand-block { display: flex; align-items: center; gap: 12px; }
+        .sf-nav-row { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; }
+        .sf-brand-block { display: flex; align-items: center; gap: 11px; }
         .sf-brand-text { display: flex; flex-direction: column; gap: 1px; }
-        .sf-brand-name { font-family: ${playfair.style.fontFamily}; font-weight: 800; font-size: 22px; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.1; }
-        @media (min-width: 600px) { .sf-brand-name { font-size: 27px; } }
+        .sf-brand-name { font-weight: 800; font-size: 19px; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.1; }
+        @media (min-width: 600px) { .sf-brand-name { font-size: 22px; } }
         .sf-brand-name em { font-style: normal; color: var(--sf-accent); }
-        .sf-brand-tagline { font-size: 9.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sf-muted); }
-        .sf-admin-link { flex-shrink: 0; font-size: 12px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 9px 20px; text-decoration: none; }
+        .sf-brand-tagline { font-size: 8.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sf-muted); }
+
+        .sf-nav-links { display: none; align-items: center; gap: 30px; }
+        @media (min-width: 920px) { .sf-nav-links { display: flex; } }
+        .sf-nav-link { background: none; border: none; font-family: inherit; font-size: 13.5px; font-weight: 600; color: var(--sf-ink); cursor: pointer; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; padding: 0; }
+        .sf-nav-link:hover { color: var(--sf-primary); }
+        .sf-nav-link svg { width: 13px; height: 13px; }
+        .sf-nav-cat-wrap { position: relative; }
+        .sf-nav-dropdown { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%); background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 14px; box-shadow: 0 16px 34px -12px rgba(31,41,55,.22); padding: 8px; min-width: 210px; z-index: 30; }
+        .sf-nav-dropdown button { display: flex; align-items: center; gap: 9px; width: 100%; text-align: left; padding: 9px 11px; border-radius: 9px; border: none; background: none; font-size: 12.5px; font-weight: 600; color: var(--sf-ink); cursor: pointer; font-family: inherit; }
+        .sf-nav-dropdown button:hover { background: var(--sf-bg); }
+        .sf-nav-dropdown svg { width: 14px; height: 14px; color: var(--sf-primary); flex-shrink: 0; }
+
+        .sf-nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .sf-nav-search-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--sf-card); border: 1px solid var(--sf-border); display: flex; align-items: center; justify-content: center; color: var(--sf-ink); cursor: pointer; flex-shrink: 0; }
+        .sf-nav-search-btn svg { width: 16px; height: 16px; }
+        .sf-admin-link { flex-shrink: 0; font-size: 12px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 9px 20px; text-decoration: none; white-space: nowrap; }
         @media (prefers-reduced-motion: no-preference) { .sf-admin-link { transition: background .15s ease; } .sf-admin-link:hover { background: var(--sf-secondary); } }
 
-        .sf-hero-body { position: relative; z-index: 2; padding: 18px 0 28px; }
-        .sf-hero-headline { font-family: ${playfair.style.fontFamily}; font-weight: 700; font-size: 25px; line-height: 1.28; color: var(--sf-ink); max-width: 480px; margin: 0 0 10px; }
-        @media (min-width: 640px) { .sf-hero-headline { font-size: 32px; } }
-        .sf-hero-sub { font-size: 14px; line-height: 1.6; color: var(--sf-muted); max-width: 460px; margin: 0 0 26px; }
+        .sf-hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr; gap: 28px; align-items: center; padding: 14px 0 40px; }
+        @media (min-width: 900px) { .sf-hero-grid { grid-template-columns: 1fr 1fr; gap: 40px; padding: 24px 0 56px; } }
 
-        .sf-search-row { position: relative; margin-bottom: 16px; }
-        .sf-search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; color: var(--sf-muted); pointer-events: none; }
-        .sf-search-input { width: 100%; font-size: 14px; padding: 15px 44px 15px 46px; border: 1px solid var(--sf-border); border-radius: 999px; background: var(--sf-card); color: var(--sf-ink); font-family: inherit; box-shadow: 0 4px 20px -8px rgba(31,41,55,.12); }
+        .sf-hero-headline { font-weight: 800; font-size: 32px; line-height: 1.16; margin: 0 0 14px; }
+        @media (min-width: 640px) { .sf-hero-headline { font-size: 44px; } }
+        .sf-hero-headline span { display: block; }
+        .sf-hero-headline-l1 { color: var(--sf-primary); }
+        .sf-hero-headline-l2 { color: var(--sf-accent); }
+        .sf-hero-sub { font-size: 14.5px; line-height: 1.65; color: var(--sf-muted); max-width: 440px; margin: 0 0 28px; }
+
+        .sf-search-row { position: relative; margin-bottom: 18px; }
+        .sf-search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; color: var(--sf-muted); pointer-events: none; }
+        .sf-search-input { width: 100%; font-size: 14px; padding: 16px 46px 16px 48px; border: 1px solid var(--sf-border); border-radius: 999px; background: var(--sf-card); color: var(--sf-ink); font-family: inherit; box-shadow: 0 8px 24px -10px rgba(31,41,55,.16); }
         .sf-search-input::placeholder { color: var(--sf-muted); }
         .sf-search-input:focus { outline: none; border-color: var(--sf-primary); }
-        .sf-search-sparkle { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--sf-accent); pointer-events: none; }
-        .sf-search-clear { position: absolute; right: 42px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; background: var(--sf-border); border: none; border-radius: 999px; color: var(--sf-ink); font-size: 10px; cursor: pointer; }
+        .sf-search-sparkle { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--sf-accent); pointer-events: none; }
+        .sf-search-clear { position: absolute; right: 44px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; background: var(--sf-border); border: none; border-radius: 999px; color: var(--sf-ink); font-size: 10px; cursor: pointer; }
 
         .sf-tabs-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
         .sf-tabs-row::-webkit-scrollbar { display: none; }
@@ -335,7 +526,11 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-tab-btn svg { width: 14px; height: 14px; }
         .sf-tab-btn[aria-pressed=true] { background: var(--sf-primary); border-color: var(--sf-primary); color: var(--sf-white); }
 
-        .sf-curator { display: grid; grid-template-columns: 1fr; background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 22px; margin: 22px 0; box-shadow: 0 10px 30px -14px rgba(31,41,55,.14); overflow: hidden; }
+        .sf-hero-illustration-wrap { display: none; }
+        @media (min-width: 900px) { .sf-hero-illustration-wrap { display: block; } }
+        .sf-hero-illustration { width: 100%; height: auto; }
+
+        .sf-curator { display: grid; grid-template-columns: 1fr; background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 22px; margin: 8px 0 28px; box-shadow: 0 10px 30px -14px rgba(31,41,55,.14); overflow: hidden; }
         @media (min-width: 720px) { .sf-curator { grid-template-columns: 1fr auto 220px; } }
         .sf-curator-main { display: flex; gap: 16px; padding: 24px; }
         .sf-curator-avatar { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--sf-primary); color: var(--sf-white); font-weight: 800; font-size: 14px; }
@@ -351,11 +546,22 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @media (min-width: 720px) { .sf-curator-stat { border-top: none; padding: 24px; } }
         .sf-curator-stat-icon { width: 34px; height: 34px; border-radius: 50%; background: var(--sf-bg); display: flex; align-items: center; justify-content: center; color: var(--sf-accent); }
         .sf-curator-stat-icon svg { width: 17px; height: 17px; }
-        .sf-curator-stat-num { font-family: ${playfair.style.fontFamily}; font-size: 26px; font-weight: 800; color: var(--sf-primary); line-height: 1; }
+        .sf-curator-stat-num { font-size: 26px; font-weight: 800; color: var(--sf-primary); line-height: 1; }
         .sf-curator-stat-label { font-size: 12px; font-weight: 700; color: var(--sf-ink); }
         .sf-curator-stat-sub { font-size: 11px; color: var(--sf-muted); line-height: 1.4; }
 
-        .sf-grid-section { padding: 8px 0 40px; }
+        .sf-trust-wrap { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 24px; padding: 30px 24px; margin: 0 0 32px; box-shadow: 0 10px 30px -16px rgba(31,41,55,.14); }
+        .sf-trust-title { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-primary); text-align: center; margin: 0 0 26px; }
+        .sf-trust-title svg { width: 14px; height: 14px; color: var(--sf-accent); }
+        .sf-trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+        @media (min-width: 720px) { .sf-trust-grid { grid-template-columns: repeat(5, 1fr); gap: 16px; } }
+        .sf-trust-item { text-align: center; }
+        .sf-trust-icon { width: 46px; height: 46px; border-radius: 50%; background: var(--sf-bg); display: flex; align-items: center; justify-content: center; color: var(--sf-primary); margin: 0 auto 14px; }
+        .sf-trust-icon svg { width: 21px; height: 21px; }
+        .sf-trust-item-title { font-size: 12.5px; font-weight: 800; color: var(--sf-ink); margin-bottom: 6px; }
+        .sf-trust-item-text { font-size: 11.5px; line-height: 1.5; color: var(--sf-muted); }
+
+        .sf-grid-section { padding: 0 0 40px; }
         .sf-cat-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 30px 0 14px; }
         .sf-cat-header:first-child { margin-top: 0; }
         .sf-cat-label { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: var(--sf-ink); }
@@ -363,51 +569,49 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-cat-viewall { font-size: 12px; font-weight: 700; color: var(--sf-primary); background: none; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 3px; }
         .sf-cat-viewall:hover { text-decoration: underline; }
 
-        .sf-product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+        .sf-product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
         @media (min-width: 560px) { .sf-product-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (min-width: 800px) { .sf-product-grid { grid-template-columns: repeat(4, 1fr); } }
+        @media (min-width: 1080px) { .sf-product-grid { grid-template-columns: repeat(5, 1fr); } }
 
-        .sf-load-more { display: block; margin: 18px auto 0; font-size: 12.5px; font-weight: 700; color: var(--sf-primary); background: var(--sf-card); border: 1px solid var(--sf-primary); border-radius: 999px; padding: 10px 24px; cursor: pointer; }
+        .sf-load-more { display: block; margin: 20px auto 0; font-size: 12.5px; font-weight: 700; color: var(--sf-primary); background: var(--sf-card); border: 1px solid var(--sf-primary); border-radius: 999px; padding: 10px 24px; cursor: pointer; }
         @media (prefers-reduced-motion: no-preference) { .sf-load-more { transition: background .15s ease, color .15s ease; } .sf-load-more:hover { background: var(--sf-primary); color: var(--sf-white); } }
 
-        .sf-card { background: var(--sf-card); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 10px 26px -14px rgba(31,41,55,.2); transition: box-shadow .2s ease, transform .2s ease; }
-        @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 16px 32px -12px rgba(31,41,55,.28); transform: translateY(-4px); } }
+        .sf-card { background: var(--sf-card); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 12px 28px -16px rgba(31,41,55,.22); transition: box-shadow .2s ease, transform .2s ease; }
+        @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 20px 36px -14px rgba(31,41,55,.3); transform: translateY(-5px); } }
         .sf-card-link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; min-width: 0; }
         .sf-card-media { position: relative; aspect-ratio: 1; background: var(--sf-border); }
         .sf-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .sf-badge { position: absolute; top: 10px; left: 10px; display: inline-flex; align-items: center; gap: 4px; font-size: 9.5px; font-weight: 800; letter-spacing: 0.02em; border-radius: 999px; padding: 4px 9px 4px 7px; box-shadow: 0 3px 10px -3px rgba(0,0,0,.35); }
+        .sf-badge-stack { position: absolute; top: 10px; left: 10px; display: flex; flex-direction: column; gap: 5px; align-items: flex-start; }
+        .sf-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 800; letter-spacing: 0.02em; border-radius: 999px; padding: 5px 10px 5px 8px; box-shadow: 0 3px 10px -3px rgba(0,0,0,.35); }
         .sf-badge-icon { width: 10px; height: 10px; flex-shrink: 0; }
-        .sf-voucher-badge { position: absolute; top: 10px; right: 10px; font-size: 9px; font-weight: 800; letter-spacing: 0.02em; color: var(--sf-white); background: #C6603F; border-radius: 999px; padding: 4px 9px; }
-        .sf-card-body { padding: 13px 14px 10px; display: flex; flex-direction: column; gap: 7px; flex: 1; }
-        .sf-card-name { font-size: 12px; font-weight: 700; line-height: 1.35; color: var(--sf-ink); min-height: 32px; }
+        .sf-voucher-badge { font-size: 8.5px; font-weight: 800; letter-spacing: 0.02em; color: var(--sf-white); background: #C6603F; border-radius: 999px; padding: 4px 9px; }
+        .sf-wishlist-btn { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.94); border: none; display: flex; align-items: center; justify-content: center; color: var(--sf-muted); cursor: pointer; box-shadow: 0 3px 10px -3px rgba(0,0,0,.3); }
+        .sf-wishlist-btn svg { width: 15px; height: 15px; }
+        .sf-wishlist-btn[aria-pressed=true] { color: #C6603F; }
+        .sf-card-body { padding: 14px 15px 11px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+        .sf-card-name { font-size: 12.5px; font-weight: 700; line-height: 1.35; color: var(--sf-ink); min-height: 34px; }
         .sf-stars { position: relative; display: inline-block; font-size: 10px; line-height: 1; letter-spacing: 1px; color: var(--sf-border); }
         .sf-stars-fill { position: absolute; inset: 0; overflow: hidden; color: var(--sf-accent); white-space: nowrap; }
         .sf-rating-row { display: flex; align-items: center; gap: 5px; }
         .sf-rating-num { font-size: 10px; font-weight: 700; color: var(--sf-muted); font-variant-numeric: tabular-nums; }
-        .sf-card-actions { display: flex; flex-direction: column; gap: 5px; padding: 0 14px 14px; }
+        .sf-card-price { margin-left: auto; font-size: 12.5px; font-weight: 800; color: var(--sf-accent); font-variant-numeric: tabular-nums; }
+        .sf-card-actions { display: flex; flex-direction: column; gap: 5px; padding: 0 15px 15px; }
         .sf-btn-store { display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 700; padding: 10px 8px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-primary); }
         @media (prefers-reduced-motion: no-preference) { .sf-btn-store { transition: background .15s ease; } .sf-btn-store:hover { background: var(--sf-secondary); } }
 
-        .sf-trust { padding: 6px 0 40px; }
-        .sf-trust-title { font-family: ${playfair.style.fontFamily}; font-size: 20px; font-weight: 800; color: var(--sf-ink); text-align: center; margin: 0 0 24px; letter-spacing: -0.01em; }
-        .sf-trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-        @media (min-width: 720px) { .sf-trust-grid { grid-template-columns: repeat(4, 1fr); } }
-        .sf-trust-card { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 20px; padding: 22px 18px; text-align: center; }
-        .sf-trust-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--sf-bg); display: flex; align-items: center; justify-content: center; color: var(--sf-primary); margin: 0 auto 14px; }
-        .sf-trust-icon svg { width: 21px; height: 21px; }
-        .sf-trust-card-title { font-size: 12.5px; font-weight: 800; color: var(--sf-ink); margin-bottom: 6px; }
-        .sf-trust-card-text { font-size: 11.5px; line-height: 1.5; color: var(--sf-muted); }
-
-        .sf-cta { background: var(--sf-primary); border-radius: 26px; margin: 0 0 44px; padding: 32px 26px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 16px; }
-        @media (min-width: 640px) { .sf-cta { flex-direction: row; text-align: left; justify-content: space-between; padding: 34px 40px; } }
+        .sf-cta { background: var(--sf-primary); border-radius: 26px; margin: 0 0 44px; padding: 32px 26px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px; }
+        @media (min-width: 640px) { .sf-cta { flex-direction: row; text-align: left; justify-content: space-between; padding: 36px 44px; } }
         .sf-cta-left { display: flex; align-items: center; gap: 14px; }
-        .sf-cta-headline { font-family: ${playfair.style.fontFamily}; font-size: 21px; font-weight: 700; color: var(--sf-white); margin: 0 0 4px; }
+        .sf-cta-headline { font-size: 22px; font-weight: 700; color: var(--sf-white); margin: 0 0 4px; }
+        .sf-cta-headline em { font-style: normal; color: var(--sf-accent); }
         .sf-cta-sub { font-size: 12.5px; color: rgba(255,255,255,.78); margin: 0; }
-        .sf-cta-btn { flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: #1F2937; background: var(--sf-accent); border: none; border-radius: 999px; padding: 13px 26px; cursor: pointer; text-decoration: none; }
+        .sf-cta-btn { flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; color: #1F2937; background: var(--sf-accent); border: none; border-radius: 999px; padding: 14px 28px; cursor: pointer; text-decoration: none; }
+        .sf-cta-btn svg { width: 15px; height: 15px; }
         @media (prefers-reduced-motion: no-preference) { .sf-cta-btn { transition: transform .15s ease; } .sf-cta-btn:hover { transform: translateY(-2px); } }
 
         .sf-faq { margin: 6px 0 40px; }
-        .sf-faq-title { font-family: ${playfair.style.fontFamily}; font-size: 19px; font-weight: 800; color: var(--sf-ink); margin: 0 0 16px; }
+        .sf-faq-title { font-size: 19px; font-weight: 800; color: var(--sf-ink); margin: 0 0 16px; }
         .sf-faq-item { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 16px; padding: 4px 20px; margin-bottom: 10px; }
         .sf-faq-item summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 0; font-size: 13.5px; font-weight: 700; color: var(--sf-ink); cursor: pointer; }
         .sf-faq-item summary::-webkit-details-marker { display: none; }
@@ -419,7 +623,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-footer-top { display: flex; flex-direction: column; gap: 24px; padding-bottom: 28px; border-bottom: 1px solid var(--sf-border); margin-bottom: 20px; }
         @media (min-width: 720px) { .sf-footer-top { flex-direction: row; justify-content: space-between; align-items: flex-start; } }
         .sf-footer-brand { display: flex; align-items: center; gap: 10px; }
-        .sf-footer-brand-name { font-family: ${playfair.style.fontFamily}; font-weight: 800; font-size: 15px; color: var(--sf-ink); }
+        .sf-footer-brand-name { font-weight: 800; font-size: 15px; color: var(--sf-ink); }
         .sf-footer-links { display: flex; flex-wrap: wrap; gap: 6px 18px; }
         .sf-footer-link { font-size: 12.5px; font-weight: 600; color: var(--sf-muted); text-decoration: none; }
         .sf-footer-link:hover { color: var(--sf-primary); }
@@ -461,75 +665,130 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         }}
       >
         <div className="sf-hero">
-          <svg className="sf-hero-waves" viewBox="0 0 800 320" preserveAspectRatio="xMaxYMin slice" aria-hidden="true">
-            <defs>
-              <linearGradient id="sfWaveGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#0B6B57" />
-                <stop offset="100%" stopColor="#D4AF37" />
-              </linearGradient>
-            </defs>
-            <path d="M40 260 C 220 170, 330 290, 520 130 S 780 70, 860 30" stroke="url(#sfWaveGrad)" strokeWidth="2" fill="none" opacity="0.22" />
-            <path d="M90 300 C 280 210, 400 320, 610 160 S 860 100, 940 60" stroke="url(#sfWaveGrad)" strokeWidth="1.5" fill="none" opacity="0.14" />
-            <circle cx="700" cy="60" r="2" fill="#D4AF37" opacity="0.6" />
-            <circle cx="760" cy="140" r="1.5" fill="#D4AF37" opacity="0.5" />
-            <circle cx="640" cy="180" r="1.5" fill="#D4AF37" opacity="0.4" />
-          </svg>
-
-          <div className="sf-wrap sf-header-row">
+          <div className="sf-wrap sf-nav-row">
             <div className="sf-brand-block">
-              <LogoMark size={38} />
+              <LogoMark size={36} />
               <div className="sf-brand-text">
-                <span className="sf-brand-name">
+                <span className={`sf-brand-name ${playfair.className}`}>
                   Check <em>This</em> Finds
                 </span>
                 <span className="sf-brand-tagline">Only Tested &amp; High-Quality Items</span>
               </div>
             </div>
-            {isAdmin && <a href="/admin" className="sf-admin-link">Manage</a>}
+
+            <nav className="sf-nav-links" aria-label="Main navigation">
+              <a
+                href="/"
+                className="sf-nav-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFilter("all");
+                  setSearch("");
+                  setDealsOnly(false);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              >
+                Home
+              </a>
+              <div className="sf-nav-cat-wrap">
+                <button type="button" className="sf-nav-link" onClick={() => setCategoriesOpen((v) => !v)}>
+                  Categories
+                  <ChevronIcon />
+                </button>
+                {categoriesOpen && (
+                  <div className="sf-nav-dropdown">
+                    {Object.keys(CATEGORIES).map((key) => {
+                      const Icon = CATEGORY_ICON[key];
+                      return (
+                        <button key={key} type="button" onClick={() => goToCategory(key)}>
+                          <Icon />
+                          {CATEGORIES[key]}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+              <button
+                type="button"
+                className="sf-nav-link"
+                onClick={() => {
+                  setDealsOnly(true);
+                  setSearch("");
+                  setCategoriesOpen(false);
+                  goToProducts();
+                }}
+              >
+                Deals
+              </button>
+              <Link href="/about" className="sf-nav-link">About</Link>
+              <Link href="/contact" className="sf-nav-link">Contact</Link>
+            </nav>
+
+            <div className="sf-nav-right">
+              <button type="button" className="sf-nav-search-btn" onClick={focusSearch} aria-label="Search">
+                <SearchIcon />
+              </button>
+              {isAdmin && <a href="/admin" className="sf-admin-link">Manage</a>}
+            </div>
           </div>
 
-          <div className="sf-wrap sf-hero-body">
-            <h1 className="sf-hero-headline">We do the research so you don&apos;t have to.</h1>
-            <p className="sf-hero-sub">Discover trusted, tested, high-quality products you&apos;ll actually love.</p>
+          <div className="sf-wrap sf-hero-grid">
+            <div>
+              <h1 className={`sf-hero-headline ${playfair.className}`}>
+                <span className="sf-hero-headline-l1">We do the research</span>
+                <span className="sf-hero-headline-l2">so you don&apos;t have to.</span>
+              </h1>
+              <p className="sf-hero-sub">Discover trusted, tested, high-quality products you&apos;ll actually love.</p>
 
-            <div className="sf-search-row">
-              <SearchIcon className="sf-search-icon" />
-              <input
-                type="text"
-                className="sf-search-input"
-                placeholder="Search products..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                aria-label="Search products"
-              />
-              {searchActive ? (
-                <button type="button" className="sf-search-clear" onClick={() => setSearch("")} aria-label="Clear search">
-                  ✕
-                </button>
-              ) : (
-                <SparkleIcon className="sf-search-sparkle" />
-              )}
+              <div className="sf-search-row">
+                <SearchIcon className="sf-search-icon" />
+                <input
+                  id="sf-hero-search"
+                  type="text"
+                  className="sf-search-input"
+                  placeholder="Search products, brands, or categories..."
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setDealsOnly(false);
+                  }}
+                  aria-label="Search products"
+                />
+                {searchActive ? (
+                  <button type="button" className="sf-search-clear" onClick={() => setSearch("")} aria-label="Clear search">
+                    ✕
+                  </button>
+                ) : (
+                  <SparkleIcon className="sf-search-sparkle" />
+                )}
+              </div>
+
+              <div className="sf-tabs-row" role="tablist" aria-label="Product categories">
+                {TABS.map((t) => {
+                  const Icon = t.key === "all" ? SparkleIcon : CATEGORY_ICON[t.key];
+                  return (
+                    <button
+                      key={t.key}
+                      type="button"
+                      className="sf-tab-btn"
+                      aria-pressed={!dealsOnly && filter === t.key}
+                      onClick={() => {
+                        setFilter(t.key);
+                        setSearch("");
+                        setDealsOnly(false);
+                      }}
+                    >
+                      <Icon />
+                      {t.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            <div className="sf-tabs-row" role="tablist" aria-label="Product categories">
-              {TABS.map((t) => {
-                const Icon = t.key === "all" ? SparkleIcon : CATEGORY_ICON[t.key];
-                return (
-                  <button
-                    key={t.key}
-                    type="button"
-                    className="sf-tab-btn"
-                    aria-pressed={filter === t.key}
-                    onClick={() => {
-                      setFilter(t.key);
-                      setSearch("");
-                    }}
-                  >
-                    <Icon />
-                    {t.label}
-                  </button>
-                );
-              })}
+            <div className="sf-hero-illustration-wrap">
+              <HeroIllustration />
             </div>
           </div>
         </div>
@@ -564,9 +823,28 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
               <span className="sf-curator-stat-icon">
                 <StarIcon />
               </span>
-              <span className="sf-curator-stat-num">100%</span>
+              <span className={`sf-curator-stat-num ${playfair.className}`}>100%</span>
               <span className="sf-curator-stat-label">Tested &amp; Trusted</span>
               <span className="sf-curator-stat-sub">Quality finds you can rely on.</span>
+            </div>
+          </section>
+
+          <section className="sf-trust-wrap">
+            <div className="sf-trust-title">
+              <SparkleIcon />
+              Why Trust Check This Finds?
+              <SparkleIcon />
+            </div>
+            <div className="sf-trust-grid">
+              {TRUST_ITEMS.map((item) => (
+                <div className="sf-trust-item" key={item.title}>
+                  <span className="sf-trust-icon">
+                    <item.icon />
+                  </span>
+                  <div className="sf-trust-item-title">{item.title}</div>
+                  <div className="sf-trust-item-text">{item.text}</div>
+                </div>
+              ))}
             </div>
           </section>
         </div>
@@ -578,9 +856,26 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
             <section className="sf-grid-section">
               {searchActive ? (
                 searchResults.length > 0 ? (
-                  <ProductGrid items={searchResults} isAdmin={isAdmin} />
+                  <ProductGrid items={searchResults} isAdmin={isAdmin} wishlist={wishlist} onToggleWishlist={toggleWishlist} />
                 ) : (
                   <div className="sf-empty">No products match &quot;{search}&quot;.</div>
+                )
+              ) : dealsOnly ? (
+                dealsResults.length > 0 ? (
+                  <>
+                    <div className="sf-cat-header">
+                      <span className="sf-cat-label">
+                        <SparkleIcon />
+                        Today&apos;s Deals
+                      </span>
+                      <button type="button" className="sf-cat-viewall" onClick={() => setDealsOnly(false)}>
+                        Show all →
+                      </button>
+                    </div>
+                    <ProductGrid items={dealsResults} isAdmin={isAdmin} wishlist={wishlist} onToggleWishlist={toggleWishlist} />
+                  </>
+                ) : (
+                  <div className="sf-empty">No active deals right now — check back soon!</div>
                 )
               ) : filter === "all" ? (
                 Object.keys(CATEGORIES).map((key) => {
@@ -598,48 +893,41 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                           View all →
                         </button>
                       </div>
-                      <ProductGrid items={items} isAdmin={isAdmin} />
+                      <ProductGrid items={items} isAdmin={isAdmin} wishlist={wishlist} onToggleWishlist={toggleWishlist} />
                     </div>
                   );
                 })
               ) : (
-                <ProductGrid items={products.filter((p) => p.category === filter)} isAdmin={isAdmin} />
+                <ProductGrid
+                  items={products.filter((p) => p.category === filter)}
+                  isAdmin={isAdmin}
+                  wishlist={wishlist}
+                  onToggleWishlist={toggleWishlist}
+                />
               )}
             </section>
           </main>
         )}
 
         <div className="sf-wrap">
-          <section className="sf-trust">
-            <h2 className="sf-trust-title">Why Trust Check This Finds?</h2>
-            <div className="sf-trust-grid">
-              {TRUST_ITEMS.map((item) => (
-                <div className="sf-trust-card" key={item.title}>
-                  <span className="sf-trust-icon">
-                    <item.icon />
-                  </span>
-                  <div className="sf-trust-card-title">{item.title}</div>
-                  <div className="sf-trust-card-text">{item.text}</div>
-                </div>
-              ))}
-            </div>
-          </section>
-
           <section className="sf-cta">
             <div className="sf-cta-left">
               <LogoMark size={40} />
               <div>
-                <div className="sf-cta-headline">Find it. Love it. Check it.</div>
-                <p className="sf-cta-sub">Quality finds you can trust, every time.</p>
+                <div className={`sf-cta-headline ${playfair.className}`}>
+                  Find it. Love it. <em>Check it.</em>
+                </div>
+                <p className="sf-cta-sub">Quality finds you can trust, every time. ✨</p>
               </div>
             </div>
             <a href="#sf-products" className="sf-cta-btn">
+              <BagIcon />
               Explore Today&apos;s Best Finds
             </a>
           </section>
 
           <section className="sf-faq">
-            <h2 className="sf-faq-title">Frequently Asked Questions</h2>
+            <h2 className={`sf-faq-title ${playfair.className}`}>Frequently Asked Questions</h2>
 
             <details className="sf-faq-item">
               <summary>How does ordering work?</summary>
@@ -664,7 +952,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
               <div>
                 <div className="sf-footer-brand">
                   <LogoMark size={26} />
-                  <span className="sf-footer-brand-name">Check This Finds</span>
+                  <span className={`sf-footer-brand-name ${playfair.className}`}>Check This Finds</span>
                 </div>
                 <div className="sf-footer-links" style={{ marginTop: 14 }}>
                   <Link href="/about" className="sf-footer-link">About</Link>
