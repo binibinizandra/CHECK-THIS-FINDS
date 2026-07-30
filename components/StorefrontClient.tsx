@@ -203,64 +203,6 @@ const TRUST_ITEMS = [
   { icon: LockIcon, title: "Safe & Trusted", text: "Your trust is my priority. Shop with confidence every time." },
 ];
 
-function HeroIllustration() {
-  return (
-    <svg viewBox="0 0 520 420" fill="none" aria-hidden="true" className="sf-hero-illustration">
-      <defs>
-        <linearGradient id="sfWaveGrad2" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#0B6B57" />
-          <stop offset="100%" stopColor="#D4AF37" />
-        </linearGradient>
-        <radialGradient id="sfPlatform" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#E7E3D9" stopOpacity="0.8" />
-          <stop offset="100%" stopColor="#E7E3D9" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-
-      <path d="M10 110 C 120 50, 200 150, 320 70 S 500 30, 510 5" stroke="url(#sfWaveGrad2)" strokeWidth="2" opacity="0.2" fill="none" />
-      <ellipse cx="270" cy="378" rx="220" ry="28" fill="url(#sfPlatform)" />
-
-      <g transform="translate(15,225)" stroke="#0B6B57" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none">
-        <path d="M0 0h16l13 88h95" />
-        <rect x="29" y="0" width="112" height="60" rx="4" />
-        <circle cx="55" cy="112" r="9" fill="#FAFAF7" />
-        <circle cx="118" cy="112" r="9" fill="#FAFAF7" />
-      </g>
-
-      <g transform="translate(175,175)">
-        <rect x="0" y="58" width="128" height="88" rx="6" fill="#C9A876" />
-        <line x1="0" y1="88" x2="128" y2="88" stroke="#A9895E" strokeWidth="2" />
-        <rect x="14" y="0" width="100" height="68" rx="6" fill="#D8B98C" />
-        <line x1="14" y1="28" x2="114" y2="28" stroke="#B79968" strokeWidth="2" />
-        <circle cx="64" cy="6" r="25" fill="#0B6B57" />
-        <path d="M53 6l7.5 7.5L75 -2" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-        <text x="64" y="40" textAnchor="middle" fontSize="6.5" fontWeight="700" fill="#0B6B57" letterSpacing="0.5">
-          CHECKED
-        </text>
-      </g>
-
-      <g transform="translate(140,258)">
-        <path d="M-12 42h44l-6 32h-30z" fill="#FAFAF7" stroke="#E7E3D9" strokeWidth="2" />
-        <path d="M10 42C10 8 -12 -4 -24 -16" stroke="#0F766E" strokeWidth="4" fill="none" strokeLinecap="round" />
-        <path d="M10 42C10 2 22 -8 34 -18" stroke="#0B6B57" strokeWidth="4" fill="none" strokeLinecap="round" />
-        <path d="M10 42C10 14 4 -8 -2 -22" stroke="#0F766E" strokeWidth="4" fill="none" strokeLinecap="round" />
-      </g>
-
-      <g transform="translate(355,145)">
-        <path d="M8 42h104l11 128H-3z" fill="#0B6B57" />
-        <path d="M28 42C28 15 44 0 60 0s32 15 32 42" stroke="#0B6B57" strokeWidth="5" fill="none" />
-        <circle cx="60" cy="100" r="23" fill="#D4AF37" />
-        <path d="M50 100l7 7 13-15" stroke="#1F2937" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      </g>
-
-      <circle cx="465" cy="65" r="2.5" fill="#D4AF37" opacity="0.7" />
-      <circle cx="420" cy="35" r="1.8" fill="#D4AF37" opacity="0.5" />
-      <circle cx="55" cy="55" r="2" fill="#D4AF37" opacity="0.5" />
-      <circle cx="480" cy="200" r="1.8" fill="#0B6B57" opacity="0.35" />
-    </svg>
-  );
-}
-
 function Stars({ rating }: { rating: number }) {
   const pct = Math.round((rating / 5) * 100);
   return (
@@ -502,8 +444,9 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-admin-link { flex-shrink: 0; font-size: 12px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 9px 20px; text-decoration: none; white-space: nowrap; }
         @media (prefers-reduced-motion: no-preference) { .sf-admin-link { transition: background .15s ease; } .sf-admin-link:hover { background: var(--sf-secondary); } }
 
-        .sf-hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr; gap: 28px; align-items: center; padding: 14px 0 40px; }
-        @media (min-width: 900px) { .sf-hero-grid { grid-template-columns: 1fr 1fr; gap: 40px; padding: 24px 0 56px; } }
+        .sf-hero-grid { position: relative; z-index: 2; padding: 20px 0 48px; }
+        @media (min-width: 900px) { .sf-hero-grid { padding: 36px 0 64px; } }
+        .sf-hero-grid > div { max-width: 640px; margin: 0 auto; text-align: center; }
 
         .sf-hero-headline { font-weight: 800; font-size: 32px; line-height: 1.16; margin: 0 0 14px; }
         @media (min-width: 640px) { .sf-hero-headline { font-size: 44px; } }
@@ -520,15 +463,12 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-search-sparkle { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--sf-accent); pointer-events: none; }
         .sf-search-clear { position: absolute; right: 44px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; background: var(--sf-border); border: none; border-radius: 999px; color: var(--sf-ink); font-size: 10px; cursor: pointer; }
 
-        .sf-tabs-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+        .sf-tabs-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; overflow-x: auto; padding: 2px 4px 6px; scrollbar-width: none; }
+        @media (max-width: 640px) { .sf-tabs-row { flex-wrap: nowrap; justify-content: flex-start; mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); } }
         .sf-tabs-row::-webkit-scrollbar { display: none; }
         .sf-tab-btn { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--sf-border); background: var(--sf-card); color: var(--sf-ink); font-weight: 600; font-size: 12.5px; padding: 9px 16px; border-radius: 999px; transition: background .15s ease, color .15s ease, border-color .15s ease; cursor: pointer; }
         .sf-tab-btn svg { width: 14px; height: 14px; }
         .sf-tab-btn[aria-pressed=true] { background: var(--sf-primary); border-color: var(--sf-primary); color: var(--sf-white); }
-
-        .sf-hero-illustration-wrap { display: none; }
-        @media (min-width: 900px) { .sf-hero-illustration-wrap { display: block; } }
-        .sf-hero-illustration { width: 100%; height: auto; }
 
         .sf-curator { display: grid; grid-template-columns: 1fr; background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 22px; margin: 8px 0 28px; box-shadow: 0 10px 30px -14px rgba(31,41,55,.14); overflow: hidden; }
         @media (min-width: 720px) { .sf-curator { grid-template-columns: 1fr auto 220px; } }
@@ -785,10 +725,6 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                   );
                 })}
               </div>
-            </div>
-
-            <div className="sf-hero-illustration-wrap">
-              <HeroIllustration />
             </div>
           </div>
         </div>
