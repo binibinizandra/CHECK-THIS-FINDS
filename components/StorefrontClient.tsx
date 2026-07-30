@@ -91,11 +91,16 @@ function ProductGrid({ items }: { items: ProductRecord[] }) {
 
 export default function StorefrontClient({ products, isAdmin }: { products: ProductRecord[]; isAdmin: boolean }) {
   const [filter, setFilter] = useState("all");
+  const [search, setSearch] = useState("");
   const featured = products[0];
 
   useEffect(() => {
     track("page_view");
   }, []);
+
+  const searchQuery = search.trim().toLowerCase();
+  const searchActive = searchQuery.length > 0;
+  const searchResults = searchActive ? products.filter((p) => p.name.toLowerCase().includes(searchQuery)) : [];
 
   return (
     <>
@@ -117,6 +122,12 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-featured-name { font-size: 15px; font-weight: 600; line-height: 1.55; color: var(--sf-ink); max-width: 440px; }
 
         .sf-tabs-section { padding: 18px 0 6px; }
+        .sf-search-row { position: relative; margin-bottom: 12px; }
+        .sf-search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--sf-muted); pointer-events: none; }
+        .sf-search-input { width: 100%; font-size: 13px; padding: 11px 36px 11px 38px; border: 1px solid var(--sf-border); border-radius: 999px; background: var(--sf-card); color: var(--sf-ink); font-family: inherit; }
+        .sf-search-input::placeholder { color: var(--sf-muted); }
+        .sf-search-input:focus { outline: none; border-color: var(--sf-pink); }
+        .sf-search-clear { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: var(--sf-border); border: none; border-radius: 999px; color: var(--sf-ink); font-size: 11px; cursor: pointer; }
         .sf-tabs-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
         .sf-tabs-row::-webkit-scrollbar { display: none; }
         .sf-tab-btn { flex-shrink: 0; border: 1px solid var(--sf-border); background: var(--sf-card); color: var(--sf-ink); font-weight: 500; font-size: 11.5px; padding: 8px 16px; border-radius: 999px; transition: background .15s ease, color .15s ease, border-color .15s ease; cursor: pointer; }
@@ -224,6 +235,26 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
               )}
 
               <section className="sf-tabs-section">
+                <div className="sf-search-row">
+                  <svg className="sf-search-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                    <circle cx="9" cy="9" r="6.5" stroke="currentColor" strokeWidth="1.6" />
+                    <path d="M18 18L14 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                  </svg>
+                  <input
+                    type="text"
+                    className="sf-search-input"
+                    placeholder="Search products..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    aria-label="Search products"
+                  />
+                  {searchActive && (
+                    <button type="button" className="sf-search-clear" onClick={() => setSearch("")} aria-label="Clear search">
+                      ✕
+                    </button>
+                  )}
+                </div>
+
                 <div className="sf-tabs-row" role="tablist" aria-label="Product categories">
                   {TABS.map((t) => (
                     <button
@@ -231,7 +262,10 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                       type="button"
                       className="sf-tab-btn"
                       aria-pressed={filter === t.key}
-                      onClick={() => setFilter(t.key)}
+                      onClick={() => {
+                        setFilter(t.key);
+                        setSearch("");
+                      }}
                     >
                       {t.label}
                     </button>
@@ -247,18 +281,26 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         ) : (
           <main className="sf-wrap">
             <section className="sf-grid-section">
-              {filter === "all"
-                ? Object.keys(CATEGORIES).map((key) => {
-                    const items = products.filter((p) => p.category === key);
-                    if (!items.length) return null;
-                    return (
-                      <div key={key}>
-                        <div className="sf-cat-label">{CATEGORIES[key]}</div>
-                        <ProductGrid items={items} />
-                      </div>
-                    );
-                  })
-                : <ProductGrid items={products.filter((p) => p.category === filter)} />}
+              {searchActive ? (
+                searchResults.length > 0 ? (
+                  <ProductGrid items={searchResults} />
+                ) : (
+                  <div className="sf-empty">No products match &quot;{search}&quot;.</div>
+                )
+              ) : filter === "all" ? (
+                Object.keys(CATEGORIES).map((key) => {
+                  const items = products.filter((p) => p.category === key);
+                  if (!items.length) return null;
+                  return (
+                    <div key={key}>
+                      <div className="sf-cat-label">{CATEGORIES[key]}</div>
+                      <ProductGrid items={items} />
+                    </div>
+                  );
+                })
+              ) : (
+                <ProductGrid items={products.filter((p) => p.category === filter)} />
+              )}
             </section>
           </main>
         )}
