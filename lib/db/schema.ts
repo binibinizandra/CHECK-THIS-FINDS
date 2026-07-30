@@ -278,3 +278,14 @@ export const comments = pgTable(
   },
   (t) => [index("comments_product_id_idx").on(t.productId)]
 );
+
+export const analyticsEvents = pgTable(
+  "analytics_events",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    type: text("type").notNull(),
+    productId: uuid("product_id").references(() => products.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("analytics_events_type_idx").on(t.type), index("analytics_events_product_idx").on(t.productId)]
+);

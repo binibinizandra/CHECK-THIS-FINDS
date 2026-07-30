@@ -24,7 +24,15 @@ const EMPTY_FORM = {
   published: true,
 };
 
-export default function ProductManager({ initialProducts }: { initialProducts: ProductRecord[] }) {
+export default function ProductManager({
+  initialProducts,
+  pageViews,
+  productClicks,
+}: {
+  initialProducts: ProductRecord[];
+  pageViews: number;
+  productClicks: Record<string, number>;
+}) {
   const [products, setProducts] = useState(initialProducts);
   const [form, setForm] = useState(EMPTY_FORM);
   const [uploading, setUploading] = useState(false);
@@ -173,6 +181,10 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
         .am-checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #0A192F; cursor: pointer; }
         .am-hint { font-size: 11.5px; color: #8B92A3; margin-top: 4px; }
         .am-badge-hidden { display: inline-block; font-size: 10px; font-weight: 700; color: #A87B00; background: #FFF3D6; border-radius: 999px; padding: 2px 8px; margin-left: 6px; vertical-align: middle; }
+        .am-stats-card { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #ECE7DC; border-radius: 14px; padding: 14px 18px; margin-bottom: 20px; }
+        .am-stats-num { font-weight: 800; font-size: 22px; color: #0A192F; }
+        .am-stats-label { font-size: 12px; color: #8B92A3; font-weight: 600; }
+        .am-list-clicks { font-size: 11px; font-weight: 700; color: #A87B00; }
       `}</style>
 
       <div className="am-wrap">
@@ -185,6 +197,11 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
             <a className="am-back" href="/">View live site</a>
             <UserButton afterSignOutUrl="/" />
           </div>
+        </div>
+
+        <div className="am-stats-card">
+          <span className="am-stats-num">{pageViews.toLocaleString()}</span>
+          <span className="am-stats-label">total site views</span>
         </div>
 
         <div className="am-card">
@@ -277,6 +294,7 @@ export default function ProductManager({ initialProducts }: { initialProducts: P
               <div className="am-list-meta">
                 {CATEGORIES.find((c) => c.key === p.category)?.label ?? p.category} · {p.rating.toFixed(1)}★ ({p.reviews})
               </div>
+              <div className="am-list-clicks">{productClicks[p.id] ?? 0} Shopee clicks</div>
             </div>
             <div className="am-list-actions">
               <button type="button" onClick={() => handleTogglePublished(p)}>{p.published ? "Hide" : "Publish"}</button>

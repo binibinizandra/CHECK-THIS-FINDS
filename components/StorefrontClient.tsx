@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Poppins } from "next/font/google";
 import type { ProductRecord } from "@/lib/products/store";
+import { track } from "@/lib/tracking/track";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 
@@ -50,7 +51,13 @@ function ProductCard({ p }: { p: ProductRecord }) {
       </Link>
       <div className="sf-card-actions">
         {p.shopeeLink && (
-          <a className="sf-btn-store" href={p.shopeeLink} target="_blank" rel="noopener noreferrer">
+          <a
+            className="sf-btn-store"
+            href={p.shopeeLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => track("product_click", p.id)}
+          >
             Buy on Shopee
           </a>
         )}
@@ -85,6 +92,10 @@ function ProductGrid({ items }: { items: ProductRecord[] }) {
 export default function StorefrontClient({ products, isAdmin }: { products: ProductRecord[]; isAdmin: boolean }) {
   const [filter, setFilter] = useState("all");
   const featured = products[0];
+
+  useEffect(() => {
+    track("page_view");
+  }, []);
 
   return (
     <>

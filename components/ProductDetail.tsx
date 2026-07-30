@@ -2,6 +2,7 @@ import { Poppins } from "next/font/google";
 import type { ProductRecord } from "@/lib/products/store";
 import type { CommentRecord } from "@/lib/comments/store";
 import ProductComments from "@/components/ProductComments";
+import { ProductViewTracker, TrackedBuyButton } from "@/components/ProductTracking";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 
@@ -102,6 +103,8 @@ export default function ProductDetail({
           minHeight: "100dvh",
         }}
       >
+        <ProductViewTracker productId={product.id} />
+
         <header className="pd-header">
           <div className="pd-wrap pd-header-row">
             <a href="/" className="pd-brand">Check This Finds</a>
@@ -158,11 +161,7 @@ export default function ProductDetail({
               )}
 
               <div className="pd-cta-row">
-                {product.shopeeLink && (
-                  <a className="pd-btn-store" href={product.shopeeLink} target="_blank" rel="noopener noreferrer">
-                    Buy on Shopee
-                  </a>
-                )}
+                {product.shopeeLink && <TrackedBuyButton productId={product.id} shopeeLink={product.shopeeLink} />}
               </div>
             </div>
           </div>
