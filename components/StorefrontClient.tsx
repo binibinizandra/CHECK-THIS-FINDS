@@ -164,6 +164,9 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-curator-avatar { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: var(--sf-pink); color: var(--sf-white); font-weight: 800; font-size: 13px; letter-spacing: 0.02em; }
         .sf-curator-text { margin: 0; font-size: 13px; line-height: 1.55; color: var(--sf-ink); }
         .sf-curator-text strong { font-weight: 700; }
+        .sf-curator-linkedin { display: inline-flex; align-items: center; gap: 5px; margin-top: 8px; font-size: 11.5px; font-weight: 600; color: var(--sf-muted); text-decoration: none; }
+        .sf-curator-linkedin svg { width: 13px; height: 13px; flex-shrink: 0; }
+        .sf-curator-linkedin:hover { color: #0A66C2; }
 
         .sf-faq { margin: 30px 0 10px; }
         .sf-faq-title { font-size: 13px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--sf-ink); margin: 0 0 14px; padding-left: 10px; border-left: 3px solid var(--sf-pink); }
@@ -175,9 +178,10 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-faq-item p { margin: 0 0 16px; font-size: 13px; line-height: 1.6; color: var(--sf-muted); }
 
         .sf-footer { margin-top: 24px; border-top: 1px solid var(--sf-border); padding: 28px 0 44px; }
-        .sf-footer-links { display: flex; justify-content: center; margin-bottom: 10px; }
+        .sf-footer-links { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
         .sf-footer-link { font-size: 12.5px; font-weight: 600; color: var(--sf-pink); text-decoration: none; }
         .sf-footer-link:hover { text-decoration: underline; }
+        .sf-footer-dot { color: var(--sf-muted); font-size: 11px; }
         .sf-footer-copy { font-size: 12.5px; color: var(--sf-ink); text-align: center; }
 
         .sf-empty { text-align: center; padding: 60px 20px; color: var(--sf-muted); font-size: 14px; }
@@ -298,9 +302,22 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         <div className="sf-wrap">
           <section className="sf-curator">
             <span className="sf-curator-avatar" aria-hidden="true">KB</span>
-            <p className="sf-curator-text">
-              Curated by <strong>Kazandra B.</strong> — Handpicking tested, top-rated, and no-budol items so you can shop with confidence.
-            </p>
+            <div>
+              <p className="sf-curator-text">
+                Curated by <strong>Kazandra B.</strong> — Handpicking tested, top-rated, and no-budol items so you can shop with confidence.
+              </p>
+              <a
+                href="https://www.linkedin.com/in/binibinizandra/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sf-curator-linkedin"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
+                </svg>
+                Verified Curator
+              </a>
+            </div>
           </section>
         </div>
 
@@ -358,6 +375,15 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
           <div className="sf-wrap">
             <div className="sf-footer-links">
               <Link href="/about" className="sf-footer-link">About Us</Link>
+              <span className="sf-footer-dot" aria-hidden="true">·</span>
+              <a
+                href="https://www.linkedin.com/in/binibinizandra/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="sf-footer-link"
+              >
+                Connect with the Founder on LinkedIn
+              </a>
             </div>
             <div className="sf-footer-copy">© {new Date().getFullYear()} Check This Finds. All rights reserved.</div>
           </div>

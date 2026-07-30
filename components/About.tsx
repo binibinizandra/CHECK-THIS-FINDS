@@ -29,6 +29,9 @@ export default function About() {
         .ab-curator-avatar { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; background: var(--sf-pink); color: var(--sf-white); font-weight: 800; font-size: 14px; }
         .ab-curator-name { font-size: 13.5px; font-weight: 800; color: var(--sf-ink); margin-bottom: 6px; }
         .ab-curator-text { font-size: 13.5px; line-height: 1.7; color: var(--sf-ink); margin: 0; }
+        .ab-curator-linkedin { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 12px; font-weight: 600; color: var(--sf-muted); text-decoration: none; }
+        .ab-curator-linkedin svg { width: 14px; height: 14px; flex-shrink: 0; }
+        .ab-curator-linkedin:hover { color: #0A66C2; }
 
         .ab-faq-title { font-size: 12px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--sf-ink); margin: 0 0 14px; padding-left: 10px; border-left: 3px solid var(--sf-pink); }
         .ab-faq-item { background: var(--sf-card); border-radius: 14px; padding: 4px 18px; margin-bottom: 10px; box-shadow: 0 4px 16px -6px rgba(60,45,55,.14); }
@@ -39,6 +42,9 @@ export default function About() {
         .ab-faq-item p { margin: 0 0 16px; font-size: 13px; line-height: 1.65; color: var(--sf-muted); }
 
         .ab-footer { margin-top: 24px; border-top: 1px solid var(--sf-border); padding: 28px 0 40px; }
+        .ab-footer-links { display: flex; justify-content: center; margin-bottom: 10px; }
+        .ab-footer-link { font-size: 12.5px; font-weight: 600; color: var(--sf-pink); text-decoration: none; }
+        .ab-footer-link:hover { text-decoration: underline; }
         .ab-footer-copy { font-size: 12.5px; color: var(--sf-muted); text-align: center; }
 
         :root {
@@ -113,6 +119,17 @@ export default function About() {
                 money. Every item listed here is handpicked based on high ratings, verified buyer reviews, and
                 real value.
               </p>
+              <a
+                href="https://www.linkedin.com/in/binibinizandra/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ab-curator-linkedin"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
+                </svg>
+                Connect with the Founder on LinkedIn
+              </a>
             </div>
           </div>
 
@@ -155,7 +172,19 @@ export default function About() {
         </main>
 
         <footer className="ab-footer">
-          <div className="ab-wrap ab-footer-copy">© {new Date().getFullYear()} Check This Finds. This site contains affiliate links.</div>
+          <div className="ab-wrap">
+            <div className="ab-footer-links">
+              <a
+                href="https://www.linkedin.com/in/binibinizandra/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ab-footer-link"
+              >
+                Connect with the Founder on LinkedIn
+              </a>
+            </div>
+            <div className="ab-footer-copy">© {new Date().getFullYear()} Check This Finds. This site contains affiliate links.</div>
+          </div>
         </footer>
       </div>
     </>
