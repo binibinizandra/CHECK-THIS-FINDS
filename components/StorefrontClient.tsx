@@ -175,6 +175,9 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-faq-item p { margin: 0 0 16px; font-size: 13px; line-height: 1.6; color: var(--sf-muted); }
 
         .sf-footer { margin-top: 24px; border-top: 1px solid var(--sf-border); padding: 28px 0 44px; }
+        .sf-footer-links { display: flex; justify-content: center; margin-bottom: 10px; }
+        .sf-footer-link { font-size: 12.5px; font-weight: 600; color: var(--sf-pink); text-decoration: none; }
+        .sf-footer-link:hover { text-decoration: underline; }
         .sf-footer-copy { font-size: 12.5px; color: var(--sf-ink); text-align: center; }
 
         .sf-empty { text-align: center; padding: 60px 20px; color: var(--sf-muted); font-size: 14px; }
@@ -353,6 +356,9 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         <footer className="sf-footer">
           <div className="sf-wrap">
+            <div className="sf-footer-links">
+              <Link href="/about" className="sf-footer-link">About Us</Link>
+            </div>
             <div className="sf-footer-copy">© {new Date().getFullYear()} Check This Finds. All rights reserved.</div>
           </div>
         </footer>
