@@ -109,25 +109,25 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         .sf-banner { position: relative; background-color: #EFE9EC; background-image: url(/images/banner-flowers.png); background-size: cover; background-position: top center; background-repeat: no-repeat; }
         .sf-header { position: relative; z-index: 2; }
-        .sf-header-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: 16px; padding: 90px 0 34px; }
+        .sf-header-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: 16px; padding: 190px 0 34px; }
         .sf-brand-block { grid-column: 2; display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; text-align: center; }
         .sf-brand-name { font-weight: 700; font-size: 26px; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.1; }
         @media (min-width: 600px) { .sf-brand-name { font-size: 32px; } }
         .sf-brand-tagline { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-muted); }
         .sf-admin-link { grid-column: 3; justify-self: end; flex-shrink: 0; font-size: 11px; font-weight: 600; color: var(--sf-white); background: var(--sf-pink); border: none; border-radius: 999px; padding: 7px 16px; }
 
-        .sf-featured { padding: 120px 0 8px; }
-        @media (min-width: 700px) { .sf-featured { padding-top: 170px; } }
+        .sf-featured { padding: 20px 0 8px; }
+        @media (min-width: 700px) { .sf-featured { padding-top: 70px; } }
         .sf-featured-title-row { display: flex; flex-direction: column; }
         .sf-featured-name { font-size: 15px; font-weight: 600; line-height: 1.55; color: var(--sf-ink); max-width: 440px; }
 
         .sf-tabs-section { padding: 18px 0 6px; }
-        .sf-search-row { position: relative; margin-bottom: 12px; }
-        .sf-search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--sf-muted); pointer-events: none; }
-        .sf-search-input { width: 100%; font-size: 13px; padding: 11px 36px 11px 38px; border: 1px solid var(--sf-border); border-radius: 999px; background: var(--sf-card); color: var(--sf-ink); font-family: inherit; }
+        .sf-search-row { position: relative; width: 150px; margin-left: auto; margin-bottom: 12px; }
+        .sf-search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; color: var(--sf-muted); pointer-events: none; }
+        .sf-search-input { width: 100%; font-size: 11.5px; padding: 7px 26px 7px 29px; border: 1px solid var(--sf-border); border-radius: 999px; background: var(--sf-card); color: var(--sf-ink); font-family: inherit; }
         .sf-search-input::placeholder { color: var(--sf-muted); }
         .sf-search-input:focus { outline: none; border-color: var(--sf-pink); }
-        .sf-search-clear { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: var(--sf-border); border: none; border-radius: 999px; color: var(--sf-ink); font-size: 11px; cursor: pointer; }
+        .sf-search-clear { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; background: var(--sf-border); border: none; border-radius: 999px; color: var(--sf-ink); font-size: 9px; cursor: pointer; }
         .sf-tabs-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
         .sf-tabs-row::-webkit-scrollbar { display: none; }
         .sf-tab-btn { flex-shrink: 0; border: 1px solid var(--sf-border); background: var(--sf-card); color: var(--sf-ink); font-weight: 500; font-size: 11.5px; padding: 8px 16px; border-radius: 999px; transition: background .15s ease, color .15s ease, border-color .15s ease; cursor: pointer; }
