@@ -160,6 +160,20 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-btn-store { display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; padding: 7px 4px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-pink); }
         @media (prefers-reduced-motion: no-preference) { .sf-btn-store { transition: opacity .15s ease; } .sf-btn-store:hover { opacity: .85; } }
 
+        .sf-curator { display: flex; align-items: center; gap: 14px; background: var(--sf-card); border-radius: 18px; padding: 16px 20px; margin: 18px 0 8px; box-shadow: 0 4px 16px -6px rgba(60,45,55,.18); }
+        .sf-curator-avatar { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: var(--sf-pink); color: var(--sf-white); font-weight: 800; font-size: 13px; letter-spacing: 0.02em; }
+        .sf-curator-text { margin: 0; font-size: 13px; line-height: 1.55; color: var(--sf-ink); }
+        .sf-curator-text strong { font-weight: 700; }
+
+        .sf-faq { margin: 30px 0 10px; }
+        .sf-faq-title { font-size: 13px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--sf-ink); margin: 0 0 14px; padding-left: 10px; border-left: 3px solid var(--sf-pink); }
+        .sf-faq-item { background: var(--sf-card); border-radius: 14px; padding: 4px 18px; margin-bottom: 10px; box-shadow: 0 4px 16px -6px rgba(60,45,55,.14); }
+        .sf-faq-item summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 0; font-size: 13.5px; font-weight: 700; color: var(--sf-ink); cursor: pointer; }
+        .sf-faq-item summary::-webkit-details-marker { display: none; }
+        .sf-faq-item summary::after { content: "+"; flex-shrink: 0; font-size: 18px; font-weight: 400; color: var(--sf-pink); transition: transform .15s ease; }
+        .sf-faq-item[open] summary::after { transform: rotate(45deg); }
+        .sf-faq-item p { margin: 0 0 16px; font-size: 13px; line-height: 1.6; color: var(--sf-muted); }
+
         .sf-footer { margin-top: 24px; border-top: 1px solid var(--sf-border); padding: 28px 0 44px; }
         .sf-footer-copy { font-size: 12.5px; color: var(--sf-ink); text-align: center; }
 
@@ -278,6 +292,15 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
           )}
         </div>
 
+        <div className="sf-wrap">
+          <section className="sf-curator">
+            <span className="sf-curator-avatar" aria-hidden="true">KB</span>
+            <p className="sf-curator-text">
+              Curated by <strong>Kazandra B.</strong> — Handpicking tested, top-rated, and no-budol items so you can shop with confidence.
+            </p>
+          </section>
+        </div>
+
         {products.length === 0 ? (
           <div className="sf-empty">No products yet. Check back soon!</div>
         ) : (
@@ -306,6 +329,27 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
             </section>
           </main>
         )}
+
+        <div className="sf-wrap">
+          <section className="sf-faq">
+            <h2 className="sf-faq-title">Frequently Asked Questions</h2>
+
+            <details className="sf-faq-item">
+              <summary>How does ordering work?</summary>
+              <p>Every &quot;Buy on Shopee&quot; button takes you straight to the real, verified listing on Shopee. We never process payments or hold your money — you check out directly with Shopee, the same as always.</p>
+            </details>
+
+            <details className="sf-faq-item">
+              <summary>How are products chosen?</summary>
+              <p>Every item featured here is checked against seller ratings, verified reviews, and trusted seller badges before it gets listed — no random picks, no guesswork.</p>
+            </details>
+
+            <details className="sf-faq-item">
+              <summary>Do I pay extra for shopping through this site?</summary>
+              <p>No. You pay the exact same official Shopee price — zero extra cost to you. We may earn a small commission from Shopee, but it never changes what you pay.</p>
+            </details>
+          </section>
+        </div>
 
         <footer className="sf-footer">
           <div className="sf-wrap">
