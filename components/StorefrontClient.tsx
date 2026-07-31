@@ -33,11 +33,13 @@ const BADGE_INFO: Record<string, { label: string; bg: string; color: string; ico
 
 function LogoMark({ size = 40 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 40 40" fill="none" aria-hidden="true">
-      <circle cx="20" cy="20" r="16.25" stroke="#0B6B57" strokeWidth="3" />
-      <path d="M20.5 3.75A16.25 16.25 0 0 1 34.9 13.1" stroke="#D4AF37" strokeWidth="3" strokeLinecap="round" />
-      <path d="M13 20.5l4.5 4.5 9.5-10.5" stroke="#0B6B57" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <img
+      src="/images/logo.png"
+      alt="Check This Finds"
+      width={size}
+      height={size}
+      style={{ width: size, height: size, objectFit: "contain", flexShrink: 0 }}
+    />
   );
 }
 
@@ -418,6 +420,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
         .sf-hero { position: relative; overflow: hidden; }
+        .sf-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
 
         .sf-nav-row { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; }
         .sf-brand-block { display: flex; align-items: center; gap: 11px; }
@@ -605,6 +608,47 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         }}
       >
         <div className="sf-hero">
+          <svg className="sf-hero-bg" viewBox="0 0 1400 620" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
+            <defs>
+              <linearGradient id="sfWaveGrad" x1="0" y1="0" x2="1" y2="0.3">
+                <stop offset="0%" stopColor="#0B6B57" />
+                <stop offset="55%" stopColor="#0F766E" />
+                <stop offset="100%" stopColor="#D4AF37" />
+              </linearGradient>
+              <linearGradient id="sfWaveGrad2" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#D4AF37" />
+                <stop offset="100%" stopColor="#0B6B57" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M-50 180 C 150 80, 320 260, 520 140 S 900 20, 1100 90 S 1420 60, 1500 -20"
+              stroke="url(#sfWaveGrad)"
+              strokeWidth="2.5"
+              fill="none"
+              opacity="0.28"
+            />
+            <path
+              d="M-50 300 C 200 220, 380 400, 600 260 S 980 140, 1180 220 S 1450 180, 1520 100"
+              stroke="url(#sfWaveGrad2)"
+              strokeWidth="1.75"
+              fill="none"
+              opacity="0.18"
+            />
+            <path
+              d="M-50 60 C 180 120, 260 -20, 480 40 S 820 120, 1000 30"
+              stroke="url(#sfWaveGrad)"
+              strokeWidth="1.5"
+              fill="none"
+              opacity="0.15"
+            />
+            <circle cx="1180" cy="70" r="3" fill="#D4AF37" opacity="0.6" />
+            <circle cx="1260" cy="150" r="2" fill="#D4AF37" opacity="0.5" />
+            <circle cx="1080" cy="220" r="2.2" fill="#0B6B57" opacity="0.35" />
+            <circle cx="1340" cy="240" r="1.6" fill="#D4AF37" opacity="0.45" />
+            <circle cx="960" cy="100" r="1.6" fill="#D4AF37" opacity="0.4" />
+            <circle cx="80" cy="90" r="2" fill="#0B6B57" opacity="0.25" />
+          </svg>
+
           <div className="sf-wrap sf-nav-row">
             <div className="sf-brand-block">
               <LogoMark size={36} />

@@ -5,11 +5,13 @@ const playfair = Playfair_Display({ subsets: ["latin"], weight: ["600", "700", "
 
 function LogoMark({ size = 32 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 40 40" fill="none" aria-hidden="true">
-      <circle cx="20" cy="20" r="16.25" stroke="#0B6B57" strokeWidth="3" />
-      <path d="M20.5 3.75A16.25 16.25 0 0 1 34.9 13.1" stroke="#D4AF37" strokeWidth="3" strokeLinecap="round" />
-      <path d="M13 20.5l4.5 4.5 9.5-10.5" stroke="#0B6B57" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
+    <img
+      src="/images/logo.png"
+      alt="Check This Finds"
+      width={size}
+      height={size}
+      style={{ width: size, height: size, objectFit: "contain", flexShrink: 0 }}
+    />
   );
 }
 
