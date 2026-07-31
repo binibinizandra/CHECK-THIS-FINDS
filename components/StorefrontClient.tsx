@@ -635,28 +635,14 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         }}
       >
         <div className="sf-hero">
-          <svg className="sf-hero-bg" viewBox="0 0 1400 620" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
-            <path
-              d="M-50 180 C 150 80, 320 260, 520 140 S 900 20, 1100 90 S 1420 60, 1500 -20"
-              stroke="#0B6B57"
-              strokeWidth="1.5"
-              fill="none"
-              opacity="0.08"
-            />
-            <path
-              d="M-50 300 C 200 220, 380 400, 600 260 S 980 140, 1180 220 S 1450 180, 1520 100"
-              stroke="#0B6B57"
-              strokeWidth="1.25"
-              fill="none"
-              opacity="0.06"
-            />
-            <path
-              d="M-50 60 C 180 120, 260 -20, 480 40 S 820 120, 1000 30"
-              stroke="#D4AF37"
-              strokeWidth="1"
-              fill="none"
-              opacity="0.07"
-            />
+          <svg className="sf-hero-bg" viewBox="0 0 1400 620" preserveAspectRatio="xMidYMin slice" fill="none" aria-hidden="true">
+            <path d="M-50 260 C 250 150, 450 350, 700 220 S 1150 80, 1450 180" stroke="#0B6B57" strokeWidth="1.6" opacity="0.22" />
+            <path d="M-50 200 C 280 320, 480 100, 760 260 S 1180 380, 1450 260" stroke="#0F766E" strokeWidth="1.3" opacity="0.16" />
+            <path d="M-50 340 C 300 220, 520 420, 820 300 S 1200 180, 1450 320" stroke="#D4AF37" strokeWidth="1.1" opacity="0.28" />
+            <path d="M-50 120 C 220 60, 420 200, 680 100 S 1080 20, 1450 100" stroke="#A8B79A" strokeWidth="1" opacity="0.16" />
+            <path d="M-50 400 C 260 480, 500 320, 780 420 S 1160 520, 1450 400" stroke="#0B6B57" strokeWidth="1" opacity="0.12" />
+            <path d="M-50 40 C 200 -20, 380 90, 620 20 S 980 -30, 1300 40" stroke="#D4AF37" strokeWidth="0.9" opacity="0.18" />
+            <path d="M-50 500 C 240 440, 460 560, 740 480 S 1140 400, 1450 500" stroke="#0F766E" strokeWidth="1" opacity="0.1" />
           </svg>
 
           <div className="sf-wrap sf-nav-row">
