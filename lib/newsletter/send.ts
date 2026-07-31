@@ -21,7 +21,12 @@ export async function sendNewsletterBroadcast(subject: string, message: string):
   const apiKey = process.env.BREVO_API_KEY;
   const senderEmail = process.env.BREVO_SENDER_EMAIL;
   if (!apiKey || !senderEmail) {
-    throw new Error("Email sending isn't set up yet — add BREVO_API_KEY and BREVO_SENDER_EMAIL in Vercel first.");
+    const missing: string[] = [];
+    if (!apiKey) missing.push("BREVO_API_KEY");
+    if (!senderEmail) missing.push("BREVO_SENDER_EMAIL");
+    throw new Error(
+      `DEBUG: missing=[${missing.join(", ")}] apiKeyLen=${apiKey?.length ?? "undefined"} senderEmailLen=${senderEmail?.length ?? "undefined"}`
+    );
   }
 
   const subscribers = await listSubscribers();
