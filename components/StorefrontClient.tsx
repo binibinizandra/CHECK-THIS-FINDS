@@ -68,6 +68,17 @@ function ChevronIcon({ className }: { className?: string }) {
   );
 }
 
+function GridIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <rect x="2" y="2" width="7" height="7" rx="1.5" />
+      <rect x="11" y="2" width="7" height="7" rx="1.5" />
+      <rect x="2" y="11" width="7" height="7" rx="1.5" />
+      <rect x="11" y="11" width="7" height="7" rx="1.5" />
+    </svg>
+  );
+}
+
 function BagIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -750,7 +761,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
                 <div className="sf-tabs-row" role="tablist" aria-label="Product categories">
                   {TABS.map((t) => {
-                    const Icon = t.key === "all" ? SparkleIcon : CATEGORY_ICON[t.key];
+                    const Icon = t.key === "all" ? GridIcon : CATEGORY_ICON[t.key];
                     return (
                       <button
                         key={t.key}
