@@ -433,7 +433,8 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-hero { position: relative; overflow: hidden; }
         .sf-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
 
-        .sf-nav-row { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; }
+        .sf-header { position: sticky; top: 0; z-index: 20; background: rgba(250,250,247,.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--sf-border); }
+        .sf-nav-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; }
         .sf-brand-block { display: flex; align-items: center; gap: 11px; }
         .sf-brand-text { display: flex; flex-direction: column; gap: 1px; }
         .sf-brand-name { font-weight: 800; font-size: 19px; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.1; }
@@ -460,32 +461,17 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         .sf-hero-grid { position: relative; z-index: 2; padding: 28px 0 48px; }
         @media (min-width: 900px) { .sf-hero-grid { padding: 40px 0 60px; } }
-        .sf-hero-grid-inner { display: grid; grid-template-columns: 1fr; gap: 36px; align-items: center; }
-        @media (min-width: 960px) { .sf-hero-grid-inner { grid-template-columns: 1.1fr 0.9fr; gap: 48px; } }
-        .sf-hero-copy { max-width: 560px; }
-        .sf-hero-photo { display: none; }
-        @media (min-width: 760px) {
-          .sf-hero-photo {
-            display: block;
-            width: 100%;
-          }
-          .sf-hero-photo img {
-            width: 100%;
-            height: auto;
-            display: block;
-            mask-image: radial-gradient(ellipse 62% 68% at 50% 50%, black 45%, transparent 92%);
-            -webkit-mask-image: radial-gradient(ellipse 62% 68% at 50% 50%, black 45%, transparent 92%);
-          }
-        }
+        .sf-hero-grid-inner { display: flex; justify-content: center; }
+        .sf-hero-copy { max-width: 600px; text-align: center; }
 
         .sf-hero-headline { font-weight: 800; font-size: 32px; line-height: 1.16; margin: 0 0 14px; }
         @media (min-width: 640px) { .sf-hero-headline { font-size: 44px; } }
         .sf-hero-headline span { display: block; }
         .sf-hero-headline-l1 { color: var(--sf-primary); }
         .sf-hero-headline-l2 { color: var(--sf-accent); }
-        .sf-hero-sub { font-size: 14.5px; line-height: 1.65; color: var(--sf-muted); max-width: 440px; margin: 0 0 28px; }
+        .sf-hero-sub { font-size: 14.5px; line-height: 1.65; color: var(--sf-muted); max-width: 440px; margin: 0 auto 28px; }
 
-        .sf-search-row { position: relative; margin-bottom: 18px; max-width: 480px; }
+        .sf-search-row { position: relative; margin: 0 auto 18px; max-width: 480px; }
         .sf-search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; color: var(--sf-muted); pointer-events: none; }
         .sf-search-input { width: 100%; font-size: 14px; padding: 16px 46px 16px 48px; border: 1px solid var(--sf-border); border-radius: 999px; background: var(--sf-card); color: var(--sf-ink); font-family: inherit; box-shadow: 0 8px 24px -10px rgba(31,41,55,.16); }
         .sf-search-input::placeholder { color: var(--sf-muted); }
@@ -493,7 +479,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-search-sparkle { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--sf-accent); pointer-events: none; }
         .sf-search-clear { position: absolute; right: 44px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; background: var(--sf-border); border: none; border-radius: 999px; color: var(--sf-ink); font-size: 10px; cursor: pointer; }
 
-        .sf-tabs-row { display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 8px; overflow-x: auto; padding: 2px 4px 6px; scrollbar-width: none; }
+        .sf-tabs-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; overflow-x: auto; padding: 2px 4px 6px; scrollbar-width: none; }
         @media (max-width: 640px) { .sf-tabs-row { flex-wrap: nowrap; mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); } }
         .sf-tabs-row::-webkit-scrollbar { display: none; }
         .sf-tab-btn { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--sf-border); background: var(--sf-card); color: var(--sf-ink); font-weight: 600; font-size: 12.5px; padding: 9px 16px; border-radius: 999px; transition: background .15s ease, color .15s ease, border-color .15s ease; cursor: pointer; }
@@ -520,35 +506,35 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-curator-stat-label { font-size: 12px; font-weight: 700; color: var(--sf-ink); }
         .sf-curator-stat-sub { font-size: 11px; color: var(--sf-muted); line-height: 1.4; }
 
-        .sf-trust-wrap { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 24px; padding: 30px 24px; margin: 8px 0 32px; box-shadow: 0 10px 30px -16px rgba(31,41,55,.14); }
-        .sf-trust-title { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-primary); text-align: center; margin: 0 0 26px; }
+        .sf-trust-wrap { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 24px; padding: 38px 30px; margin: 16px 0 56px; box-shadow: 0 20px 48px -28px rgba(31,41,55,.16); }
+        .sf-trust-title { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-primary); text-align: center; margin: 0 0 30px; }
         .sf-trust-title svg { width: 14px; height: 14px; color: var(--sf-accent); }
-        .sf-trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
-        @media (min-width: 720px) { .sf-trust-grid { grid-template-columns: repeat(5, 1fr); gap: 16px; } }
+        .sf-trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
+        @media (min-width: 720px) { .sf-trust-grid { grid-template-columns: repeat(5, 1fr); gap: 18px; } }
         .sf-trust-item { text-align: center; }
-        .sf-trust-icon { width: 46px; height: 46px; border-radius: 50%; background: var(--sf-bg); display: flex; align-items: center; justify-content: center; color: var(--sf-primary); margin: 0 auto 14px; }
+        .sf-trust-icon { width: 46px; height: 46px; border-radius: 50%; background: var(--sf-bg); display: flex; align-items: center; justify-content: center; color: var(--sf-primary); margin: 0 auto 16px; }
         .sf-trust-icon svg { width: 21px; height: 21px; }
         .sf-trust-item-title { font-size: 12.5px; font-weight: 800; color: var(--sf-ink); margin-bottom: 6px; }
         .sf-trust-item-text { font-size: 11.5px; line-height: 1.5; color: var(--sf-muted); }
 
-        .sf-grid-section { padding: 0 0 40px; }
-        .sf-cat-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 30px 0 14px; }
+        .sf-grid-section { padding: 0 0 56px; }
+        .sf-cat-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 40px 0 18px; }
         .sf-cat-header:first-child { margin-top: 0; }
         .sf-cat-label { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: var(--sf-ink); }
         .sf-cat-label svg { width: 16px; height: 16px; color: var(--sf-primary); }
         .sf-cat-viewall { font-size: 12px; font-weight: 700; color: var(--sf-primary); background: none; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 3px; }
         .sf-cat-viewall:hover { text-decoration: underline; }
 
-        .sf-product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .sf-product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         @media (min-width: 560px) { .sf-product-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (min-width: 800px) { .sf-product-grid { grid-template-columns: repeat(4, 1fr); } }
         @media (min-width: 1080px) { .sf-product-grid { grid-template-columns: repeat(5, 1fr); } }
 
-        .sf-load-more { display: block; margin: 20px auto 0; font-size: 12.5px; font-weight: 700; color: var(--sf-primary); background: var(--sf-card); border: 1px solid var(--sf-primary); border-radius: 999px; padding: 10px 24px; cursor: pointer; }
+        .sf-load-more { display: block; margin: 28px auto 0; font-size: 12.5px; font-weight: 700; color: var(--sf-primary); background: var(--sf-card); border: 1px solid var(--sf-primary); border-radius: 999px; padding: 10px 24px; cursor: pointer; }
         @media (prefers-reduced-motion: no-preference) { .sf-load-more { transition: background .15s ease, color .15s ease; } .sf-load-more:hover { background: var(--sf-primary); color: var(--sf-white); } }
 
-        .sf-card { background: var(--sf-card); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 12px 28px -16px rgba(31,41,55,.22); transition: box-shadow .2s ease, transform .2s ease; }
-        @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 20px 36px -14px rgba(31,41,55,.3); transform: translateY(-5px); } }
+        .sf-card { background: var(--sf-card); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 16px 36px -22px rgba(31,41,55,.2); transition: box-shadow .25s ease, transform .25s ease; }
+        @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 26px 44px -20px rgba(31,41,55,.26); transform: translateY(-6px); } }
         .sf-card-link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; min-width: 0; }
         .sf-card-media { position: relative; aspect-ratio: 1; background: var(--sf-border); }
         .sf-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -570,7 +556,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-btn-store { display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 700; padding: 10px 8px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-primary); }
         @media (prefers-reduced-motion: no-preference) { .sf-btn-store { transition: background .15s ease; } .sf-btn-store:hover { background: var(--sf-secondary); } }
 
-        .sf-cta { background: var(--sf-primary); border-radius: 26px; margin: 0 0 44px; padding: 32px 26px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px; }
+        .sf-cta { background: var(--sf-primary); border-radius: 26px; margin: 0 0 56px; padding: 32px 26px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px; box-shadow: 0 24px 48px -24px rgba(11,107,87,.4); }
         @media (min-width: 640px) { .sf-cta { flex-direction: row; text-align: left; justify-content: space-between; padding: 36px 44px; } }
         .sf-cta-left { display: flex; align-items: center; gap: 14px; }
         .sf-cta-headline { font-size: 22px; font-weight: 700; color: var(--sf-white); margin: 0 0 4px; }
@@ -634,17 +620,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
           minHeight: "100dvh",
         }}
       >
-        <div className="sf-hero">
-          <svg className="sf-hero-bg" viewBox="0 0 1400 620" preserveAspectRatio="xMidYMin slice" fill="none" aria-hidden="true">
-            <path d="M-50 260 C 250 150, 450 350, 700 220 S 1150 80, 1450 180" stroke="#0B6B57" strokeWidth="1.6" opacity="0.22" />
-            <path d="M-50 200 C 280 320, 480 100, 760 260 S 1180 380, 1450 260" stroke="#0F766E" strokeWidth="1.3" opacity="0.16" />
-            <path d="M-50 340 C 300 220, 520 420, 820 300 S 1200 180, 1450 320" stroke="#D4AF37" strokeWidth="1.1" opacity="0.28" />
-            <path d="M-50 120 C 220 60, 420 200, 680 100 S 1080 20, 1450 100" stroke="#A8B79A" strokeWidth="1" opacity="0.16" />
-            <path d="M-50 400 C 260 480, 500 320, 780 420 S 1160 520, 1450 400" stroke="#0B6B57" strokeWidth="1" opacity="0.12" />
-            <path d="M-50 40 C 200 -20, 380 90, 620 20 S 980 -30, 1300 40" stroke="#D4AF37" strokeWidth="0.9" opacity="0.18" />
-            <path d="M-50 500 C 240 440, 460 560, 740 480 S 1140 400, 1450 500" stroke="#0F766E" strokeWidth="1" opacity="0.1" />
-          </svg>
-
+        <header className="sf-header">
           <div className="sf-wrap sf-nav-row">
             <div className="sf-brand-block">
               <LogoMark size={36} />
@@ -712,6 +688,18 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
               {isAdmin && <a href="/admin" className="sf-admin-link">Manage</a>}
             </div>
           </div>
+        </header>
+
+        <div className="sf-hero">
+          <svg className="sf-hero-bg" viewBox="0 0 1400 620" preserveAspectRatio="xMidYMin slice" fill="none" aria-hidden="true">
+            <path d="M-50 260 C 250 150, 450 350, 700 220 S 1150 80, 1450 180" stroke="#0B6B57" strokeWidth="1.6" opacity="0.22" />
+            <path d="M-50 200 C 280 320, 480 100, 760 260 S 1180 380, 1450 260" stroke="#0F766E" strokeWidth="1.3" opacity="0.16" />
+            <path d="M-50 340 C 300 220, 520 420, 820 300 S 1200 180, 1450 320" stroke="#D4AF37" strokeWidth="1.1" opacity="0.28" />
+            <path d="M-50 120 C 220 60, 420 200, 680 100 S 1080 20, 1450 100" stroke="#A8B79A" strokeWidth="1" opacity="0.16" />
+            <path d="M-50 400 C 260 480, 500 320, 780 420 S 1160 520, 1450 400" stroke="#0B6B57" strokeWidth="1" opacity="0.12" />
+            <path d="M-50 40 C 200 -20, 380 90, 620 20 S 980 -30, 1300 40" stroke="#D4AF37" strokeWidth="0.9" opacity="0.18" />
+            <path d="M-50 500 C 240 440, 460 560, 740 480 S 1140 400, 1450 500" stroke="#0F766E" strokeWidth="1" opacity="0.1" />
+          </svg>
 
           <div className="sf-wrap sf-hero-grid">
             <div className="sf-hero-grid-inner">
@@ -766,10 +754,6 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                     );
                   })}
                 </div>
-              </div>
-
-              <div className="sf-hero-photo">
-                <img src="/images/hero-photo.png" alt="Check This Finds — checked for quality" />
               </div>
             </div>
           </div>
