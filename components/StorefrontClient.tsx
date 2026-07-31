@@ -60,6 +60,22 @@ function SparkleIcon({ className }: { className?: string }) {
   );
 }
 
+function MenuIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M3 5.5h14M3 10h14M3 14.5h14" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function CloseIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 function ChevronIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -351,6 +367,7 @@ function NewsletterForm() {
   return (
     <form className="sf-newsletter-form" onSubmit={handleSubmit}>
       <input
+        id="sf-newsletter-input"
         type="email"
         required
         className="sf-newsletter-input"
@@ -374,6 +391,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
   const [search, setSearch] = useState("");
   const [dealsOnly, setDealsOnly] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
 
   useEffect(() => {
@@ -422,6 +440,12 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
     el?.focus();
   }
 
+  function focusNewsletter() {
+    const el = document.getElementById("sf-newsletter-input") as HTMLInputElement | null;
+    el?.scrollIntoView({ behavior: "smooth", block: "center" });
+    el?.focus();
+  }
+
   return (
     <>
       <style>{`
@@ -456,6 +480,19 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-admin-link { flex-shrink: 0; font-size: 12px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 9px 20px; text-decoration: none; white-space: nowrap; }
         @media (prefers-reduced-motion: no-preference) { .sf-admin-link { transition: background .15s ease; } .sf-admin-link:hover { background: var(--sf-secondary); } }
 
+        .sf-mobile-menu-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--sf-card); border: 1px solid var(--sf-border); display: flex; align-items: center; justify-content: center; color: var(--sf-ink); cursor: pointer; flex-shrink: 0; }
+        .sf-mobile-menu-btn svg { width: 17px; height: 17px; }
+        @media (min-width: 920px) { .sf-mobile-menu-btn { display: none; } }
+        .sf-mobile-menu { display: none; }
+        .sf-mobile-menu.open { display: block; border-top: 1px solid var(--sf-border); background: var(--sf-card); }
+        @media (min-width: 920px) { .sf-mobile-menu.open { display: none; } }
+        .sf-mobile-menu-list { display: flex; flex-direction: column; padding: 8px 0; }
+        .sf-mobile-menu-list a, .sf-mobile-menu-list button { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 13px 20px; border: none; background: none; font-family: inherit; font-size: 14.5px; font-weight: 600; color: var(--sf-ink); text-decoration: none; cursor: pointer; }
+        .sf-mobile-menu-list a:hover, .sf-mobile-menu-list button:hover { background: var(--sf-bg); }
+        .sf-mobile-menu-list svg { width: 16px; height: 16px; color: var(--sf-primary); flex-shrink: 0; }
+        .sf-mobile-menu-sub { padding-left: 20px; }
+        .sf-mobile-menu-sub a, .sf-mobile-menu-sub button { padding-left: 40px; font-size: 13.5px; font-weight: 500; }
+
         .sf-hero-grid { position: relative; z-index: 2; padding: 28px 0 48px; }
         @media (min-width: 900px) { .sf-hero-grid { padding: 48px 0 68px; } }
         @media (min-width: 1440px) { .sf-hero-grid { padding: 72px 0 88px; } }
@@ -481,6 +518,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-search-input { width: 100%; font-size: 14.5px; font-weight: 500; padding: 18px 48px 18px 50px; border: 1.5px solid var(--sf-border); border-radius: 999px; background: var(--sf-card); color: var(--sf-ink); font-family: inherit; box-shadow: 0 10px 30px -12px rgba(31,41,55,.18); transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
         .sf-search-input::placeholder { color: var(--sf-muted); font-weight: 400; }
         .sf-search-input:focus { outline: none; border-color: var(--sf-primary); box-shadow: 0 10px 30px -12px rgba(31,41,55,.18), 0 0 0 4px rgba(11,107,87,.12); }
+        .sf-search-input:focus-visible { outline: 2px solid var(--sf-primary); outline-offset: 3px; }
         @media (prefers-reduced-motion: no-preference) { .sf-search-input:focus { transform: translateY(-1px); } }
         .sf-search-sparkle { position: absolute; right: 22px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--sf-accent); pointer-events: none; }
         .sf-search-clear { position: absolute; right: 46px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; background: var(--sf-border); border: none; border-radius: 999px; color: var(--sf-ink); font-size: 10px; cursor: pointer; }
@@ -518,6 +556,11 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @media (min-width: 640px) { .sf-trust-item-title { font-size: 12.5px; margin-bottom: 6px; } }
         .sf-trust-item-text { font-size: 9.5px; line-height: 1.4; color: var(--sf-muted); }
         @media (min-width: 640px) { .sf-trust-item-text { font-size: 11.5px; line-height: 1.5; } }
+
+        .sf-trust-dots { display: flex; justify-content: center; gap: 6px; margin-top: 4px; }
+        @media (min-width: 640px) { .sf-trust-dots { display: none; } }
+        .sf-trust-dots span { width: 5px; height: 5px; border-radius: 50%; background: var(--sf-border); }
+        .sf-trust-dots span:first-child { width: 14px; border-radius: 3px; background: var(--sf-primary); }
 
         .sf-grid-section { padding: 0 0 56px; }
         .sf-cat-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 40px 0 18px; }
@@ -571,8 +614,8 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @media (min-width: 640px) { .sf-card-price { font-size: 14.5px; } }
         .sf-card-actions { display: flex; flex-direction: column; gap: 4px; padding: 0 9px 9px; }
         @media (min-width: 640px) { .sf-card-actions { gap: 5px; padding: 0 15px 15px; } }
-        .sf-btn-store { display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 9px; font-weight: 700; padding: 7px 6px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-primary); }
-        @media (min-width: 640px) { .sf-btn-store { font-size: 10.5px; padding: 10px 8px; } }
+        .sf-btn-store { display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 9px; font-weight: 700; min-height: 44px; padding: 7px 6px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-primary); }
+        @media (min-width: 640px) { .sf-btn-store { font-size: 10.5px; min-height: 0; padding: 10px 8px; } }
         .sf-btn-store svg { width: 9px; height: 9px; flex-shrink: 0; }
         @media (prefers-reduced-motion: no-preference) {
           .sf-btn-store { transition: background .2s ease, transform .2s ease; }
@@ -628,6 +671,9 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-footer-copy { font-size: 11.5px; color: var(--sf-muted); }
 
         .sf-empty { text-align: center; padding: 60px 20px; color: var(--sf-muted); font-size: 14px; }
+
+        a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--sf-primary); outline-offset: 2px; border-radius: 4px; }
+        .sf-cta-btn:focus-visible { outline-color: var(--sf-white); }
 
         :root {
           --sf-bg: #FAFAF7;
@@ -707,6 +753,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
               >
                 Deals
               </button>
+              <Link href="/wishlist" className="sf-nav-link">Wishlist</Link>
               <Link href="/about" className="sf-nav-link">About</Link>
               <Link href="/contact" className="sf-nav-link">Contact</Link>
             </nav>
@@ -716,7 +763,71 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                 <SearchIcon />
               </button>
               {isAdmin && <a href="/admin" className="sf-admin-link">Manage</a>}
+              <button
+                type="button"
+                className="sf-mobile-menu-btn"
+                onClick={() => setMobileMenuOpen((v) => !v)}
+                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={mobileMenuOpen}
+              >
+                {mobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+              </button>
             </div>
+          </div>
+
+          <div className={`sf-mobile-menu${mobileMenuOpen ? " open" : ""}`}>
+            <nav className="sf-mobile-menu-list" aria-label="Mobile navigation">
+              <a
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setFilter("all");
+                  setSearch("");
+                  setDealsOnly(false);
+                  setMobileMenuOpen(false);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              >
+                <HomeIcon />
+                Home
+              </a>
+              <div className="sf-mobile-menu-sub">
+                {Object.keys(CATEGORIES).map((key) => {
+                  const Icon = CATEGORY_ICON[key];
+                  return (
+                    <button
+                      key={key}
+                      type="button"
+                      onClick={() => {
+                        goToCategory(key);
+                        setMobileMenuOpen(false);
+                      }}
+                    >
+                      <Icon />
+                      {CATEGORIES[key]}
+                    </button>
+                  );
+                })}
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setDealsOnly(true);
+                  setSearch("");
+                  setMobileMenuOpen(false);
+                  goToProducts();
+                }}
+              >
+                <SparkleIcon />
+                Deals
+              </button>
+              <Link href="/wishlist" onClick={() => setMobileMenuOpen(false)}>
+                <HeartIcon />
+                Wishlist
+              </Link>
+              <Link href="/about" onClick={() => setMobileMenuOpen(false)}>About</Link>
+              <Link href="/contact" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
+            </nav>
           </div>
         </header>
 
@@ -811,6 +922,11 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                 </div>
               ))}
             </div>
+            <div className="sf-trust-dots" aria-hidden="true">
+              {TRUST_ITEMS.map((item) => (
+                <span key={item.title} />
+              ))}
+            </div>
           </section>
         </div>
 
@@ -886,10 +1002,10 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                 <p className="sf-cta-sub">Quality finds you can trust, every time. ✨</p>
               </div>
             </div>
-            <a href="#sf-products" className="sf-cta-btn">
+            <button type="button" onClick={focusNewsletter} className="sf-cta-btn">
               <BagIcon />
-              Explore Today&apos;s Best Finds
-            </a>
+              Get Notified of New Finds
+            </button>
           </section>
 
           <section className="sf-faq">
