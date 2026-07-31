@@ -463,9 +463,10 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @media (min-width: 1440px) { .sf-hero-bg-wide { display: block; } }
 
         .sfw-glow { opacity: 0.85; }
+        .sfw-emerald path, .sfw-gold path { stroke-dasharray: 64 26; stroke-dashoffset: 0; }
         @media (prefers-reduced-motion: no-preference) {
-          .sfw-emerald { animation: sfwDriftA 46s ease-in-out infinite alternate; }
-          .sfw-gold { animation: sfwDriftB 58s ease-in-out infinite alternate; }
+          .sfw-emerald path { animation: sfwFlow 36s linear infinite; }
+          .sfw-gold path { animation: sfwFlow 44s linear infinite; }
           .sfw-glow-a { animation: sfwGlowPulse 20s ease-in-out infinite; }
           .sfw-glow-b { animation: sfwGlowPulse 24s ease-in-out infinite; animation-delay: -11s; }
           .sfw-particle { animation: sfwTwinkle 7s ease-in-out infinite; }
@@ -477,8 +478,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
           .sfw-particle:nth-child(7) { animation-delay: -5.2s; }
           .sfw-particle:nth-child(8) { animation-delay: -2.8s; }
         }
-        @keyframes sfwDriftA { 0% { transform: translate(0, 0); } 100% { transform: translate(-16px, 9px); } }
-        @keyframes sfwDriftB { 0% { transform: translate(0, 0); } 100% { transform: translate(13px, -11px); } }
+        @keyframes sfwFlow { to { stroke-dashoffset: -900; } }
         @keyframes sfwGlowPulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
         @keyframes sfwTwinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.9; } }
 
