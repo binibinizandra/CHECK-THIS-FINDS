@@ -462,7 +462,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-hero-grid { position: relative; z-index: 2; padding: 28px 0 48px; }
         @media (min-width: 900px) { .sf-hero-grid { padding: 40px 0 60px; } }
         .sf-hero-grid-inner { display: flex; justify-content: center; }
-        .sf-hero-copy { max-width: 600px; text-align: center; }
+        .sf-hero-copy { max-width: 880px; text-align: center; }
 
         .sf-hero-headline { font-weight: 800; font-size: 32px; line-height: 1.16; margin: 0 0 14px; }
         @media (min-width: 640px) { .sf-hero-headline { font-size: 44px; } }
@@ -479,8 +479,8 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-search-sparkle { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--sf-accent); pointer-events: none; }
         .sf-search-clear { position: absolute; right: 44px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; background: var(--sf-border); border: none; border-radius: 999px; color: var(--sf-ink); font-size: 10px; cursor: pointer; }
 
-        .sf-tabs-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; overflow-x: auto; padding: 2px 4px 6px; scrollbar-width: none; }
-        @media (max-width: 640px) { .sf-tabs-row { flex-wrap: nowrap; mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); } }
+        .sf-tabs-row { display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 8px; overflow-x: auto; padding: 2px 4px 6px; scrollbar-width: none; mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); }
+        @media (min-width: 900px) { .sf-tabs-row { justify-content: center; mask-image: none; -webkit-mask-image: none; } }
         .sf-tabs-row::-webkit-scrollbar { display: none; }
         .sf-tab-btn { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--sf-border); background: var(--sf-card); color: var(--sf-ink); font-weight: 600; font-size: 12.5px; padding: 9px 16px; border-radius: 999px; transition: background .15s ease, color .15s ease, border-color .15s ease; cursor: pointer; }
         .sf-tab-btn svg { width: 14px; height: 14px; }
