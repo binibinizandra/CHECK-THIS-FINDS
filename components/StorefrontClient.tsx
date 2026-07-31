@@ -462,6 +462,26 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-hero-bg-wide { display: none; }
         @media (min-width: 1440px) { .sf-hero-bg-wide { display: block; } }
 
+        .sfw-glow { opacity: 0.85; }
+        @media (prefers-reduced-motion: no-preference) {
+          .sfw-emerald { animation: sfwDriftA 46s ease-in-out infinite alternate; }
+          .sfw-gold { animation: sfwDriftB 58s ease-in-out infinite alternate; }
+          .sfw-glow-a { animation: sfwGlowPulse 20s ease-in-out infinite; }
+          .sfw-glow-b { animation: sfwGlowPulse 24s ease-in-out infinite; animation-delay: -11s; }
+          .sfw-particle { animation: sfwTwinkle 7s ease-in-out infinite; }
+          .sfw-particle:nth-child(2) { animation-delay: -1.1s; }
+          .sfw-particle:nth-child(3) { animation-delay: -2.3s; }
+          .sfw-particle:nth-child(4) { animation-delay: -3.4s; }
+          .sfw-particle:nth-child(5) { animation-delay: -4.6s; }
+          .sfw-particle:nth-child(6) { animation-delay: -0.6s; }
+          .sfw-particle:nth-child(7) { animation-delay: -5.2s; }
+          .sfw-particle:nth-child(8) { animation-delay: -2.8s; }
+        }
+        @keyframes sfwDriftA { 0% { transform: translate(0, 0); } 100% { transform: translate(-16px, 9px); } }
+        @keyframes sfwDriftB { 0% { transform: translate(0, 0); } 100% { transform: translate(13px, -11px); } }
+        @keyframes sfwGlowPulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+        @keyframes sfwTwinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.9; } }
+
         .sf-header { position: sticky; top: 0; z-index: 20; background: rgba(250,250,247,.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--sf-border); }
         .sf-nav-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; }
         .sf-brand-block { display: flex; align-items: center; gap: 11px; }
@@ -842,17 +862,49 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         <div className="sf-hero">
           <svg className="sf-hero-bg" viewBox="0 0 1400 620" preserveAspectRatio="xMidYMin slice" fill="none" aria-hidden="true">
-            <path d="M-50 260 C 250 150, 450 350, 700 220 S 1150 80, 1450 180" stroke="#0B6B57" strokeWidth="1.6" opacity="0.22" />
-            <path d="M-50 200 C 280 320, 480 100, 760 260 S 1180 380, 1450 260" stroke="#0F766E" strokeWidth="1.3" opacity="0.16" />
-            <path d="M-50 340 C 300 220, 520 420, 820 300 S 1200 180, 1450 320" stroke="#D4AF37" strokeWidth="1.1" opacity="0.28" />
-            <path d="M-50 120 C 220 60, 420 200, 680 100 S 1080 20, 1450 100" stroke="#A8B79A" strokeWidth="1" opacity="0.16" />
-            <path d="M-50 400 C 260 480, 500 320, 780 420 S 1160 520, 1450 400" stroke="#0B6B57" strokeWidth="1" opacity="0.12" />
-            <path d="M-50 40 C 200 -20, 380 90, 620 20 S 980 -30, 1300 40" stroke="#D4AF37" strokeWidth="0.9" opacity="0.18" />
-            <path d="M-50 500 C 240 440, 460 560, 740 480 S 1140 400, 1450 500" stroke="#0F766E" strokeWidth="1" opacity="0.1" />
-            <g className="sf-hero-bg-wide">
-              <path d="M950 -30 C 1100 60, 1000 180, 1180 240 S 1250 400, 1400 460" stroke="#0B6B57" strokeWidth="1.2" opacity="0.14" />
-              <path d="M980 620 C 1120 520, 1050 400, 1220 340 S 1300 160, 1420 90" stroke="#D4AF37" strokeWidth="1" opacity="0.16" />
-              <path d="M900 300 C 1050 260, 1150 340, 1300 300 S 1400 260, 1450 280" stroke="#A8B79A" strokeWidth="0.9" opacity="0.12" />
+            <defs>
+              <radialGradient id="sfwGlowEmerald" cx="26%" cy="18%" r="55%">
+                <stop offset="0%" stopColor="#0B6B57" stopOpacity="0.12" />
+                <stop offset="100%" stopColor="#0B6B57" stopOpacity="0" />
+              </radialGradient>
+              <radialGradient id="sfwGlowGold" cx="82%" cy="72%" r="50%">
+                <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.10" />
+                <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
+              </radialGradient>
+            </defs>
+
+            <rect className="sfw-glow sfw-glow-a" x="0" y="0" width="1400" height="620" fill="url(#sfwGlowEmerald)" />
+            <rect className="sfw-glow sfw-glow-b" x="0" y="0" width="1400" height="620" fill="url(#sfwGlowGold)" />
+
+            <g className="sfw-emerald">
+              <path d="M-50 260 C 250 150, 450 350, 700 220 S 1150 80, 1450 180" stroke="#0B6B57" strokeWidth="1.6" opacity="0.22" />
+              <path d="M-50 200 C 280 320, 480 100, 760 260 S 1180 380, 1450 260" stroke="#0F766E" strokeWidth="1.3" opacity="0.16" />
+              <path d="M-50 120 C 220 60, 420 200, 680 100 S 1080 20, 1450 100" stroke="#A8B79A" strokeWidth="1" opacity="0.16" />
+              <path d="M-50 400 C 260 480, 500 320, 780 420 S 1160 520, 1450 400" stroke="#0B6B57" strokeWidth="1" opacity="0.12" />
+              <path d="M-50 500 C 240 440, 460 560, 740 480 S 1140 400, 1450 500" stroke="#0F766E" strokeWidth="1" opacity="0.1" />
+              <g className="sf-hero-bg-wide">
+                <path d="M950 -30 C 1100 60, 1000 180, 1180 240 S 1250 400, 1400 460" stroke="#0B6B57" strokeWidth="1.2" opacity="0.14" />
+                <path d="M900 300 C 1050 260, 1150 340, 1300 300 S 1400 260, 1450 280" stroke="#A8B79A" strokeWidth="0.9" opacity="0.12" />
+              </g>
+            </g>
+
+            <g className="sfw-gold">
+              <path d="M-50 340 C 300 220, 520 420, 820 300 S 1200 180, 1450 320" stroke="#D4AF37" strokeWidth="1.1" opacity="0.28" />
+              <path d="M-50 40 C 200 -20, 380 90, 620 20 S 980 -30, 1300 40" stroke="#D4AF37" strokeWidth="0.9" opacity="0.18" />
+              <g className="sf-hero-bg-wide">
+                <path d="M980 620 C 1120 520, 1050 400, 1220 340 S 1300 160, 1420 90" stroke="#D4AF37" strokeWidth="1" opacity="0.16" />
+              </g>
+            </g>
+
+            <g className="sfw-particles">
+              <circle className="sfw-particle" cx="180" cy="90" r="1.4" fill="#D4AF37" opacity="0.5" />
+              <circle className="sfw-particle" cx="520" cy="55" r="1.7" fill="#D4AF37" opacity="0.45" />
+              <circle className="sfw-particle" cx="860" cy="130" r="1.2" fill="#D4AF37" opacity="0.5" />
+              <circle className="sfw-particle" cx="1120" cy="75" r="1.9" fill="#D4AF37" opacity="0.4" />
+              <circle className="sfw-particle" cx="1300" cy="310" r="1.4" fill="#D4AF37" opacity="0.5" />
+              <circle className="sfw-particle" cx="980" cy="470" r="1.6" fill="#D4AF37" opacity="0.4" />
+              <circle className="sfw-particle" cx="240" cy="410" r="1.2" fill="#D4AF37" opacity="0.45" />
+              <circle className="sfw-particle" cx="650" cy="530" r="1.5" fill="#D4AF37" opacity="0.4" />
             </g>
           </svg>
 
