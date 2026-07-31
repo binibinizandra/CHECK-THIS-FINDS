@@ -216,18 +216,6 @@ const TRUST_ITEMS = [
   { icon: LockIcon, title: "Safe & Trusted", text: "Your trust is my priority. Shop with confidence every time." },
 ];
 
-function Stars({ rating }: { rating: number }) {
-  const pct = Math.round((rating / 5) * 100);
-  return (
-    <span className="sf-stars" aria-hidden="true">
-      ★★★★★
-      <span className="sf-stars-fill" style={{ width: `${pct}%` }}>
-        ★★★★★
-      </span>
-    </span>
-  );
-}
-
 function ProductCard({
   p,
   isAdmin,
@@ -270,11 +258,11 @@ function ProductCard({
         </div>
         <div className="sf-card-body">
           <div className="sf-card-name">{p.name}</div>
-          <div className="sf-rating-row">
-            <Stars rating={p.rating} />
-            <span className="sf-rating-num">{p.rating.toFixed(1)} ({p.reviews})</span>
-            {p.price != null && <span className="sf-card-price">₱{p.price.toLocaleString()}</span>}
-          </div>
+          {p.price != null && (
+            <div className="sf-rating-row">
+              <span className="sf-card-price">₱{p.price.toLocaleString()}</span>
+            </div>
+          )}
         </div>
       </Link>
       <div className="sf-card-actions">
@@ -506,16 +494,24 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-curator-stat-label { font-size: 12px; font-weight: 700; color: var(--sf-ink); }
         .sf-curator-stat-sub { font-size: 11px; color: var(--sf-muted); line-height: 1.4; }
 
-        .sf-trust-wrap { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 24px; padding: 38px 30px; margin: 16px 0 56px; box-shadow: 0 20px 48px -28px rgba(31,41,55,.16); }
-        .sf-trust-title { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-primary); text-align: center; margin: 0 0 30px; }
-        .sf-trust-title svg { width: 14px; height: 14px; color: var(--sf-accent); }
-        .sf-trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
+        .sf-trust-wrap { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 18px; padding: 20px 16px; margin: 16px 0 40px; box-shadow: 0 20px 48px -28px rgba(31,41,55,.16); }
+        @media (min-width: 640px) { .sf-trust-wrap { border-radius: 24px; padding: 38px 30px; margin: 16px 0 56px; } }
+        .sf-trust-title { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--sf-primary); text-align: center; margin: 0 0 16px; }
+        @media (min-width: 640px) { .sf-trust-title { gap: 10px; font-size: 14px; letter-spacing: 0.06em; margin: 0 0 30px; } }
+        .sf-trust-title svg { width: 11px; height: 11px; color: var(--sf-accent); flex-shrink: 0; }
+        @media (min-width: 640px) { .sf-trust-title svg { width: 14px; height: 14px; } }
+        .sf-trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 10px; }
+        @media (min-width: 640px) { .sf-trust-grid { gap: 26px; } }
         @media (min-width: 720px) { .sf-trust-grid { grid-template-columns: repeat(5, 1fr); gap: 18px; } }
         .sf-trust-item { text-align: center; }
-        .sf-trust-icon { width: 46px; height: 46px; border-radius: 50%; background: var(--sf-bg); display: flex; align-items: center; justify-content: center; color: var(--sf-primary); margin: 0 auto 16px; }
-        .sf-trust-icon svg { width: 21px; height: 21px; }
-        .sf-trust-item-title { font-size: 12.5px; font-weight: 800; color: var(--sf-ink); margin-bottom: 6px; }
-        .sf-trust-item-text { font-size: 11.5px; line-height: 1.5; color: var(--sf-muted); }
+        .sf-trust-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--sf-bg); display: flex; align-items: center; justify-content: center; color: var(--sf-primary); margin: 0 auto 8px; }
+        @media (min-width: 640px) { .sf-trust-icon { width: 46px; height: 46px; margin: 0 auto 16px; } }
+        .sf-trust-icon svg { width: 15px; height: 15px; }
+        @media (min-width: 640px) { .sf-trust-icon svg { width: 21px; height: 21px; } }
+        .sf-trust-item-title { font-size: 11px; font-weight: 800; color: var(--sf-ink); margin-bottom: 3px; }
+        @media (min-width: 640px) { .sf-trust-item-title { font-size: 12.5px; margin-bottom: 6px; } }
+        .sf-trust-item-text { font-size: 9.5px; line-height: 1.4; color: var(--sf-muted); }
+        @media (min-width: 640px) { .sf-trust-item-text { font-size: 11.5px; line-height: 1.5; } }
 
         .sf-grid-section { padding: 0 0 56px; }
         .sf-cat-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 40px 0 18px; }
@@ -547,11 +543,8 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-wishlist-btn[aria-pressed=true] { color: #C6603F; }
         .sf-card-body { padding: 14px 15px 11px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
         .sf-card-name { font-size: 12.5px; font-weight: 700; line-height: 1.35; color: var(--sf-ink); min-height: 34px; }
-        .sf-stars { position: relative; display: inline-block; font-size: 10px; line-height: 1; letter-spacing: 1px; color: var(--sf-border); }
-        .sf-stars-fill { position: absolute; inset: 0; overflow: hidden; color: var(--sf-accent); white-space: nowrap; }
         .sf-rating-row { display: flex; align-items: center; gap: 5px; }
-        .sf-rating-num { font-size: 10px; font-weight: 700; color: var(--sf-muted); font-variant-numeric: tabular-nums; }
-        .sf-card-price { margin-left: auto; font-size: 12.5px; font-weight: 800; color: var(--sf-accent); font-variant-numeric: tabular-nums; }
+        .sf-card-price { font-size: 13.5px; font-weight: 800; color: var(--sf-accent); font-variant-numeric: tabular-nums; }
         .sf-card-actions { display: flex; flex-direction: column; gap: 5px; padding: 0 15px 15px; }
         .sf-btn-store { display: flex; align-items: center; justify-content: center; font-size: 10.5px; font-weight: 700; padding: 10px 8px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-primary); }
         @media (prefers-reduced-motion: no-preference) { .sf-btn-store { transition: background .15s ease; } .sf-btn-store:hover { background: var(--sf-secondary); } }

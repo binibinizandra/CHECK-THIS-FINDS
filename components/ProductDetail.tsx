@@ -52,7 +52,6 @@ export default function ProductDetail({
 }) {
   const pros = bullets(product.pros);
   const cons = bullets(product.cons);
-  const pct = Math.round((product.rating / 5) * 100);
   const badge = product.badge ? BADGE_INFO[product.badge] : null;
 
   return (
@@ -74,10 +73,6 @@ export default function ProductDetail({
 
         .pd-cat { display: inline-flex; font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-white); background: var(--sf-primary); border-radius: 999px; padding: 6px 14px; margin-bottom: 14px; }
         .pd-name { font-size: 25px; font-weight: 800; color: var(--sf-ink); line-height: 1.25; }
-        .pd-rating-row { display: flex; align-items: center; gap: 8px; margin-top: 12px; }
-        .pd-stars { position: relative; display: inline-block; font-size: 18px; line-height: 1; letter-spacing: 2px; color: var(--sf-border); }
-        .pd-stars-fill { position: absolute; inset: 0; overflow: hidden; color: var(--sf-accent); white-space: nowrap; }
-        .pd-rating-num { font-size: 14px; font-weight: 600; color: var(--sf-muted); }
 
         .pd-cols { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 26px; }
         @media (min-width: 480px) { .pd-cols { grid-template-columns: 1fr 1fr; } }
@@ -156,13 +151,6 @@ export default function ProductDetail({
             <div>
               <span className="pd-cat">{CATEGORIES[product.category] ?? product.category}</span>
               <h1 className={`pd-name ${playfair.className}`}>{product.name}</h1>
-              <div className="pd-rating-row">
-                <span className="pd-stars" aria-hidden="true">
-                  ★★★★★
-                  <span className="pd-stars-fill" style={{ width: `${pct}%` }}>★★★★★</span>
-                </span>
-                <span className="pd-rating-num">{product.rating.toFixed(1)} ({product.reviews} reviews)</span>
-              </div>
 
               {(pros.length > 0 || cons.length > 0) && (
                 <div className="pd-cols">
