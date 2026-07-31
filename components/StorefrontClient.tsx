@@ -453,7 +453,19 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @media (min-width: 960px) { .sf-hero-grid-inner { grid-template-columns: 1.1fr 0.9fr; gap: 48px; } }
         .sf-hero-copy { max-width: 560px; }
         .sf-hero-photo { display: none; }
-        @media (min-width: 760px) { .sf-hero-photo { display: block; width: 100%; border-radius: 24px; overflow: hidden; } .sf-hero-photo img { width: 100%; height: auto; display: block; } }
+        @media (min-width: 760px) {
+          .sf-hero-photo {
+            display: block;
+            width: 100%;
+          }
+          .sf-hero-photo img {
+            width: 100%;
+            height: auto;
+            display: block;
+            mask-image: radial-gradient(ellipse 62% 68% at 50% 50%, black 45%, transparent 92%);
+            -webkit-mask-image: radial-gradient(ellipse 62% 68% at 50% 50%, black 45%, transparent 92%);
+          }
+        }
 
         .sf-hero-headline { font-weight: 800; font-size: 32px; line-height: 1.16; margin: 0 0 14px; }
         @media (min-width: 640px) { .sf-hero-headline { font-size: 44px; } }
