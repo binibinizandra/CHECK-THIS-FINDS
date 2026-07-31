@@ -23,8 +23,6 @@ const EMPTY_FORM = {
   id: null as string | null,
   name: "",
   category: "home",
-  rating: "4.8",
-  reviews: "0",
   imageUrl: "",
   shopeeLink: "",
   price: "",
@@ -59,8 +57,6 @@ export default function ProductManager({
       id: p.id,
       name: p.name,
       category: p.category,
-      rating: String(p.rating),
-      reviews: String(p.reviews),
       imageUrl: p.imageUrl,
       shopeeLink: p.shopeeLink ?? "",
       price: p.price != null ? String(p.price) : "",
@@ -101,15 +97,15 @@ export default function ProductManager({
   function handleSave() {
     setError("");
     setSaved(false);
-    const ratingNum = parseFloat(form.rating);
-    const reviewsNum = parseInt(form.reviews, 10);
+    const ratingNum = 5;
+    const reviewsNum = 0;
     const priceNum = form.price.trim() ? parseFloat(form.price) : null;
     startTransition(async () => {
       const result = await saveProduct(form.id, {
         name: form.name.trim(),
         category: form.category,
-        rating: Number.isFinite(ratingNum) ? ratingNum : 5,
-        reviews: Number.isFinite(reviewsNum) ? reviewsNum : 0,
+        rating: ratingNum,
+        reviews: reviewsNum,
         imageUrl: form.imageUrl,
         shopeeLink: form.shopeeLink.trim() || null,
         tiktokLink: null,
@@ -237,23 +233,13 @@ export default function ProductManager({
             <input className="am-input" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="e.g. Electric Kettle" />
           </div>
 
-          <div className="am-row am-field">
-            <div>
-              <label className="am-label">Category</label>
-              <select className="am-select" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}>
-                {CATEGORIES.map((c) => (
-                  <option key={c.key} value={c.key}>{c.label}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="am-label">Rating (1–5)</label>
-              <input className="am-input" type="number" min="1" max="5" step="0.1" value={form.rating} onChange={(e) => setForm({ ...form, rating: e.target.value })} />
-            </div>
-            <div>
-              <label className="am-label">Review count</label>
-              <input className="am-input" type="number" min="0" value={form.reviews} onChange={(e) => setForm({ ...form, reviews: e.target.value })} />
-            </div>
+          <div className="am-field">
+            <label className="am-label">Category</label>
+            <select className="am-select" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}>
+              {CATEGORIES.map((c) => (
+                <option key={c.key} value={c.key}>{c.label}</option>
+              ))}
+            </select>
           </div>
 
           <div className="am-field">
@@ -350,7 +336,7 @@ export default function ProductManager({
                 {p.name} {!p.published && <span className="am-badge-hidden">Hidden</span>}
               </div>
               <div className="am-list-meta">
-                {CATEGORIES.find((c) => c.key === p.category)?.label ?? p.category} · {p.rating.toFixed(1)}★ ({p.reviews})
+                {CATEGORIES.find((c) => c.key === p.category)?.label ?? p.category}
                 {p.price != null && ` · ₱${p.price.toLocaleString()}`}
               </div>
               <div className="am-list-clicks">{productViews[p.id] ?? 0} views · {productClicks[p.id] ?? 0} Shopee clicks</div>
