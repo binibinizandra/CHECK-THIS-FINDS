@@ -447,9 +447,13 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-admin-link { flex-shrink: 0; font-size: 12px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 9px 20px; text-decoration: none; white-space: nowrap; }
         @media (prefers-reduced-motion: no-preference) { .sf-admin-link { transition: background .15s ease; } .sf-admin-link:hover { background: var(--sf-secondary); } }
 
-        .sf-hero-grid { position: relative; z-index: 2; padding: 20px 0 48px; }
-        @media (min-width: 900px) { .sf-hero-grid { padding: 36px 0 64px; } }
-        .sf-hero-grid > div { max-width: 640px; margin: 0 auto; text-align: center; }
+        .sf-hero-grid { position: relative; z-index: 2; padding: 28px 0 48px; }
+        @media (min-width: 900px) { .sf-hero-grid { padding: 40px 0 60px; } }
+        .sf-hero-grid-inner { display: grid; grid-template-columns: 1fr; gap: 36px; align-items: center; }
+        @media (min-width: 960px) { .sf-hero-grid-inner { grid-template-columns: 1.1fr 0.9fr; gap: 48px; } }
+        .sf-hero-copy { max-width: 560px; }
+        .sf-hero-photo { display: none; }
+        @media (min-width: 760px) { .sf-hero-photo { display: block; width: 100%; border-radius: 24px; overflow: hidden; } .sf-hero-photo img { width: 100%; height: auto; display: block; } }
 
         .sf-hero-headline { font-weight: 800; font-size: 32px; line-height: 1.16; margin: 0 0 14px; }
         @media (min-width: 640px) { .sf-hero-headline { font-size: 44px; } }
@@ -458,7 +462,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-hero-headline-l2 { color: var(--sf-accent); }
         .sf-hero-sub { font-size: 14.5px; line-height: 1.65; color: var(--sf-muted); max-width: 440px; margin: 0 0 28px; }
 
-        .sf-search-row { position: relative; margin-bottom: 18px; }
+        .sf-search-row { position: relative; margin-bottom: 18px; max-width: 480px; }
         .sf-search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; color: var(--sf-muted); pointer-events: none; }
         .sf-search-input { width: 100%; font-size: 14px; padding: 16px 46px 16px 48px; border: 1px solid var(--sf-border); border-radius: 999px; background: var(--sf-card); color: var(--sf-ink); font-family: inherit; box-shadow: 0 8px 24px -10px rgba(31,41,55,.16); }
         .sf-search-input::placeholder { color: var(--sf-muted); }
@@ -466,8 +470,8 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-search-sparkle { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--sf-accent); pointer-events: none; }
         .sf-search-clear { position: absolute; right: 44px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; background: var(--sf-border); border: none; border-radius: 999px; color: var(--sf-ink); font-size: 10px; cursor: pointer; }
 
-        .sf-tabs-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; overflow-x: auto; padding: 2px 4px 6px; scrollbar-width: none; }
-        @media (max-width: 640px) { .sf-tabs-row { flex-wrap: nowrap; justify-content: flex-start; mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); } }
+        .sf-tabs-row { display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 8px; overflow-x: auto; padding: 2px 4px 6px; scrollbar-width: none; }
+        @media (max-width: 640px) { .sf-tabs-row { flex-wrap: nowrap; mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); } }
         .sf-tabs-row::-webkit-scrollbar { display: none; }
         .sf-tab-btn { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--sf-border); background: var(--sf-card); color: var(--sf-ink); font-weight: 600; font-size: 12.5px; padding: 9px 16px; border-radius: 999px; transition: background .15s ease, color .15s ease, border-color .15s ease; cursor: pointer; }
         .sf-tab-btn svg { width: 14px; height: 14px; }
@@ -493,7 +497,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-curator-stat-label { font-size: 12px; font-weight: 700; color: var(--sf-ink); }
         .sf-curator-stat-sub { font-size: 11px; color: var(--sf-muted); line-height: 1.4; }
 
-        .sf-trust-wrap { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 24px; padding: 30px 24px; margin: 0 0 32px; box-shadow: 0 10px 30px -16px rgba(31,41,55,.14); }
+        .sf-trust-wrap { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 24px; padding: 30px 24px; margin: 8px 0 32px; box-shadow: 0 10px 30px -16px rgba(31,41,55,.14); }
         .sf-trust-title { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-primary); text-align: center; margin: 0 0 26px; }
         .sf-trust-title svg { width: 14px; height: 14px; color: var(--sf-accent); }
         .sf-trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
@@ -609,44 +613,27 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
       >
         <div className="sf-hero">
           <svg className="sf-hero-bg" viewBox="0 0 1400 620" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
-            <defs>
-              <linearGradient id="sfWaveGrad" x1="0" y1="0" x2="1" y2="0.3">
-                <stop offset="0%" stopColor="#0B6B57" />
-                <stop offset="55%" stopColor="#0F766E" />
-                <stop offset="100%" stopColor="#D4AF37" />
-              </linearGradient>
-              <linearGradient id="sfWaveGrad2" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%" stopColor="#D4AF37" />
-                <stop offset="100%" stopColor="#0B6B57" />
-              </linearGradient>
-            </defs>
             <path
               d="M-50 180 C 150 80, 320 260, 520 140 S 900 20, 1100 90 S 1420 60, 1500 -20"
-              stroke="url(#sfWaveGrad)"
-              strokeWidth="2.5"
+              stroke="#0B6B57"
+              strokeWidth="1.5"
               fill="none"
-              opacity="0.28"
+              opacity="0.08"
             />
             <path
               d="M-50 300 C 200 220, 380 400, 600 260 S 980 140, 1180 220 S 1450 180, 1520 100"
-              stroke="url(#sfWaveGrad2)"
-              strokeWidth="1.75"
+              stroke="#0B6B57"
+              strokeWidth="1.25"
               fill="none"
-              opacity="0.18"
+              opacity="0.06"
             />
             <path
               d="M-50 60 C 180 120, 260 -20, 480 40 S 820 120, 1000 30"
-              stroke="url(#sfWaveGrad)"
-              strokeWidth="1.5"
+              stroke="#D4AF37"
+              strokeWidth="1"
               fill="none"
-              opacity="0.15"
+              opacity="0.07"
             />
-            <circle cx="1180" cy="70" r="3" fill="#D4AF37" opacity="0.6" />
-            <circle cx="1260" cy="150" r="2" fill="#D4AF37" opacity="0.5" />
-            <circle cx="1080" cy="220" r="2.2" fill="#0B6B57" opacity="0.35" />
-            <circle cx="1340" cy="240" r="1.6" fill="#D4AF37" opacity="0.45" />
-            <circle cx="960" cy="100" r="1.6" fill="#D4AF37" opacity="0.4" />
-            <circle cx="80" cy="90" r="2" fill="#0B6B57" opacity="0.25" />
           </svg>
 
           <div className="sf-wrap sf-nav-row">
@@ -718,97 +705,68 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
           </div>
 
           <div className="sf-wrap sf-hero-grid">
-            <div>
-              <h1 className={`sf-hero-headline ${playfair.className}`}>
-                <span className="sf-hero-headline-l1">We do the research</span>
-                <span className="sf-hero-headline-l2">so you don&apos;t have to.</span>
-              </h1>
-              <p className="sf-hero-sub">Discover trusted, tested, high-quality products you&apos;ll actually love.</p>
+            <div className="sf-hero-grid-inner">
+              <div className="sf-hero-copy">
+                <h1 className={`sf-hero-headline ${playfair.className}`}>
+                  <span className="sf-hero-headline-l1">We do the research</span>
+                  <span className="sf-hero-headline-l2">so you don&apos;t have to.</span>
+                </h1>
+                <p className="sf-hero-sub">Discover trusted, tested, high-quality products you&apos;ll actually love.</p>
 
-              <div className="sf-search-row">
-                <SearchIcon className="sf-search-icon" />
-                <input
-                  id="sf-hero-search"
-                  type="text"
-                  className="sf-search-input"
-                  placeholder="Search products, brands, or categories..."
-                  value={search}
-                  onChange={(e) => {
-                    setSearch(e.target.value);
-                    setDealsOnly(false);
-                  }}
-                  aria-label="Search products"
-                />
-                {searchActive ? (
-                  <button type="button" className="sf-search-clear" onClick={() => setSearch("")} aria-label="Clear search">
-                    ✕
-                  </button>
-                ) : (
-                  <SparkleIcon className="sf-search-sparkle" />
-                )}
+                <div className="sf-search-row">
+                  <SearchIcon className="sf-search-icon" />
+                  <input
+                    id="sf-hero-search"
+                    type="text"
+                    className="sf-search-input"
+                    placeholder="Search products, brands, or categories..."
+                    value={search}
+                    onChange={(e) => {
+                      setSearch(e.target.value);
+                      setDealsOnly(false);
+                    }}
+                    aria-label="Search products"
+                  />
+                  {searchActive ? (
+                    <button type="button" className="sf-search-clear" onClick={() => setSearch("")} aria-label="Clear search">
+                      ✕
+                    </button>
+                  ) : (
+                    <SparkleIcon className="sf-search-sparkle" />
+                  )}
+                </div>
+
+                <div className="sf-tabs-row" role="tablist" aria-label="Product categories">
+                  {TABS.map((t) => {
+                    const Icon = t.key === "all" ? SparkleIcon : CATEGORY_ICON[t.key];
+                    return (
+                      <button
+                        key={t.key}
+                        type="button"
+                        className="sf-tab-btn"
+                        aria-pressed={!dealsOnly && filter === t.key}
+                        onClick={() => {
+                          setFilter(t.key);
+                          setSearch("");
+                          setDealsOnly(false);
+                        }}
+                      >
+                        <Icon />
+                        {t.label}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
-              <div className="sf-tabs-row" role="tablist" aria-label="Product categories">
-                {TABS.map((t) => {
-                  const Icon = t.key === "all" ? SparkleIcon : CATEGORY_ICON[t.key];
-                  return (
-                    <button
-                      key={t.key}
-                      type="button"
-                      className="sf-tab-btn"
-                      aria-pressed={!dealsOnly && filter === t.key}
-                      onClick={() => {
-                        setFilter(t.key);
-                        setSearch("");
-                        setDealsOnly(false);
-                      }}
-                    >
-                      <Icon />
-                      {t.label}
-                    </button>
-                  );
-                })}
+              <div className="sf-hero-photo">
+                <img src="/images/hero-photo.png" alt="Check This Finds — checked for quality" />
               </div>
             </div>
           </div>
         </div>
 
         <div className="sf-wrap">
-          <section className="sf-curator">
-            <div className="sf-curator-main">
-              <span className="sf-curator-avatar" aria-hidden="true">KB</span>
-              <div>
-                <div className="sf-curator-name">
-                  Curated by Kazandra B.
-                  <SparkleIcon className="sf-sparkle-inline" />
-                </div>
-                <p className="sf-curator-text">
-                  Handpicking tested, top-rated, and no-budol items so you can shop with confidence.
-                </p>
-                <a
-                  href="https://www.linkedin.com/in/binibinizandra/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="sf-curator-linkedin"
-                >
-                  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
-                  </svg>
-                  Verified Curator
-                </a>
-              </div>
-            </div>
-            <div className="sf-curator-divider" aria-hidden="true" />
-            <div className="sf-curator-stat">
-              <span className="sf-curator-stat-icon">
-                <StarIcon />
-              </span>
-              <span className={`sf-curator-stat-num ${playfair.className}`}>100%</span>
-              <span className="sf-curator-stat-label">Tested &amp; Trusted</span>
-              <span className="sf-curator-stat-sub">Quality finds you can rely on.</span>
-            </div>
-          </section>
-
           <section className="sf-trust-wrap">
             <div className="sf-trust-title">
               <SparkleIcon />
@@ -858,32 +816,33 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                   <div className="sf-empty">No active deals right now — check back soon!</div>
                 )
               ) : filter === "all" ? (
-                Object.keys(CATEGORIES).map((key) => {
-                  const items = products.filter((p) => p.category === key);
-                  if (!items.length) return null;
-                  const Icon = CATEGORY_ICON[key];
-                  return (
-                    <div key={key}>
-                      <div className="sf-cat-header">
-                        <span className="sf-cat-label">
-                          <Icon />
-                          {CATEGORIES[key]}
-                        </span>
-                        <button type="button" className="sf-cat-viewall" onClick={() => goToCategory(key)}>
-                          View all →
-                        </button>
-                      </div>
-                      <ProductGrid items={items} isAdmin={isAdmin} wishlist={wishlist} onToggleWishlist={toggleWishlist} />
-                    </div>
-                  );
-                })
+                <>
+                  <div className="sf-cat-header">
+                    <span className="sf-cat-label">
+                      <HomeIcon />
+                      Featured Finds For You
+                    </span>
+                    <button type="button" className="sf-cat-viewall" onClick={goToProducts}>
+                      View all finds →
+                    </button>
+                  </div>
+                  <ProductGrid items={products} isAdmin={isAdmin} wishlist={wishlist} onToggleWishlist={toggleWishlist} />
+                </>
               ) : (
-                <ProductGrid
-                  items={products.filter((p) => p.category === filter)}
-                  isAdmin={isAdmin}
-                  wishlist={wishlist}
-                  onToggleWishlist={toggleWishlist}
-                />
+                <>
+                  <div className="sf-cat-header">
+                    <span className="sf-cat-label">
+                      {(() => { const Icon = CATEGORY_ICON[filter]; return Icon ? <Icon /> : null; })()}
+                      {CATEGORIES[filter] ?? filter}
+                    </span>
+                  </div>
+                  <ProductGrid
+                    items={products.filter((p) => p.category === filter)}
+                    isAdmin={isAdmin}
+                    wishlist={wishlist}
+                    onToggleWishlist={toggleWishlist}
+                  />
+                </>
               )}
             </section>
           </main>
