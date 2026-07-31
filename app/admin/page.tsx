@@ -4,6 +4,7 @@ import { isOwner } from "@/lib/auth/owner";
 import { ensureUser } from "@/lib/users/store";
 import { listProducts } from "@/lib/products/store";
 import { getPageViewCount, getProductClickCounts, getProductViewCounts } from "@/lib/tracking/store";
+import { listSubscribers } from "@/lib/newsletter/store";
 import ProductManager from "@/components/admin/ProductManager";
 
 export default async function AdminPage() {
@@ -14,11 +15,12 @@ export default async function AdminPage() {
 
   const user = await currentUser();
   await ensureUser(userId, user?.primaryEmailAddress?.emailAddress ?? null, user?.fullName ?? user?.firstName ?? null);
-  const [initialProducts, pageViews, productClicks, productViews] = await Promise.all([
+  const [initialProducts, pageViews, productClicks, productViews, subscribers] = await Promise.all([
     listProducts(userId),
     getPageViewCount(),
     getProductClickCounts(),
     getProductViewCounts(),
+    listSubscribers(),
   ]);
 
   return (
@@ -27,6 +29,7 @@ export default async function AdminPage() {
       pageViews={pageViews}
       productClicks={productClicks}
       productViews={productViews}
+      subscribers={subscribers}
     />
   );
 }

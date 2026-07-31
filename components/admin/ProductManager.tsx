@@ -3,6 +3,7 @@ import { useRef, useState, useTransition } from "react";
 import { UserButton } from "@clerk/nextjs";
 import { uploadProductImage, saveProduct, removeProduct, togglePublished } from "@/lib/products/actions";
 import type { ProductRecord } from "@/lib/products/store";
+import type { SubscriberRecord } from "@/lib/newsletter/store";
 
 const CATEGORIES = [
   { key: "home", label: "Home Needs & Appliances" },
@@ -38,11 +39,13 @@ export default function ProductManager({
   pageViews,
   productClicks,
   productViews,
+  subscribers,
 }: {
   initialProducts: ProductRecord[];
   pageViews: number;
   productClicks: Record<string, number>;
   productViews: Record<string, number>;
+  subscribers: SubscriberRecord[];
 }) {
   const [products, setProducts] = useState(initialProducts);
   const [form, setForm] = useState(EMPTY_FORM);
@@ -204,6 +207,18 @@ export default function ProductManager({
         .am-stats-num { font-weight: 800; font-size: 22px; color: #1F2937; }
         .am-stats-label { font-size: 12px; color: #6B7280; font-weight: 600; }
         .am-list-clicks { font-size: 11px; font-weight: 700; color: #0F766E; }
+        .am-stats-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+        .am-stats-row .am-stats-card { margin-bottom: 0; flex: 1; min-width: 160px; }
+        .am-subs-details { background: #fff; border: 1px solid #E7E3D9; border-radius: 14px; padding: 4px 18px; margin-bottom: 24px; }
+        .am-subs-details summary { list-style: none; display: flex; align-items: center; justify-content: space-between; padding: 14px 0; font-size: 13px; font-weight: 700; color: #1F2937; cursor: pointer; }
+        .am-subs-details summary::-webkit-details-marker { display: none; }
+        .am-subs-details summary::after { content: "+"; font-size: 18px; font-weight: 400; color: #0B6B57; }
+        .am-subs-details[open] summary::after { content: "−"; }
+        .am-subs-list { max-height: 260px; overflow-y: auto; padding-bottom: 14px; }
+        .am-subs-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; border-top: 1px solid #F0EDE4; font-size: 12.5px; }
+        .am-subs-email { color: #1F2937; font-weight: 600; word-break: break-all; }
+        .am-subs-date { color: #6B7280; font-size: 11.5px; flex-shrink: 0; }
+        .am-subs-empty { font-size: 12.5px; color: #6B7280; padding: 4px 0 14px; }
       `}</style>
 
       <div className="am-wrap">
@@ -218,10 +233,32 @@ export default function ProductManager({
           </div>
         </div>
 
-        <div className="am-stats-card">
-          <span className="am-stats-num">{pageViews.toLocaleString()}</span>
-          <span className="am-stats-label">total site views</span>
+        <div className="am-stats-row">
+          <div className="am-stats-card">
+            <span className="am-stats-num">{pageViews.toLocaleString()}</span>
+            <span className="am-stats-label">total site views</span>
+          </div>
+          <div className="am-stats-card">
+            <span className="am-stats-num">{subscribers.length.toLocaleString()}</span>
+            <span className="am-stats-label">newsletter subscribers</span>
+          </div>
         </div>
+
+        <details className="am-subs-details">
+          <summary>View newsletter subscribers</summary>
+          {subscribers.length === 0 ? (
+            <div className="am-subs-empty">No one has subscribed yet.</div>
+          ) : (
+            <div className="am-subs-list">
+              {subscribers.map((s) => (
+                <div className="am-subs-row" key={s.id}>
+                  <span className="am-subs-email">{s.email}</span>
+                  <span className="am-subs-date">{new Date(s.createdAt).toLocaleDateString()}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </details>
 
         <div className="am-card">
           <div style={{ fontWeight: 700, fontSize: 14, color: "#1F2937", marginBottom: 12 }}>
