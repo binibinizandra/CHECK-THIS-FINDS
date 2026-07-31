@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState, useTransition } from "react";
+import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
 import { uploadProductImage, saveProduct, removeProduct, togglePublished } from "@/lib/products/actions";
 import { sendNewsletterUpdate } from "@/lib/newsletter/actions";
@@ -345,7 +346,7 @@ export default function ProductManager({
             <label className="am-label">Product photo</label>
             <input ref={fileInputRef} className="am-input" type="file" accept="image/*" onChange={handleFileChange} disabled={uploading} />
             {uploading && <div style={{ fontSize: 12.5, color: "#6B7280", marginTop: 6 }}>Uploading…</div>}
-            {form.imageUrl && <img className="am-preview" src={form.imageUrl} alt="Preview" />}
+            {form.imageUrl && <Image className="am-preview" src={form.imageUrl} alt="Preview" width={100} height={100} />}
           </div>
 
           <div className="am-field">
@@ -429,7 +430,7 @@ export default function ProductManager({
         )}
         {products.map((p) => (
           <div className="am-list-item" key={p.id}>
-            <img src={p.imageUrl} alt={p.name} />
+            <Image src={p.imageUrl} alt={p.name} width={48} height={48} />
             <div style={{ minWidth: 0 }}>
               <div className="am-list-name">
                 {p.name} {!p.published && <span className="am-badge-hidden">Hidden</span>}

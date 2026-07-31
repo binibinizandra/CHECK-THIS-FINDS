@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Poppins, Playfair_Display } from "next/font/google";
 import type { ProductRecord } from "@/lib/products/store";
 import type { CommentRecord } from "@/lib/comments/store";
@@ -23,7 +24,7 @@ const BADGE_INFO: Record<string, { label: string; bg: string; color: string }> =
 
 function LogoMark({ size = 26 }: { size?: number }) {
   return (
-    <img
+    <Image
       src="/images/logo.png"
       alt="Check This Finds"
       width={size}
@@ -140,7 +141,7 @@ export default function ProductDetail({
         <main className="pd-wrap pd-main">
           <div className="pd-grid">
             <div className="pd-media">
-              <img src={product.imageUrl} alt={product.name} />
+              <Image src={product.imageUrl} alt={product.name} fill priority sizes="(min-width: 760px) 480px, 100vw" />
               {badge && (
                 <span className="pd-media-badge" style={{ background: badge.bg, color: badge.color }}>
                   {badge.label}

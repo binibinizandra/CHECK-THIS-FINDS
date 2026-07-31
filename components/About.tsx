@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Poppins, Playfair_Display } from "next/font/google";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
@@ -5,7 +6,7 @@ const playfair = Playfair_Display({ subsets: ["latin"], weight: ["600", "700", "
 
 function LogoMark({ size = 32 }: { size?: number }) {
   return (
-    <img
+    <Image
       src="/images/logo.png"
       alt="Check This Finds"
       width={size}

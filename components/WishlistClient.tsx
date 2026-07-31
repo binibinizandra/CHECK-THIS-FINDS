@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Poppins, Playfair_Display } from "next/font/google";
 import type { ProductRecord } from "@/lib/products/store";
 import { track } from "@/lib/tracking/track";
@@ -12,7 +13,7 @@ const WISHLIST_KEY = "ctf_wishlist";
 
 function LogoMark({ size = 26 }: { size?: number }) {
   return (
-    <img
+    <Image
       src="/images/logo.png"
       alt="Check This Finds"
       width={size}
@@ -154,7 +155,7 @@ export default function WishlistClient({ products, isAdmin }: { products: Produc
                 <article className="wl-card" key={p.id}>
                   <Link href={`/product/${p.id}`} className="wl-card-link">
                     <div className="wl-card-media">
-                      <img src={p.imageUrl} alt={p.name} loading="lazy" />
+                      <Image src={p.imageUrl} alt={p.name} fill sizes="(min-width: 800px) 25vw, (min-width: 560px) 33vw, 50vw" />
                     </div>
                     <div className="wl-card-body">
                       <div className="wl-card-name">{p.name}</div>

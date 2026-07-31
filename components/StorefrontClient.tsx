@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Poppins, Playfair_Display } from "next/font/google";
 import type { ProductRecord } from "@/lib/products/store";
 import { track } from "@/lib/tracking/track";
@@ -33,7 +34,7 @@ const BADGE_INFO: Record<string, { label: string; bg: string; color: string; ico
 
 function LogoMark({ size = 40 }: { size?: number }) {
   return (
-    <img
+    <Image
       src="/images/logo.png"
       alt="Check This Finds"
       width={size}
@@ -256,7 +257,12 @@ function ProductCard({
     <article className="sf-card">
       <Link href={`/product/${p.id}`} className="sf-card-link">
         <div className="sf-card-media">
-          <img src={p.imageUrl} alt={p.name} loading="lazy" />
+          <Image
+            src={p.imageUrl}
+            alt={p.name}
+            fill
+            sizes="(min-width: 1080px) 20vw, (min-width: 800px) 25vw, (min-width: 560px) 33vw, 50vw"
+          />
           <div className="sf-badge-stack">
             {badge && (
               <span className="sf-badge" style={{ background: badge.bg, color: badge.color }}>
@@ -453,6 +459,8 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         .sf-hero { position: relative; overflow: hidden; }
         .sf-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .sf-hero-bg-wide { display: none; }
+        @media (min-width: 1440px) { .sf-hero-bg-wide { display: block; } }
 
         .sf-header { position: sticky; top: 0; z-index: 20; background: rgba(250,250,247,.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--sf-border); }
         .sf-nav-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; }
@@ -498,6 +506,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @media (min-width: 1440px) { .sf-hero-grid { padding: 72px 0 88px; } }
         .sf-hero-grid-inner { display: flex; justify-content: center; }
         .sf-hero-copy { max-width: 880px; text-align: center; }
+        @media (min-width: 1440px) { .sf-hero-copy { max-width: 980px; } }
 
         .sf-hero-eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sf-primary); margin: 0 0 16px; }
         .sf-hero-eyebrow::before, .sf-hero-eyebrow::after { content: ""; display: inline-block; width: 16px; height: 1px; background: var(--sf-accent); }
@@ -840,6 +849,11 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
             <path d="M-50 400 C 260 480, 500 320, 780 420 S 1160 520, 1450 400" stroke="#0B6B57" strokeWidth="1" opacity="0.12" />
             <path d="M-50 40 C 200 -20, 380 90, 620 20 S 980 -30, 1300 40" stroke="#D4AF37" strokeWidth="0.9" opacity="0.18" />
             <path d="M-50 500 C 240 440, 460 560, 740 480 S 1140 400, 1450 500" stroke="#0F766E" strokeWidth="1" opacity="0.1" />
+            <g className="sf-hero-bg-wide">
+              <path d="M950 -30 C 1100 60, 1000 180, 1180 240 S 1250 400, 1400 460" stroke="#0B6B57" strokeWidth="1.2" opacity="0.14" />
+              <path d="M980 620 C 1120 520, 1050 400, 1220 340 S 1300 160, 1420 90" stroke="#D4AF37" strokeWidth="1" opacity="0.16" />
+              <path d="M900 300 C 1050 260, 1150 340, 1300 300 S 1400 260, 1450 280" stroke="#A8B79A" strokeWidth="0.9" opacity="0.12" />
+            </g>
           </svg>
 
           <div className="sf-wrap sf-hero-grid">
