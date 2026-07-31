@@ -2,6 +2,7 @@
 import { useRef, useState, useTransition } from "react";
 import { UserButton } from "@clerk/nextjs";
 import { uploadProductImage, saveProduct, removeProduct, togglePublished } from "@/lib/products/actions";
+import { sendNewsletterUpdate } from "@/lib/newsletter/actions";
 import type { ProductRecord } from "@/lib/products/store";
 import type { SubscriberRecord } from "@/lib/newsletter/store";
 
@@ -54,6 +55,29 @@ export default function ProductManager({
   const [saved, setSaved] = useState(false);
   const [pending, startTransition] = useTransition();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [composeSubject, setComposeSubject] = useState("");
+  const [composeMessage, setComposeMessage] = useState("");
+  const [sending, setSending] = useState(false);
+  const [sendResult, setSendResult] = useState("");
+  const [sendError, setSendError] = useState("");
+
+  function handleSendUpdate() {
+    if (!window.confirm(`Send this update to all ${subscribers.length} subscriber(s)? This can't be undone.`)) return;
+    setSending(true);
+    setSendError("");
+    setSendResult("");
+    sendNewsletterUpdate(composeSubject, composeMessage).then((result) => {
+      setSending(false);
+      if ("error" in result) {
+        setSendError(result.error);
+        return;
+      }
+      setSendResult(`Sent to ${result.sent} of ${result.total} subscriber(s).${result.failed ? ` ${result.failed} failed.` : ""}`);
+      setComposeSubject("");
+      setComposeMessage("");
+    });
+  }
 
   function startEdit(p: ProductRecord) {
     setForm({
@@ -259,6 +283,44 @@ export default function ProductManager({
             </div>
           )}
         </details>
+
+        <div className="am-card">
+          <div style={{ fontWeight: 700, fontSize: 14, color: "#1F2937", marginBottom: 4 }}>
+            Compose an update
+          </div>
+          <div className="am-sub" style={{ marginBottom: 12 }}>
+            Emails every subscriber ({subscribers.length}) with the message below.
+          </div>
+          <div className="am-field">
+            <label className="am-label">Subject</label>
+            <input
+              className="am-input"
+              value={composeSubject}
+              onChange={(e) => setComposeSubject(e.target.value)}
+              placeholder="e.g. New finds this week 🎉"
+            />
+          </div>
+          <div className="am-field">
+            <label className="am-label">Message</label>
+            <textarea
+              className="am-input"
+              rows={5}
+              value={composeMessage}
+              onChange={(e) => setComposeMessage(e.target.value)}
+              placeholder="Write your update here..."
+            />
+          </div>
+          <button
+            className="am-btn am-btn-primary"
+            type="button"
+            onClick={handleSendUpdate}
+            disabled={sending || subscribers.length === 0 || !composeSubject.trim() || !composeMessage.trim()}
+          >
+            {sending ? "Sending…" : `Send to ${subscribers.length} subscriber(s)`}
+          </button>
+          {sendResult && <div className="am-saved">{sendResult}</div>}
+          {sendError && <div className="am-error">{sendError}</div>}
+        </div>
 
         <div className="am-card">
           <div style={{ fontWeight: 700, fontSize: 14, color: "#1F2937", marginBottom: 12 }}>
