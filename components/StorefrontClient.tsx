@@ -198,10 +198,11 @@ const CATEGORY_ICON: Record<string, (p: { className?: string }) => JSX.Element> 
 };
 
 const TRUST_ITEMS = [
-  { icon: BadgeCheckIcon, title: "Personally Curated" },
-  { icon: StarIcon, title: "Top Rated Only" },
-  { icon: HandshakeIcon, title: "Honest Reviews" },
-  { icon: LockIcon, title: "Safe & Verified" },
+  { icon: BadgeCheckIcon, title: "Personally Curated", text: "Every product is carefully researched and selected by me." },
+  { icon: StarIcon, title: "Top Rated", text: "Only highly rated and recommended products make it here." },
+  { icon: CoinIcon, title: "Worth Every Peso", text: "Great value, quality, and performance you can count on." },
+  { icon: HandshakeIcon, title: "Honest Recommendations", text: "No hype, no push — just real reviews and honest opinions." },
+  { icon: LockIcon, title: "Safe & Trusted", text: "Your trust is my priority. Shop with confidence every time." },
 ];
 
 function Stars({ rating }: { rating: number }) {
@@ -413,25 +414,13 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
     el?.focus();
   }
 
-  const avgRating = products.length
-    ? products.reduce((sum, p) => sum + p.rating, 0) / products.length
-    : null;
-
-  const spotlightItems = (() => {
-    const badged = products.filter((p) => p.badge);
-    const pool = badged.length >= 3 ? badged : products;
-    return pool.slice(0, 3);
-  })();
-
   return (
     <>
       <style>{`
         .sf-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
         .sf-hero { position: relative; overflow: hidden; }
-        .sf-hero-bg { position: absolute; top: -6px; right: -70px; width: 340px; height: 320px; pointer-events: none; z-index: 1; opacity: 0.55; }
-        @media (min-width: 640px) { .sf-hero-bg { width: 560px; height: 520px; right: -20px; top: -10px; opacity: 0.8; } }
-        @media (min-width: 960px) { .sf-hero-bg { width: 820px; height: 640px; right: 0; top: -20px; opacity: 1; } }
+        .sf-hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
 
         .sf-nav-row { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 0; }
         .sf-brand-block { display: flex; align-items: center; gap: 11px; }
@@ -458,38 +447,16 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-admin-link { flex-shrink: 0; font-size: 12px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 9px 20px; text-decoration: none; white-space: nowrap; }
         @media (prefers-reduced-motion: no-preference) { .sf-admin-link { transition: background .15s ease; } .sf-admin-link:hover { background: var(--sf-secondary); } }
 
-        .sf-hero-grid { position: relative; z-index: 2; padding: 20px 0 52px; }
-        @media (min-width: 900px) { .sf-hero-grid { padding: 40px 0 72px; } }
+        .sf-hero-grid { position: relative; z-index: 2; padding: 20px 0 48px; }
+        @media (min-width: 900px) { .sf-hero-grid { padding: 36px 0 64px; } }
+        .sf-hero-grid > div { max-width: 640px; margin: 0 auto; text-align: center; }
 
-        .sf-hero-grid-inner { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
-        @media (min-width: 960px) { .sf-hero-grid-inner { grid-template-columns: 1.05fr 0.9fr; gap: 56px; } }
-
-        .sf-hero-copy { max-width: 560px; margin: 0 auto; text-align: center; }
-        @media (min-width: 960px) { .sf-hero-copy { margin: 0; text-align: left; } }
-
-        .sf-hero-rating-pill { display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; font-weight: 700; color: var(--sf-primary); background: rgba(11,107,87,.08); border: 1px solid rgba(11,107,87,.18); border-radius: 999px; padding: 7px 14px; margin-bottom: 20px; }
-        .sf-hero-rating-pill svg { width: 12px; height: 12px; color: var(--sf-accent); }
-
-        .sf-hero-headline { font-weight: 800; font-size: 32px; line-height: 1.18; margin: 0 0 16px; color: var(--sf-ink); }
-        @media (min-width: 640px) { .sf-hero-headline { font-size: 42px; } }
-        .sf-hero-headline em { font-style: normal; color: var(--sf-primary); }
+        .sf-hero-headline { font-weight: 800; font-size: 32px; line-height: 1.16; margin: 0 0 14px; }
+        @media (min-width: 640px) { .sf-hero-headline { font-size: 44px; } }
+        .sf-hero-headline span { display: block; }
+        .sf-hero-headline-l1 { color: var(--sf-primary); }
+        .sf-hero-headline-l2 { color: var(--sf-accent); }
         .sf-hero-sub { font-size: 14.5px; line-height: 1.65; color: var(--sf-muted); max-width: 440px; margin: 0 0 28px; }
-        @media (min-width: 960px) { .sf-hero-sub { margin-left: 0; margin-right: 0; } }
-        .sf-hero-copy .sf-hero-sub { margin-left: auto; margin-right: auto; }
-        @media (min-width: 960px) { .sf-hero-copy .sf-hero-sub { margin-left: 0; margin-right: 0; } }
-
-        .sf-hero-spotlight { display: flex; gap: 12px; overflow-x: auto; padding: 4px 2px 6px; scrollbar-width: none; }
-        .sf-hero-spotlight::-webkit-scrollbar { display: none; }
-        @media (min-width: 960px) { .sf-hero-spotlight { flex-direction: column; overflow: visible; padding: 0; max-width: 290px; margin-left: auto; } }
-        .sf-spotlight-card { flex: 0 0 210px; display: flex; align-items: center; gap: 11px; background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 16px; padding: 11px; text-decoration: none; color: inherit; box-shadow: 0 14px 30px -18px rgba(31,41,55,.25); }
-        @media (prefers-reduced-motion: no-preference) { .sf-spotlight-card { transition: transform .15s ease, box-shadow .15s ease; } .sf-spotlight-card:hover { transform: translateY(-3px); box-shadow: 0 18px 34px -16px rgba(31,41,55,.32); } }
-        @media (min-width: 960px) { .sf-spotlight-card { flex: none; width: 100%; } .sf-spotlight-card:nth-child(2) { margin-left: 26px; } .sf-spotlight-card:nth-child(3) { margin-left: 12px; } }
-        .sf-spotlight-img { width: 50px; height: 50px; border-radius: 12px; object-fit: cover; flex-shrink: 0; background: var(--sf-border); }
-        .sf-spotlight-body { min-width: 0; }
-        .sf-spotlight-name { font-size: 12px; font-weight: 700; color: var(--sf-ink); line-height: 1.35; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-        .sf-spotlight-meta { display: flex; align-items: center; gap: 5px; margin-top: 5px; font-size: 10.5px; font-weight: 700; color: var(--sf-muted); }
-        .sf-spotlight-meta svg { width: 11px; height: 11px; color: var(--sf-accent); flex-shrink: 0; }
-        .sf-spotlight-price { margin-left: auto; color: var(--sf-primary); font-weight: 800; flex-shrink: 0; }
 
         .sf-search-row { position: relative; margin-bottom: 18px; }
         .sf-search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; color: var(--sf-muted); pointer-events: none; }
@@ -500,35 +467,45 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-search-clear { position: absolute; right: 44px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; background: var(--sf-border); border: none; border-radius: 999px; color: var(--sf-ink); font-size: 10px; cursor: pointer; }
 
         .sf-tabs-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; overflow-x: auto; padding: 2px 4px 6px; scrollbar-width: none; }
-        @media (min-width: 960px) { .sf-tabs-row { justify-content: flex-start; } }
         @media (max-width: 640px) { .sf-tabs-row { flex-wrap: nowrap; justify-content: flex-start; mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); } }
         .sf-tabs-row::-webkit-scrollbar { display: none; }
         .sf-tab-btn { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--sf-border); background: var(--sf-card); color: var(--sf-ink); font-weight: 600; font-size: 12.5px; padding: 9px 16px; border-radius: 999px; transition: background .15s ease, color .15s ease, border-color .15s ease; cursor: pointer; }
         .sf-tab-btn svg { width: 14px; height: 14px; }
         .sf-tab-btn[aria-pressed=true] { background: var(--sf-primary); border-color: var(--sf-primary); color: var(--sf-white); }
 
-        .sf-curator-avatar { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: var(--sf-primary); color: var(--sf-white); font-weight: 800; font-size: 13px; }
-        .sf-curator-name { font-size: 13.5px; font-weight: 800; color: var(--sf-ink); margin-bottom: 4px; }
-        .sf-curator-linkedin { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 700; color: var(--sf-primary); text-decoration: none; }
-        .sf-curator-linkedin svg { width: 13px; height: 13px; flex-shrink: 0; }
+        .sf-curator { display: grid; grid-template-columns: 1fr; background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 22px; margin: 8px 0 28px; box-shadow: 0 10px 30px -14px rgba(31,41,55,.14); overflow: hidden; }
+        @media (min-width: 720px) { .sf-curator { grid-template-columns: 1fr auto 220px; } }
+        .sf-curator-main { display: flex; gap: 16px; padding: 24px; }
+        .sf-curator-avatar { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--sf-primary); color: var(--sf-white); font-weight: 800; font-size: 14px; }
+        .sf-curator-name { font-size: 14px; font-weight: 800; color: var(--sf-ink); margin-bottom: 6px; }
+        .sf-curator-name .sf-sparkle-inline { width: 13px; height: 13px; color: var(--sf-accent); display: inline-block; vertical-align: -1px; margin-left: 4px; }
+        .sf-curator-text { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--sf-ink); }
+        .sf-curator-linkedin { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 12px; font-weight: 700; color: var(--sf-primary); text-decoration: none; }
+        .sf-curator-linkedin svg { width: 14px; height: 14px; flex-shrink: 0; }
         .sf-curator-linkedin:hover { color: #0A66C2; }
+        .sf-curator-divider { display: none; }
+        @media (min-width: 720px) { .sf-curator-divider { display: block; width: 1px; background: var(--sf-border); margin: 24px 0; } }
+        .sf-curator-stat { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 6px; padding: 20px 24px 24px; border-top: 1px solid var(--sf-border); }
+        @media (min-width: 720px) { .sf-curator-stat { border-top: none; padding: 24px; } }
+        .sf-curator-stat-icon { width: 34px; height: 34px; border-radius: 50%; background: var(--sf-bg); display: flex; align-items: center; justify-content: center; color: var(--sf-accent); }
+        .sf-curator-stat-icon svg { width: 17px; height: 17px; }
+        .sf-curator-stat-num { font-size: 26px; font-weight: 800; color: var(--sf-primary); line-height: 1; }
+        .sf-curator-stat-label { font-size: 12px; font-weight: 700; color: var(--sf-ink); }
+        .sf-curator-stat-sub { font-size: 11px; color: var(--sf-muted); line-height: 1.4; }
 
-        .sf-trust-strip { display: flex; flex-direction: column; gap: 22px; background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 20px; padding: 24px 26px; margin: 8px 0 52px; box-shadow: 0 10px 28px -18px rgba(31,41,55,.16); }
-        @media (min-width: 860px) { .sf-trust-strip { flex-direction: row; align-items: center; justify-content: space-between; gap: 28px; } }
-        .sf-trust-strip-curator { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-        .sf-trust-strip-divider { display: none; }
-        @media (min-width: 860px) { .sf-trust-strip-divider { display: block; width: 1px; height: 34px; background: var(--sf-border); } }
-        .sf-trust-strip-markers { display: flex; flex-wrap: wrap; gap: 16px 26px; }
-        .sf-trust-marker { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: var(--sf-ink); white-space: nowrap; }
-        .sf-trust-marker svg { width: 16px; height: 16px; color: var(--sf-primary); flex-shrink: 0; }
+        .sf-trust-wrap { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 24px; padding: 30px 24px; margin: 0 0 32px; box-shadow: 0 10px 30px -16px rgba(31,41,55,.14); }
+        .sf-trust-title { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-primary); text-align: center; margin: 0 0 26px; }
+        .sf-trust-title svg { width: 14px; height: 14px; color: var(--sf-accent); }
+        .sf-trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+        @media (min-width: 720px) { .sf-trust-grid { grid-template-columns: repeat(5, 1fr); gap: 16px; } }
+        .sf-trust-item { text-align: center; }
+        .sf-trust-icon { width: 46px; height: 46px; border-radius: 50%; background: var(--sf-bg); display: flex; align-items: center; justify-content: center; color: var(--sf-primary); margin: 0 auto 14px; }
+        .sf-trust-icon svg { width: 21px; height: 21px; }
+        .sf-trust-item-title { font-size: 12.5px; font-weight: 800; color: var(--sf-ink); margin-bottom: 6px; }
+        .sf-trust-item-text { font-size: 11.5px; line-height: 1.5; color: var(--sf-muted); }
 
-        .sf-section-intro { margin: 0 0 30px; text-align: center; }
-        .sf-section-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sf-primary); margin-bottom: 8px; }
-        .sf-section-title { font-size: 24px; font-weight: 800; color: var(--sf-ink); margin: 0; }
-        @media (min-width: 640px) { .sf-section-title { font-size: 28px; } }
-
-        .sf-grid-section { padding: 0 0 48px; }
-        .sf-cat-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 36px 0 14px; }
+        .sf-grid-section { padding: 0 0 40px; }
+        .sf-cat-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 30px 0 14px; }
         .sf-cat-header:first-child { margin-top: 0; }
         .sf-cat-label { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: var(--sf-ink); }
         .sf-cat-label svg { width: 16px; height: 16px; color: var(--sf-primary); }
@@ -631,48 +608,45 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         }}
       >
         <div className="sf-hero">
-          <svg className="sf-hero-bg" viewBox="0 0 700 620" preserveAspectRatio="xMaxYMin meet" aria-hidden="true">
+          <svg className="sf-hero-bg" viewBox="0 0 1400 620" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
             <defs>
-              <linearGradient id="sfRibbonA" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#0F766E" />
-                <stop offset="100%" stopColor="#0B6B57" />
-              </linearGradient>
-              <linearGradient id="sfRibbonB" x1="0" y1="0" x2="1" y2="1">
+              <linearGradient id="sfWaveGrad" x1="0" y1="0" x2="1" y2="0.3">
                 <stop offset="0%" stopColor="#0B6B57" />
-                <stop offset="100%" stopColor="#0F766E" />
-              </linearGradient>
-              <linearGradient id="sfRibbonC" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#E8C765" />
+                <stop offset="55%" stopColor="#0F766E" />
                 <stop offset="100%" stopColor="#D4AF37" />
               </linearGradient>
+              <linearGradient id="sfWaveGrad2" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#D4AF37" />
+                <stop offset="100%" stopColor="#0B6B57" />
+              </linearGradient>
             </defs>
-
-            <g strokeLinecap="round" strokeLinejoin="round" fill="none">
-              <path
-                d="M640 20 C 470 55, 380 175, 485 265 C 590 355, 720 325, 695 445 C 678 525, 545 545, 470 615"
-                stroke="url(#sfRibbonA)"
-                strokeWidth="92"
-                opacity="0.9"
-              />
-              <path
-                d="M690 -10 C 515 30, 425 165, 530 258 C 625 340, 740 305, 725 425 C 708 505, 575 528, 500 605"
-                stroke="url(#sfRibbonB)"
-                strokeWidth="66"
-                opacity="0.78"
-              />
-              <path
-                d="M602 62 C 490 96, 438 190, 520 255 C 600 318, 682 296, 670 382"
-                stroke="url(#sfRibbonC)"
-                strokeWidth="30"
-                opacity="0.95"
-              />
-            </g>
-
-            <rect x="655" y="95" width="20" height="20" rx="5" fill="#D4AF37" opacity="0.55" transform="rotate(18 665 105)" />
-            <rect x="458" y="470" width="14" height="14" rx="4" fill="#0F766E" opacity="0.4" transform="rotate(-12 465 477)" />
-            <circle cx="545" cy="118" r="4" fill="#D4AF37" opacity="0.6" />
-            <circle cx="695" cy="290" r="3" fill="#0B6B57" opacity="0.4" />
-            <circle cx="428" cy="360" r="3.4" fill="#D4AF37" opacity="0.5" />
+            <path
+              d="M-50 180 C 150 80, 320 260, 520 140 S 900 20, 1100 90 S 1420 60, 1500 -20"
+              stroke="url(#sfWaveGrad)"
+              strokeWidth="2.5"
+              fill="none"
+              opacity="0.28"
+            />
+            <path
+              d="M-50 300 C 200 220, 380 400, 600 260 S 980 140, 1180 220 S 1450 180, 1520 100"
+              stroke="url(#sfWaveGrad2)"
+              strokeWidth="1.75"
+              fill="none"
+              opacity="0.18"
+            />
+            <path
+              d="M-50 60 C 180 120, 260 -20, 480 40 S 820 120, 1000 30"
+              stroke="url(#sfWaveGrad)"
+              strokeWidth="1.5"
+              fill="none"
+              opacity="0.15"
+            />
+            <circle cx="1180" cy="70" r="3" fill="#D4AF37" opacity="0.6" />
+            <circle cx="1260" cy="150" r="2" fill="#D4AF37" opacity="0.5" />
+            <circle cx="1080" cy="220" r="2.2" fill="#0B6B57" opacity="0.35" />
+            <circle cx="1340" cy="240" r="1.6" fill="#D4AF37" opacity="0.45" />
+            <circle cx="960" cy="100" r="1.6" fill="#D4AF37" opacity="0.4" />
+            <circle cx="80" cy="90" r="2" fill="#0B6B57" opacity="0.25" />
           </svg>
 
           <div className="sf-wrap sf-nav-row">
@@ -744,97 +718,73 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
           </div>
 
           <div className="sf-wrap sf-hero-grid">
-            <div className="sf-hero-grid-inner">
-              <div className="sf-hero-copy">
-                {avgRating != null && products.length > 0 && (
-                  <div className="sf-hero-rating-pill">
-                    <StarIcon />
-                    {avgRating.toFixed(1)} average rating across {products.length} handpicked finds
-                  </div>
+            <div>
+              <h1 className={`sf-hero-headline ${playfair.className}`}>
+                <span className="sf-hero-headline-l1">We do the research</span>
+                <span className="sf-hero-headline-l2">so you don&apos;t have to.</span>
+              </h1>
+              <p className="sf-hero-sub">Discover trusted, tested, high-quality products you&apos;ll actually love.</p>
+
+              <div className="sf-search-row">
+                <SearchIcon className="sf-search-icon" />
+                <input
+                  id="sf-hero-search"
+                  type="text"
+                  className="sf-search-input"
+                  placeholder="Search products, brands, or categories..."
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    setDealsOnly(false);
+                  }}
+                  aria-label="Search products"
+                />
+                {searchActive ? (
+                  <button type="button" className="sf-search-clear" onClick={() => setSearch("")} aria-label="Clear search">
+                    ✕
+                  </button>
+                ) : (
+                  <SparkleIcon className="sf-search-sparkle" />
                 )}
-                <h1 className={`sf-hero-headline ${playfair.className}`}>
-                  We do the research, <em>so you don&apos;t have to.</em>
-                </h1>
-                <p className="sf-hero-sub">Discover trusted, tested, high-quality products you&apos;ll actually love.</p>
-
-                <div className="sf-search-row">
-                  <SearchIcon className="sf-search-icon" />
-                  <input
-                    id="sf-hero-search"
-                    type="text"
-                    className="sf-search-input"
-                    placeholder="Search products, brands, or categories..."
-                    value={search}
-                    onChange={(e) => {
-                      setSearch(e.target.value);
-                      setDealsOnly(false);
-                    }}
-                    aria-label="Search products"
-                  />
-                  {searchActive ? (
-                    <button type="button" className="sf-search-clear" onClick={() => setSearch("")} aria-label="Clear search">
-                      ✕
-                    </button>
-                  ) : (
-                    <SparkleIcon className="sf-search-sparkle" />
-                  )}
-                </div>
-
-                <div className="sf-tabs-row" role="tablist" aria-label="Product categories">
-                  {TABS.map((t) => {
-                    const Icon = t.key === "all" ? SparkleIcon : CATEGORY_ICON[t.key];
-                    return (
-                      <button
-                        key={t.key}
-                        type="button"
-                        className="sf-tab-btn"
-                        aria-pressed={!dealsOnly && filter === t.key}
-                        onClick={() => {
-                          setFilter(t.key);
-                          setSearch("");
-                          setDealsOnly(false);
-                        }}
-                      >
-                        <Icon />
-                        {t.label}
-                      </button>
-                    );
-                  })}
-                </div>
               </div>
 
-              {spotlightItems.length > 0 && (
-                <div className="sf-hero-spotlight">
-                  {spotlightItems.map((p) => (
-                    <a
-                      key={p.id}
-                      href={`/product/${p.id}`}
-                      className="sf-spotlight-card"
-                      onClick={() => { if (!isAdmin) track("product_click", p.id); }}
+              <div className="sf-tabs-row" role="tablist" aria-label="Product categories">
+                {TABS.map((t) => {
+                  const Icon = t.key === "all" ? SparkleIcon : CATEGORY_ICON[t.key];
+                  return (
+                    <button
+                      key={t.key}
+                      type="button"
+                      className="sf-tab-btn"
+                      aria-pressed={!dealsOnly && filter === t.key}
+                      onClick={() => {
+                        setFilter(t.key);
+                        setSearch("");
+                        setDealsOnly(false);
+                      }}
                     >
-                      <img className="sf-spotlight-img" src={p.imageUrl} alt="" loading="lazy" />
-                      <div className="sf-spotlight-body">
-                        <div className="sf-spotlight-name">{p.name}</div>
-                        <div className="sf-spotlight-meta">
-                          <StarIcon />
-                          {p.rating.toFixed(1)}
-                          {p.price != null && <span className="sf-spotlight-price">₱{p.price.toLocaleString()}</span>}
-                        </div>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              )}
+                      <Icon />
+                      {t.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
 
         <div className="sf-wrap">
-          <section className="sf-trust-strip">
-            <div className="sf-trust-strip-curator">
+          <section className="sf-curator">
+            <div className="sf-curator-main">
               <span className="sf-curator-avatar" aria-hidden="true">KB</span>
               <div>
-                <div className="sf-curator-name">Curated by Kazandra B.</div>
+                <div className="sf-curator-name">
+                  Curated by Kazandra B.
+                  <SparkleIcon className="sf-sparkle-inline" />
+                </div>
+                <p className="sf-curator-text">
+                  Handpicking tested, top-rated, and no-budol items so you can shop with confidence.
+                </p>
                 <a
                   href="https://www.linkedin.com/in/binibinizandra/"
                   target="_blank"
@@ -848,13 +798,32 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                 </a>
               </div>
             </div>
-            <div className="sf-trust-strip-divider" aria-hidden="true" />
-            <div className="sf-trust-strip-markers">
+            <div className="sf-curator-divider" aria-hidden="true" />
+            <div className="sf-curator-stat">
+              <span className="sf-curator-stat-icon">
+                <StarIcon />
+              </span>
+              <span className={`sf-curator-stat-num ${playfair.className}`}>100%</span>
+              <span className="sf-curator-stat-label">Tested &amp; Trusted</span>
+              <span className="sf-curator-stat-sub">Quality finds you can rely on.</span>
+            </div>
+          </section>
+
+          <section className="sf-trust-wrap">
+            <div className="sf-trust-title">
+              <SparkleIcon />
+              Why Trust Check This Finds?
+              <SparkleIcon />
+            </div>
+            <div className="sf-trust-grid">
               {TRUST_ITEMS.map((item) => (
-                <span className="sf-trust-marker" key={item.title}>
-                  <item.icon />
-                  {item.title}
-                </span>
+                <div className="sf-trust-item" key={item.title}>
+                  <span className="sf-trust-icon">
+                    <item.icon />
+                  </span>
+                  <div className="sf-trust-item-title">{item.title}</div>
+                  <div className="sf-trust-item-text">{item.text}</div>
+                </div>
               ))}
             </div>
           </section>
@@ -865,12 +834,6 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         ) : (
           <main className="sf-wrap" id="sf-products">
             <section className="sf-grid-section">
-              {!searchActive && !dealsOnly && (
-                <div className="sf-section-intro">
-                  <span className="sf-section-eyebrow">Handpicked For You</span>
-                  <h2 className={`sf-section-title ${playfair.className}`}>This Week&apos;s Best Finds</h2>
-                </div>
-              )}
               {searchActive ? (
                 searchResults.length > 0 ? (
                   <ProductGrid items={searchResults} isAdmin={isAdmin} wishlist={wishlist} onToggleWishlist={toggleWishlist} />
