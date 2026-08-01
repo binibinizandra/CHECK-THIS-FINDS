@@ -563,7 +563,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-search-sparkle { position: absolute; right: 22px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--sf-accent); pointer-events: none; }
         .sf-search-clear { position: absolute; right: 46px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; background: var(--sf-border); border: none; border-radius: 999px; color: var(--sf-ink); font-size: 10px; cursor: pointer; }
 
-        .sf-tabs-row { display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 2px 4px 6px; scrollbar-width: none; mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); }
+        .sf-tabs-row { display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; touch-action: pan-x; overscroll-behavior-x: contain; padding: 2px 4px 6px; scrollbar-width: none; mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); }
         @media (min-width: 900px) { .sf-tabs-row { justify-content: center; mask-image: none; -webkit-mask-image: none; } }
         .sf-tabs-row::-webkit-scrollbar { display: none; }
         .sf-tab-btn { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; border: 1px solid var(--sf-border); background: var(--sf-card); color: var(--sf-ink); font-weight: 600; font-size: 12.5px; padding: 10px 20px; border-radius: 999px; transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease; cursor: pointer; }
@@ -581,7 +581,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-trust-title svg { width: 11px; height: 11px; color: var(--sf-accent); flex-shrink: 0; }
         @media (min-width: 640px) { .sf-trust-title svg { width: 14px; height: 14px; } }
 
-        .sf-trust-grid { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding: 2px 16px 6px 0; scrollbar-width: none; }
+        .sf-trust-grid { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; touch-action: pan-x; overscroll-behavior-x: contain; padding: 2px 16px 6px 0; scrollbar-width: none; }
         .sf-trust-grid::-webkit-scrollbar { display: none; }
         @media (min-width: 640px) { .sf-trust-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; overflow-x: visible; scroll-snap-type: none; padding: 0; } }
         @media (min-width: 720px) { .sf-trust-grid { grid-template-columns: repeat(5, 1fr); gap: 18px; } }
