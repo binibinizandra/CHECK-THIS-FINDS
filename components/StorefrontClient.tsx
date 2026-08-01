@@ -411,6 +411,17 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
     } catch {}
   }, []);
 
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setCategoriesOpen(false);
+        setMobileMenuOpen(false);
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   function toggleWishlist(id: string) {
     setWishlist((prev) => {
       const next = new Set(prev);
@@ -503,12 +514,12 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-nav-dropdown svg { width: 14px; height: 14px; color: var(--sf-primary); flex-shrink: 0; }
 
         .sf-nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-        .sf-nav-search-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--sf-card); border: 1px solid var(--sf-border); display: flex; align-items: center; justify-content: center; color: var(--sf-ink); cursor: pointer; flex-shrink: 0; }
+        .sf-nav-search-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--sf-card); border: 1px solid var(--sf-border); display: flex; align-items: center; justify-content: center; color: var(--sf-ink); cursor: pointer; flex-shrink: 0; }
         .sf-nav-search-btn svg { width: 16px; height: 16px; }
-        .sf-admin-link { flex-shrink: 0; font-size: 12px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 9px 20px; text-decoration: none; white-space: nowrap; }
-        @media (prefers-reduced-motion: no-preference) { .sf-admin-link { transition: background .15s ease; } .sf-admin-link:hover { background: var(--sf-secondary); } }
+        .sf-admin-link { flex-shrink: 0; display: inline-flex; align-items: center; min-height: 44px; font-size: 12px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 9px 20px; text-decoration: none; white-space: nowrap; }
+        @media (prefers-reduced-motion: no-preference) { .sf-admin-link { transition: background .2s ease; } .sf-admin-link:hover { background: var(--sf-secondary); } }
 
-        .sf-mobile-menu-btn { width: 38px; height: 38px; border-radius: 50%; background: var(--sf-card); border: 1px solid var(--sf-border); display: flex; align-items: center; justify-content: center; color: var(--sf-ink); cursor: pointer; flex-shrink: 0; }
+        .sf-mobile-menu-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--sf-card); border: 1px solid var(--sf-border); display: flex; align-items: center; justify-content: center; color: var(--sf-ink); cursor: pointer; flex-shrink: 0; }
         .sf-mobile-menu-btn svg { width: 17px; height: 17px; }
         @media (min-width: 920px) { .sf-mobile-menu-btn { display: none; } }
         .sf-mobile-menu { display: none; }
@@ -544,18 +555,18 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         .sf-search-row { position: relative; margin: 0 auto 18px; max-width: 480px; }
         .sf-search-icon { position: absolute; left: 22px; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; color: var(--sf-muted); pointer-events: none; }
-        .sf-search-input { width: 100%; font-size: 14.5px; font-weight: 500; padding: 18px 48px 18px 50px; border: 1.5px solid var(--sf-border); border-radius: 999px; background: var(--sf-card); color: var(--sf-ink); font-family: inherit; box-shadow: 0 10px 30px -12px rgba(31,41,55,.18); transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+        .sf-search-input { width: 100%; font-size: 14.5px; font-weight: 500; padding: 18px 48px 18px 50px; border: 1.5px solid var(--sf-border); border-radius: 999px; background: var(--sf-card); color: var(--sf-ink); font-family: inherit; box-shadow: 0 12px 34px -14px rgba(31,41,55,.13); transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
         .sf-search-input::placeholder { color: var(--sf-muted); font-weight: 400; }
-        .sf-search-input:focus { outline: none; border-color: var(--sf-primary); box-shadow: 0 10px 30px -12px rgba(31,41,55,.18), 0 0 0 4px rgba(11,107,87,.12); }
+        .sf-search-input:focus { outline: none; border-color: var(--sf-primary); box-shadow: 0 12px 34px -14px rgba(31,41,55,.13), 0 0 0 4px rgba(11,107,87,.12); }
         .sf-search-input:focus-visible { outline: 2px solid var(--sf-primary); outline-offset: 3px; }
         @media (prefers-reduced-motion: no-preference) { .sf-search-input:focus { transform: translateY(-1px); } }
         .sf-search-sparkle { position: absolute; right: 22px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--sf-accent); pointer-events: none; }
         .sf-search-clear { position: absolute; right: 46px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; background: var(--sf-border); border: none; border-radius: 999px; color: var(--sf-ink); font-size: 10px; cursor: pointer; }
 
-        .sf-tabs-row { display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 8px; overflow-x: auto; padding: 2px 4px 6px; scrollbar-width: none; mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); }
+        .sf-tabs-row { display: flex; justify-content: flex-start; flex-wrap: nowrap; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 2px 4px 6px; scrollbar-width: none; mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent); }
         @media (min-width: 900px) { .sf-tabs-row { justify-content: center; mask-image: none; -webkit-mask-image: none; } }
         .sf-tabs-row::-webkit-scrollbar { display: none; }
-        .sf-tab-btn { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--sf-border); background: var(--sf-card); color: var(--sf-ink); font-weight: 600; font-size: 12.5px; padding: 10px 20px; border-radius: 999px; transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease; cursor: pointer; }
+        .sf-tab-btn { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; border: 1px solid var(--sf-border); background: var(--sf-card); color: var(--sf-ink); font-weight: 600; font-size: 12.5px; padding: 10px 20px; border-radius: 999px; transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease; cursor: pointer; }
         .sf-tab-btn svg { width: 14px; height: 14px; }
         @media (prefers-reduced-motion: no-preference) {
           .sf-tab-btn:hover { background: var(--sf-bg); border-color: var(--sf-primary); transform: translateY(-1.5px); }
@@ -606,14 +617,14 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @media (min-width: 1080px) { .sf-product-grid { grid-template-columns: repeat(5, 1fr); } }
 
         .sf-load-more { display: block; margin: 28px auto 0; font-size: 12.5px; font-weight: 700; color: var(--sf-primary); background: var(--sf-card); border: 1px solid var(--sf-primary); border-radius: 999px; padding: 10px 24px; cursor: pointer; }
-        @media (prefers-reduced-motion: no-preference) { .sf-load-more { transition: background .15s ease, color .15s ease; } .sf-load-more:hover { background: var(--sf-primary); color: var(--sf-white); } }
+        @media (prefers-reduced-motion: no-preference) { .sf-load-more { transition: background .25s ease, color .25s ease; } .sf-load-more:hover { background: var(--sf-primary); color: var(--sf-white); } }
 
         .sf-card { background: var(--sf-card); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 4px 16px -10px rgba(31,41,55,.18); transition: box-shadow .3s ease, transform .3s ease; }
         @media (min-width: 640px) { .sf-card { border-radius: 20px; box-shadow: 0 8px 24px -14px rgba(31,41,55,.18); } }
         @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 28px 48px -20px rgba(31,41,55,.28); transform: translateY(-6px); } }
         .sf-card-link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; min-width: 0; }
         .sf-card-media { position: relative; aspect-ratio: 1; background: var(--sf-border); overflow: hidden; }
-        .sf-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+        .sf-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease; }
         @media (prefers-reduced-motion: no-preference) { .sf-card:hover .sf-card-media img { transform: scale(1.06); } }
         .sf-badge-stack { position: absolute; top: 6px; left: 6px; display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
         @media (min-width: 640px) { .sf-badge-stack { top: 10px; left: 10px; gap: 5px; } }
@@ -630,7 +641,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @media (min-width: 640px) { .sf-wishlist-btn svg { width: 15px; height: 15px; } }
         .sf-wishlist-btn[aria-pressed=true] { color: #C6603F; }
         @media (prefers-reduced-motion: no-preference) {
-          .sf-wishlist-btn { transition: transform .15s ease; }
+          .sf-wishlist-btn { transition: transform .2s ease; }
           .sf-wishlist-btn[aria-pressed=true] { animation: sfPop .3s ease; }
         }
         @keyframes sfPop { 0% { transform: scale(1); } 40% { transform: scale(1.25); } 100% { transform: scale(1); } }
@@ -666,14 +677,14 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @media (min-width: 640px) { .sf-cta-btn { gap: 8px; font-size: 13px; padding: 14px 28px; } }
         .sf-cta-btn svg { width: 12px; height: 12px; }
         @media (min-width: 640px) { .sf-cta-btn svg { width: 15px; height: 15px; } }
-        @media (prefers-reduced-motion: no-preference) { .sf-cta-btn { transition: transform .15s ease; } .sf-cta-btn:hover { transform: translateY(-2px); } }
+        @media (prefers-reduced-motion: no-preference) { .sf-cta-btn { transition: transform .2s ease; } .sf-cta-btn:hover { transform: translateY(-2px); } }
 
         .sf-faq { margin: 6px 0 40px; }
         .sf-faq-title { font-size: 19px; font-weight: 800; color: var(--sf-ink); margin: 0 0 16px; }
         .sf-faq-item { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 16px; padding: 4px 20px; margin-bottom: 10px; }
         .sf-faq-item summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 0; font-size: 13.5px; font-weight: 700; color: var(--sf-ink); cursor: pointer; }
         .sf-faq-item summary::-webkit-details-marker { display: none; }
-        .sf-faq-item summary::after { content: "+"; flex-shrink: 0; font-size: 19px; font-weight: 400; color: var(--sf-primary); transition: transform .15s ease; }
+        .sf-faq-item summary::after { content: "+"; flex-shrink: 0; font-size: 19px; font-weight: 400; color: var(--sf-primary); transition: transform .2s ease; }
         .sf-faq-item[open] summary::after { transform: rotate(45deg); }
         .sf-faq-item p { margin: 0 0 16px; font-size: 13px; line-height: 1.6; color: var(--sf-muted); }
 
@@ -709,7 +720,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
           --sf-card: #FFFFFF;
           --sf-border: #E7E3D9;
           --sf-ink: #1F2937;
-          --sf-muted: #6B7280;
+          --sf-muted: #5B6472;
           --sf-primary: #0B6B57;
           --sf-secondary: #0F766E;
           --sf-accent: #D4AF37;
