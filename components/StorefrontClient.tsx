@@ -535,8 +535,8 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-hero-grid { position: relative; z-index: 2; padding: 28px 0 48px; }
         @media (min-width: 900px) { .sf-hero-grid { padding: 48px 0 68px; } }
         @media (min-width: 1440px) { .sf-hero-grid { padding: 72px 0 88px; } }
-        .sf-hero-grid-inner { display: flex; justify-content: center; }
-        .sf-hero-copy { max-width: 880px; text-align: center; }
+        .sf-hero-grid-inner { display: flex; justify-content: center; min-width: 0; }
+        .sf-hero-copy { max-width: 880px; width: 100%; min-width: 0; text-align: center; }
         @media (min-width: 1440px) { .sf-hero-copy { max-width: 980px; } }
 
         .sf-hero-eyebrow { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sf-primary); margin: 0 0 16px; }
