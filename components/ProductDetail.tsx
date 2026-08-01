@@ -60,11 +60,11 @@ export default function ProductDetail({
       <style>{`
         .pd-wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
         .pd-header { position: sticky; top: 0; z-index: 20; background: rgba(250,250,247,.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--sf-border); }
-        .pd-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; }
+        .pd-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; padding-bottom: 14px; }
         .pd-brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; color: var(--sf-ink); text-decoration: none; }
         .pd-back { font-size: 12.5px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 8px 18px; text-decoration: none; }
 
-        .pd-main { padding: 32px 0 40px; }
+        .pd-main { padding-top: 32px; padding-bottom: 40px; }
         .pd-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
         @media (min-width: 760px) { .pd-grid { grid-template-columns: 1fr 1fr; gap: 36px; align-items: start; } }
 

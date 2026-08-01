@@ -73,11 +73,11 @@ export default function WishlistClient({ products, isAdmin }: { products: Produc
       <style>{`
         .wl-wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         .wl-header { position: sticky; top: 0; z-index: 20; background: rgba(250,250,247,.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--sf-border); }
-        .wl-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; }
+        .wl-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; padding-bottom: 14px; }
         .wl-brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; color: var(--sf-ink); text-decoration: none; }
         .wl-back { font-size: 12.5px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 8px 18px; text-decoration: none; }
 
-        .wl-main { padding: 40px 0 60px; }
+        .wl-main { padding-top: 40px; padding-bottom: 60px; }
         .wl-title { font-size: 26px; font-weight: 800; color: var(--sf-ink); margin: 0 0 6px; }
         .wl-sub { font-size: 13.5px; color: var(--sf-muted); margin: 0 0 32px; }
 

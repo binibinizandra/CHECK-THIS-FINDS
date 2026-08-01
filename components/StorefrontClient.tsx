@@ -494,7 +494,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @keyframes sfwTwinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.9; } }
 
         .sf-header { position: sticky; top: 0; z-index: 20; background: rgba(250,250,247,.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--sf-border); }
-        .sf-nav-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; }
+        .sf-nav-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 16px; padding-bottom: 16px; }
         .sf-brand-block { display: flex; align-items: center; gap: 11px; }
         .sf-brand-text { display: flex; flex-direction: column; gap: 1px; }
         .sf-brand-name { font-weight: 800; font-size: 19px; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.1; }
@@ -532,9 +532,9 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-mobile-menu-sub { padding-left: 20px; }
         .sf-mobile-menu-sub a, .sf-mobile-menu-sub button { padding-left: 40px; font-size: 13.5px; font-weight: 500; }
 
-        .sf-hero-grid { position: relative; z-index: 2; padding: 28px 0 48px; }
-        @media (min-width: 900px) { .sf-hero-grid { padding: 48px 0 68px; } }
-        @media (min-width: 1440px) { .sf-hero-grid { padding: 72px 0 88px; } }
+        .sf-hero-grid { position: relative; z-index: 2; padding-top: 28px; padding-bottom: 48px; }
+        @media (min-width: 900px) { .sf-hero-grid { padding-top: 48px; padding-bottom: 68px; } }
+        @media (min-width: 1440px) { .sf-hero-grid { padding-top: 72px; padding-bottom: 88px; } }
         .sf-hero-grid-inner { display: flex; justify-content: center; min-width: 0; }
         .sf-hero-copy { max-width: 880px; width: 100%; min-width: 0; text-align: center; }
         @media (min-width: 1440px) { .sf-hero-copy { max-width: 980px; } }
