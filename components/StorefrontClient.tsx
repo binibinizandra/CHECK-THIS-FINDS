@@ -4,25 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { Manrope } from "next/font/google";
 import type { ProductRecord } from "@/lib/products/store";
+import type { CategoryRecord } from "@/lib/categories/store";
 import { track } from "@/lib/tracking/track";
 import { subscribeNewsletter } from "@/lib/newsletter/actions";
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
-
-const CATEGORIES: Record<string, string> = {
-  home: "Home Needs & Appliances",
-  digital: "Digital Finds",
-  care: "Personal Care",
-  food: "Food & Treats",
-};
-
-const TABS = [
-  { key: "all", label: "All Finds" },
-  { key: "home", label: "Home Needs & Appliances" },
-  { key: "digital", label: "Digital Finds" },
-  { key: "care", label: "Personal Care" },
-  { key: "food", label: "Food & Treats" },
-];
 
 const BADGE_INFO: Record<string, { label: string; bg: string; color: string; icon: (p: { className?: string }) => JSX.Element }> = {
   best_pick: { label: "Best Pick", bg: "var(--sf-primary)", color: "#FFFFFF", icon: BadgeCheckIcon },
@@ -225,12 +211,25 @@ function LockIcon({ className }: { className?: string }) {
   );
 }
 
+function TagIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M11.5 3.5h6.5a2.5 2.5 0 0 1 2.5 2.5v6.5a2.5 2.5 0 0 1-.73 1.77l-8.5 8.5a2.5 2.5 0 0 1-3.54 0l-6.5-6.5a2.5 2.5 0 0 1 0-3.54l8.5-8.5a2.5 2.5 0 0 1 1.77-.73z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+      <circle cx="16" cy="8" r="1.6" fill="currentColor" />
+    </svg>
+  );
+}
+
 const CATEGORY_ICON: Record<string, (p: { className?: string }) => JSX.Element> = {
   home: HomeIcon,
   digital: DigitalIcon,
   care: CareIcon,
   food: FoodIcon,
 };
+
+function getCategoryIcon(key: string) {
+  return CATEGORY_ICON[key] ?? TagIcon;
+}
 
 const TRUST_ITEMS = [
   { icon: BadgeCheckIcon, title: "Personally Curated", text: "Every product is carefully researched and selected by me." },
@@ -391,7 +390,17 @@ function NewsletterForm() {
 
 const WISHLIST_KEY = "ctf_wishlist";
 
-export default function StorefrontClient({ products, isAdmin }: { products: ProductRecord[]; isAdmin: boolean }) {
+export default function StorefrontClient({
+  products,
+  categories,
+  isAdmin,
+}: {
+  products: ProductRecord[];
+  categories: CategoryRecord[];
+  isAdmin: boolean;
+}) {
+  const tabs = [{ key: "all", label: "All Finds" }, ...categories.map((c) => ({ key: c.key, label: c.label }))];
+  const categoryLabel = (key: string) => categories.find((c) => c.key === key)?.label ?? key;
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
   const [dealsOnly, setDealsOnly] = useState(false);
@@ -782,12 +791,12 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                 </button>
                 {categoriesOpen && (
                   <div className="sf-nav-dropdown">
-                    {Object.keys(CATEGORIES).map((key) => {
-                      const Icon = CATEGORY_ICON[key];
+                    {categories.map((c) => {
+                      const Icon = getCategoryIcon(c.key);
                       return (
-                        <button key={key} type="button" onClick={() => goToCategory(key)}>
+                        <button key={c.key} type="button" onClick={() => goToCategory(c.key)}>
                           <Icon />
-                          {CATEGORIES[key]}
+                          {c.label}
                         </button>
                       );
                     })}
@@ -845,19 +854,19 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                 Home
               </a>
               <div className="sf-mobile-menu-sub">
-                {Object.keys(CATEGORIES).map((key) => {
-                  const Icon = CATEGORY_ICON[key];
+                {categories.map((c) => {
+                  const Icon = getCategoryIcon(c.key);
                   return (
                     <button
-                      key={key}
+                      key={c.key}
                       type="button"
                       onClick={() => {
-                        goToCategory(key);
+                        goToCategory(c.key);
                         setMobileMenuOpen(false);
                       }}
                     >
                       <Icon />
-                      {CATEGORIES[key]}
+                      {c.label}
                     </button>
                   );
                 })}
@@ -1001,8 +1010,8 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                 </div>
 
                 <div className="sf-tabs-row" role="tablist" aria-label="Product categories">
-                  {TABS.map((t) => {
-                    const Icon = t.key === "all" ? GridIcon : CATEGORY_ICON[t.key];
+                  {tabs.map((t) => {
+                    const Icon = t.key === "all" ? GridIcon : getCategoryIcon(t.key);
                     return (
                       <button
                         key={t.key}
@@ -1097,8 +1106,8 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                 <>
                   <div className="sf-cat-header">
                     <span className="sf-cat-label">
-                      {(() => { const Icon = CATEGORY_ICON[filter]; return Icon ? <Icon /> : null; })()}
-                      {CATEGORIES[filter] ?? filter}
+                      {(() => { const Icon = getCategoryIcon(filter); return <Icon />; })()}
+                      {categoryLabel(filter)}
                     </span>
                   </div>
                   <ProductGrid

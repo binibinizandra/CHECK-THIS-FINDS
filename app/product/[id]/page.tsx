@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getProduct } from "@/lib/products/store";
 import { listComments } from "@/lib/comments/store";
+import { fetchPublicCategories } from "@/lib/categories/actions";
 import { currentUserId } from "@/lib/auth/currentUser";
 import { isOwner } from "@/lib/auth/owner";
 import ProductDetail from "@/components/ProductDetail";
@@ -37,9 +38,9 @@ export default async function ProductPage({ params }: { params: { id: string } }
   const product = await getProduct(params.id);
   if (!product) notFound();
 
-  const [comments, userId] = await Promise.all([listComments(product.id), currentUserId()]);
+  const [comments, categories, userId] = await Promise.all([listComments(product.id), fetchPublicCategories(), currentUserId()]);
   const isAdmin = isOwner(userId);
   if (!product.published && !isAdmin) notFound();
 
-  return <ProductDetail product={product} comments={comments} isAdmin={isAdmin} />;
+  return <ProductDetail product={product} comments={comments} categories={categories} isAdmin={isAdmin} />;
 }

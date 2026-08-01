@@ -1,4 +1,4 @@
-import { pgTable, text, jsonb, timestamp, integer, boolean, primaryKey, uuid, index, serial, doublePrecision } from "drizzle-orm/pg-core";
+import { pgTable, text, jsonb, timestamp, integer, boolean, primaryKey, uuid, index, uniqueIndex, serial, doublePrecision } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(),
@@ -267,6 +267,22 @@ export const products = pgTable(
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [index("products_user_category_idx").on(t.userId, t.category)]
+);
+
+export const categories = pgTable(
+  "categories",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id").notNull().references(() => users.id),
+    key: text("key").notNull(),
+    label: text("label").notNull(),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    index("categories_user_idx").on(t.userId),
+    uniqueIndex("categories_user_key_idx").on(t.userId, t.key),
+  ]
 );
 
 export const comments = pgTable(

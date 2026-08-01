@@ -2,17 +2,11 @@ import Image from "next/image";
 import { Manrope } from "next/font/google";
 import type { ProductRecord } from "@/lib/products/store";
 import type { CommentRecord } from "@/lib/comments/store";
+import type { CategoryRecord } from "@/lib/categories/store";
 import ProductComments from "@/components/ProductComments";
 import { ProductViewTracker, TrackedBuyButton } from "@/components/ProductTracking";
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
-
-const CATEGORIES: Record<string, string> = {
-  home: "Home Needs & Appliances",
-  digital: "Digital Finds",
-  care: "Personal Care",
-  food: "Food & Treats",
-};
 
 const BADGE_INFO: Record<string, { label: string; bg: string; color: string }> = {
   best_pick: { label: "Best Pick", bg: "#D4AF37", color: "#1F2937" },
@@ -44,15 +38,18 @@ function bullets(text: string | null): string[] {
 export default function ProductDetail({
   product,
   comments,
+  categories,
   isAdmin,
 }: {
   product: ProductRecord;
   comments: CommentRecord[];
+  categories: CategoryRecord[];
   isAdmin: boolean;
 }) {
   const pros = bullets(product.pros);
   const cons = bullets(product.cons);
   const badge = product.badge ? BADGE_INFO[product.badge] : null;
+  const categoryLabel = categories.find((c) => c.key === product.category)?.label ?? product.category;
 
   return (
     <>
@@ -149,7 +146,7 @@ export default function ProductDetail({
             </div>
 
             <div>
-              <span className="pd-cat">{CATEGORIES[product.category] ?? product.category}</span>
+              <span className="pd-cat">{categoryLabel}</span>
               <h1 className="pd-name">{product.name}</h1>
 
               {(pros.length > 0 || cons.length > 0) && (

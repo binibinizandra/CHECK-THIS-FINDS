@@ -3,16 +3,11 @@ import { useRef, useState, useTransition } from "react";
 import Image from "next/image";
 import { UserButton } from "@clerk/nextjs";
 import { uploadProductImage, saveProduct, removeProduct, togglePublished } from "@/lib/products/actions";
+import { addCategory, renameCategory, removeCategory } from "@/lib/categories/actions";
 import { sendNewsletterUpdate } from "@/lib/newsletter/actions";
 import type { ProductRecord } from "@/lib/products/store";
+import type { CategoryRecord } from "@/lib/categories/store";
 import type { SubscriberRecord } from "@/lib/newsletter/store";
-
-const CATEGORIES = [
-  { key: "home", label: "Home Needs & Appliances" },
-  { key: "digital", label: "Digital Finds" },
-  { key: "care", label: "Personal Care" },
-  { key: "food", label: "Food & Treats" },
-];
 
 const BADGES = [
   { key: "", label: "No badge" },
@@ -25,7 +20,7 @@ const BADGES = [
 const EMPTY_FORM = {
   id: null as string | null,
   name: "",
-  category: "home",
+  category: "",
   imageUrl: "",
   shopeeLink: "",
   price: "",
@@ -38,24 +33,82 @@ const EMPTY_FORM = {
 
 export default function ProductManager({
   initialProducts,
+  initialCategories,
   pageViews,
   productClicks,
   productViews,
   subscribers,
 }: {
   initialProducts: ProductRecord[];
+  initialCategories: CategoryRecord[];
   pageViews: number;
   productClicks: Record<string, number>;
   productViews: Record<string, number>;
   subscribers: SubscriberRecord[];
 }) {
   const [products, setProducts] = useState(initialProducts);
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [categories, setCategories] = useState(initialCategories);
+  const [form, setForm] = useState({ ...EMPTY_FORM, category: initialCategories[0]?.key ?? "" });
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
   const [pending, startTransition] = useTransition();
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [newCategoryLabel, setNewCategoryLabel] = useState("");
+  const [addingCategory, setAddingCategory] = useState(false);
+  const [categoryError, setCategoryError] = useState("");
+  const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
+  const [editingCategoryLabel, setEditingCategoryLabel] = useState("");
+  const [categoryPending, startCategoryTransition] = useTransition();
+
+  function handleAddCategory() {
+    setCategoryError("");
+    if (!newCategoryLabel.trim()) return;
+    setAddingCategory(true);
+    addCategory(newCategoryLabel).then((result) => {
+      setAddingCategory(false);
+      if ("error" in result) {
+        setCategoryError(result.error);
+        return;
+      }
+      setCategories((prev) => [...prev, result.category]);
+      setNewCategoryLabel("");
+    });
+  }
+
+  function startEditCategory(c: CategoryRecord) {
+    setEditingCategoryId(c.id);
+    setEditingCategoryLabel(c.label);
+    setCategoryError("");
+  }
+
+  function saveEditCategory() {
+    if (!editingCategoryId || !editingCategoryLabel.trim()) return;
+    const id = editingCategoryId;
+    const label = editingCategoryLabel.trim();
+    startCategoryTransition(async () => {
+      const result = await renameCategory(id, label);
+      if ("error" in result) {
+        setCategoryError(result.error);
+        return;
+      }
+      setCategories((prev) => prev.map((c) => (c.id === id ? { ...c, label } : c)));
+      setEditingCategoryId(null);
+    });
+  }
+
+  function handleDeleteCategory(c: CategoryRecord) {
+    const inUse = products.filter((p) => p.category === c.key).length;
+    const warning = inUse > 0
+      ? `Delete "${c.label}"? ${inUse} product(s) are still assigned to it — they'll keep that category until you move them.`
+      : `Delete "${c.label}"?`;
+    if (!window.confirm(warning)) return;
+    startCategoryTransition(async () => {
+      await removeCategory(c.id);
+      setCategories((prev) => prev.filter((x) => x.id !== c.id));
+    });
+  }
 
   const [composeSubject, setComposeSubject] = useState("");
   const [composeMessage, setComposeMessage] = useState("");
@@ -100,7 +153,7 @@ export default function ProductManager({
   }
 
   function resetForm() {
-    setForm(EMPTY_FORM);
+    setForm({ ...EMPTY_FORM, category: categories[0]?.key ?? "" });
     if (fileInputRef.current) fileInputRef.current.value = "";
     setError("");
     setSaved(false);
@@ -225,6 +278,12 @@ export default function ProductManager({
         .am-list-meta { font-size: 11.5px; color: #6B7280; }
         .am-list-actions { display: flex; gap: 6px; margin-left: auto; }
         .am-list-actions button { font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 6px; border: 1px solid #E7E3D9; background: #fff; cursor: pointer; }
+        .am-cat-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid #F0EDE4; }
+        .am-cat-row:first-of-type { border-top: none; }
+        .am-cat-row input.am-input { flex: 1; padding: 6px 9px; }
+        .am-cat-label { font-weight: 600; font-size: 13.5px; color: #1F2937; }
+        .am-cat-count { font-size: 11.5px; color: #6B7280; margin-left: auto; white-space: nowrap; }
+        .am-cat-row button { font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 6px; border: 1px solid #E7E3D9; background: #fff; cursor: pointer; flex-shrink: 0; }
         .am-checkbox-label { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: #1F2937; cursor: pointer; }
         .am-hint { font-size: 11.5px; color: #6B7280; margin-top: 4px; }
         .am-badge-hidden { display: inline-block; font-size: 10px; font-weight: 700; color: #8A6D1F; background: #F5EAC8; border-radius: 999px; padding: 2px 8px; margin-left: 6px; vertical-align: middle; }
@@ -324,6 +383,60 @@ export default function ProductManager({
         </div>
 
         <div className="am-card">
+          <div style={{ fontWeight: 700, fontSize: 14, color: "#1F2937", marginBottom: 4 }}>
+            Categories
+          </div>
+          <div className="am-sub" style={{ marginBottom: 12 }}>
+            Add new categories or rename existing ones. To move a product, edit it below and pick a different category.
+          </div>
+
+          {categories.map((c) => (
+            <div className="am-cat-row" key={c.id}>
+              {editingCategoryId === c.id ? (
+                <>
+                  <input
+                    className="am-input"
+                    value={editingCategoryLabel}
+                    onChange={(e) => setEditingCategoryLabel(e.target.value)}
+                    onKeyDown={(e) => { if (e.key === "Enter") saveEditCategory(); if (e.key === "Escape") setEditingCategoryId(null); }}
+                    autoFocus
+                  />
+                  <button type="button" onClick={saveEditCategory} disabled={categoryPending || !editingCategoryLabel.trim()}>Save</button>
+                  <button type="button" onClick={() => setEditingCategoryId(null)}>Cancel</button>
+                </>
+              ) : (
+                <>
+                  <span className="am-cat-label">{c.label}</span>
+                  <span className="am-cat-count">{products.filter((p) => p.category === c.key).length} product(s)</span>
+                  <button type="button" onClick={() => startEditCategory(c)}>Edit</button>
+                  <button type="button" onClick={() => handleDeleteCategory(c)} disabled={categoryPending}>Delete</button>
+                </>
+              )}
+            </div>
+          ))}
+
+          <div className="am-row" style={{ marginTop: 12 }}>
+            <input
+              className="am-input"
+              value={newCategoryLabel}
+              onChange={(e) => setNewCategoryLabel(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter") handleAddCategory(); }}
+              placeholder="e.g. Skin Care"
+            />
+            <button
+              className="am-btn am-btn-primary"
+              type="button"
+              style={{ flex: "0 0 auto" }}
+              onClick={handleAddCategory}
+              disabled={addingCategory || !newCategoryLabel.trim()}
+            >
+              {addingCategory ? "Adding…" : "Add category"}
+            </button>
+          </div>
+          {categoryError && <div className="am-error">{categoryError}</div>}
+        </div>
+
+        <div className="am-card">
           <div style={{ fontWeight: 700, fontSize: 14, color: "#1F2937", marginBottom: 12 }}>
             {form.id ? "Edit product" : "Add a product"}
           </div>
@@ -336,7 +449,7 @@ export default function ProductManager({
           <div className="am-field">
             <label className="am-label">Category</label>
             <select className="am-select" value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}>
-              {CATEGORIES.map((c) => (
+              {categories.map((c) => (
                 <option key={c.key} value={c.key}>{c.label}</option>
               ))}
             </select>
@@ -436,7 +549,7 @@ export default function ProductManager({
                 {p.name} {!p.published && <span className="am-badge-hidden">Hidden</span>}
               </div>
               <div className="am-list-meta">
-                {CATEGORIES.find((c) => c.key === p.category)?.label ?? p.category}
+                {categories.find((c) => c.key === p.category)?.label ?? p.category}
                 {p.price != null && ` · ₱${p.price.toLocaleString()}`}
               </div>
               <div className="am-list-clicks">{productViews[p.id] ?? 0} views · {productClicks[p.id] ?? 0} Shopee clicks</div>
