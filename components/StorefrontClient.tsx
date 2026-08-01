@@ -530,7 +530,7 @@ export default function StorefrontClient({
         .sf-nav-link:hover { color: var(--sf-primary); }
         .sf-nav-link svg { width: 13px; height: 13px; }
         .sf-nav-cat-wrap { position: relative; }
-        .sf-nav-dropdown { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%); background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 14px; box-shadow: 0 16px 34px -12px rgba(31,41,55,.22); padding: 8px; min-width: 210px; z-index: 30; }
+        .sf-nav-dropdown { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%); background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 14px; box-shadow: 0 16px 34px -12px rgba(31,41,55,.22); padding: 8px; min-width: 210px; max-height: min(60vh, 420px); overflow-y: auto; z-index: 30; }
         .sf-nav-dropdown button { display: flex; align-items: center; gap: 9px; width: 100%; text-align: left; padding: 9px 11px; border-radius: 9px; border: none; background: none; font-size: 12.5px; font-weight: 500; color: var(--sf-ink); cursor: pointer; font-family: inherit; }
         .sf-nav-dropdown button:hover { background: var(--sf-bg); }
         .sf-nav-dropdown svg { width: 14px; height: 14px; color: var(--sf-primary); flex-shrink: 0; }
@@ -1110,12 +1110,16 @@ export default function StorefrontClient({
                       {categoryLabel(filter)}
                     </span>
                   </div>
-                  <ProductGrid
-                    items={products.filter((p) => p.category === filter)}
-                    isAdmin={isAdmin}
-                    wishlist={wishlist}
-                    onToggleWishlist={toggleWishlist}
-                  />
+                  {products.filter((p) => p.category === filter).length > 0 ? (
+                    <ProductGrid
+                      items={products.filter((p) => p.category === filter)}
+                      isAdmin={isAdmin}
+                      wishlist={wishlist}
+                      onToggleWishlist={toggleWishlist}
+                    />
+                  ) : (
+                    <div className="sf-empty">No products in {categoryLabel(filter)} yet — check back soon!</div>
+                  )}
                 </>
               )}
             </section>
