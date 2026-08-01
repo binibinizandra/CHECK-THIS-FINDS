@@ -476,6 +476,8 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sfw-back { filter: blur(1.3px); }
         .sfw-dunes { filter: blur(46px); }
         @media (min-width: 900px) { .sfw-dunes { filter: blur(60px); } }
+        .sfw-gold-glow { filter: blur(14px); }
+        @media (min-width: 900px) { .sfw-gold-glow { filter: blur(18px); } }
 
         .sfw-d1 { stroke-dasharray: 46 20; }
         .sfw-d2 { stroke-dasharray: 64 28; }
@@ -934,6 +936,11 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
               <path className="sfw-line sfw-d2 sfw-t2" d="M-60 180 C 310 300, 470 80, 760 260 S 1190 370, 1460 240" stroke="url(#sfwFadeEmerald)" strokeWidth="1" opacity="0.16" />
               <path className="sfw-line sfw-d3 sfw-t3" d="M-60 430 C 270 500, 520 320, 810 440 S 1200 530, 1460 400" stroke="#A8B79A" strokeWidth="0.8" opacity="0.12" />
               <path className="sfw-line sfw-d1 sfw-t2" d="M 120 430 C 150 460, 175 478, 195 486 C 230 440, 290 340, 360 260" stroke="#0B6B57" strokeWidth="1" opacity="0.09" />
+            </g>
+
+            <g className="sfw-gold-glow">
+              <path d="M-60 350 C 310 210, 540 430, 850 300 S 1230 160, 1460 330" stroke="#D4AF37" strokeWidth="14" opacity="0.07" fill="none" />
+              <path d="M-60 50 C 210 -10, 400 110, 650 20 S 1010 -50, 1330 40" stroke="#D4AF37" strokeWidth="10" opacity="0.06" fill="none" />
             </g>
 
             <g className="sfw-gold">
