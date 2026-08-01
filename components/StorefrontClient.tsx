@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Manrope } from "next/font/google";
@@ -311,7 +311,23 @@ function ProductCard({
   );
 }
 
-const PAGE_SIZE = 6;
+// Matches the .sf-product-grid column breakpoints below (2/3/4/5 cols).
+function useProductGridColumns() {
+  const [columns, setColumns] = useState(2);
+  useEffect(() => {
+    function update() {
+      const w = window.innerWidth;
+      if (w >= 1080) setColumns(5);
+      else if (w >= 800) setColumns(4);
+      else if (w >= 560) setColumns(3);
+      else setColumns(2);
+    }
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  return columns;
+}
 
 function ProductGrid({
   items,
@@ -324,7 +340,16 @@ function ProductGrid({
   wishlist: Set<string>;
   onToggleWishlist: (id: string) => void;
 }) {
-  const [visible, setVisible] = useState(PAGE_SIZE);
+  const columns = useProductGridColumns();
+  const pageSize = columns * 2; // two full rows per page, whatever the current column count
+  const [visible, setVisible] = useState(pageSize);
+
+  // Keep visible count a full multiple of the current column count so the
+  // grid never ends on a half-empty row (e.g. 6 items in a 5-column layout).
+  useEffect(() => {
+    setVisible((v) => Math.max(v, pageSize));
+  }, [pageSize]);
+
   const shown = items.slice(0, visible);
   const remaining = items.length - shown.length;
 
@@ -336,7 +361,7 @@ function ProductGrid({
         ))}
       </div>
       {remaining > 0 && (
-        <button type="button" className="sf-load-more" onClick={() => setVisible((v) => v + PAGE_SIZE)}>
+        <button type="button" className="sf-load-more" onClick={() => setVisible((v) => v + pageSize)}>
           Load more ({remaining} more)
         </button>
       )}
@@ -407,10 +432,26 @@ export default function StorefrontClient({
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
+  const tabsRowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isAdmin) track("page_view");
   }, [isAdmin]);
+
+  // A trackpad/mouse wheel scroll is vertical by default — convert it to
+  // horizontal so the category row is scrollable without a touch swipe.
+  useEffect(() => {
+    const el = tabsRowRef.current;
+    if (!el) return;
+    function handleWheel(e: WheelEvent) {
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+      if (el!.scrollWidth <= el!.clientWidth) return;
+      el!.scrollLeft += e.deltaY;
+      e.preventDefault();
+    }
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    return () => el.removeEventListener("wheel", handleWheel);
+  }, []);
 
   useEffect(() => {
     try {
@@ -1008,7 +1049,7 @@ export default function StorefrontClient({
                   )}
                 </div>
 
-                <div className="sf-tabs-row" role="tablist" aria-label="Product categories">
+                <div className="sf-tabs-row" ref={tabsRowRef} role="tablist" aria-label="Product categories">
                   {tabs.map((t) => {
                     const Icon = t.key === "all" ? GridIcon : getCategoryIcon(t.key);
                     return (
