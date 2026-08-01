@@ -269,6 +269,19 @@ export const products = pgTable(
   (t) => [index("products_user_category_idx").on(t.userId, t.category)]
 );
 
+export const aboutContent = pgTable("about_content", {
+  userId: text("user_id").primaryKey().references(() => users.id),
+  eyebrow: text("eyebrow").notNull(),
+  title: text("title").notNull(),
+  intro: text("intro").notNull(),
+  missionText: text("mission_text").notNull(),
+  visionText: text("vision_text").notNull(),
+  curatorName: text("curator_name").notNull(),
+  curatorBio: text("curator_bio").notNull(),
+  faq: jsonb("faq").notNull().default([]),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const categories = pgTable(
   "categories",
   {

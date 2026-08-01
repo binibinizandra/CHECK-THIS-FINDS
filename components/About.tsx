@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Manrope } from "next/font/google";
+import type { AboutContentRecord } from "@/lib/about/store";
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 
@@ -15,7 +16,9 @@ function LogoMark({ size = 32 }: { size?: number }) {
   );
 }
 
-export default function About() {
+export default function About({ content }: { content: AboutContentRecord }) {
+  const introParagraphs = content.intro.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+
   return (
     <>
       <style>{`
@@ -92,51 +95,31 @@ export default function About() {
         </header>
 
         <main className="ab-wrap ab-main">
-          <span className="ab-eyebrow">About Check This Finds</span>
-          <h1 className="ab-title">Welcome to Check This Finds</h1>
+          <span className="ab-eyebrow">{content.eyebrow}</span>
+          <h1 className="ab-title">{content.title}</h1>
 
           <div className="ab-intro">
-            <p>
-              Check This Finds was created for every Filipino shopper who wants complete confidence in every online
-              purchase. We know how overwhelming it is to spend hours scrolling, filtering through endless reviews,
-              and second-guessing whether an item on Shopee is worth your hard-earned money. That&apos;s why we do
-              the heavy lifting for you.
-            </p>
-            <p>
-              We curate tested, highly rated, and verified items into one clean, seamless, and easy-to-navigate
-              hub — ranging from everyday budget home essentials to premium, trusted tech finds. No endless
-              scrolling, no wasted time, and zero regret. Just direct access to legitimate, proven products that
-              deliver real value for every peso.
-            </p>
+            {introParagraphs.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
           </div>
 
           <div className="ab-mv-grid">
             <div className="ab-mv-card">
               <div className="ab-mv-title">Our Mission</div>
-              <p className="ab-mv-text">
-                To provide a fast, honest, and reliable shopping shortcut for Filipinos by curating proven,
-                high-quality products from trusted sellers.
-              </p>
+              <p className="ab-mv-text">{content.missionText}</p>
             </div>
             <div className="ab-mv-card">
               <div className="ab-mv-title">Our Vision</div>
-              <p className="ab-mv-text">
-                To become the #1 preferred and most trusted Affiliate Shopping Hub in the Philippines — the very
-                first destination every shopper visits before checking out for a guaranteed safe, smart, and
-                satisfying online shopping experience.
-              </p>
+              <p className="ab-mv-text">{content.visionText}</p>
             </div>
           </div>
 
           <div className="ab-curator">
             <span className="ab-curator-avatar" aria-hidden="true">KB</span>
             <div>
-              <div className="ab-curator-name">Curated by Kazandra B.</div>
-              <p className="ab-curator-text">
-                As a passionate online shopper and researcher, I created Check This Finds to save you time and
-                money. Every item listed here is handpicked based on high ratings, verified buyer reviews, and
-                real value.
-              </p>
+              <div className="ab-curator-name">{content.curatorName}</div>
+              <p className="ab-curator-text">{content.curatorBio}</p>
               <a
                 href="https://www.linkedin.com/in/binibinizandra/"
                 target="_blank"
@@ -154,38 +137,12 @@ export default function About() {
           <section>
             <div className="ab-faq-title">Frequently Asked Questions</div>
 
-            <details className="ab-faq-item">
-              <summary>How does purchasing work on this site?</summary>
-              <p>
-                Check This Finds is a curated recommendation hub. When you click on an item, you&apos;ll be
-                redirected directly to the official and verified seller on Shopee, where you can securely place
-                your order.
-              </p>
-            </details>
-
-            <details className="ab-faq-item">
-              <summary>How are products selected?</summary>
-              <p>
-                We strictly filter items to include only those with high sales volumes, minimum 4.8/5 seller
-                ratings, positive real customer feedback, and proven quality.
-              </p>
-            </details>
-
-            <details className="ab-faq-item">
-              <summary>Will it cost me more to buy through these links?</summary>
-              <p>
-                No. The prices are 100% the same as the official store. We highlight items with special discounts
-                and free shipping deals so you get the best price possible.
-              </p>
-            </details>
-
-            <details className="ab-faq-item">
-              <summary>Are the seller links safe and verified?</summary>
-              <p>
-                Yes! We only link to Shopee Mall, Preferred sellers, and top-rated merchants so you can shop
-                safely with peace of mind.
-              </p>
-            </details>
+            {content.faq.map((item, i) => (
+              <details className="ab-faq-item" key={i}>
+                <summary>{item.question}</summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
           </section>
         </main>
 
