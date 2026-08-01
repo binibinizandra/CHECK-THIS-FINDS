@@ -474,6 +474,8 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         .sfw-line { fill: none; stroke-linecap: round; }
         .sfw-back { filter: blur(1.3px); }
+        .sfw-dunes { filter: blur(46px); }
+        @media (min-width: 900px) { .sfw-dunes { filter: blur(60px); } }
 
         .sfw-d1 { stroke-dasharray: 46 20; }
         .sfw-d2 { stroke-dasharray: 64 28; }
@@ -908,6 +910,15 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
                 <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
               </linearGradient>
             </defs>
+
+            <g className="sfw-dunes">
+              <ellipse cx="60" cy="580" rx="280" ry="90" fill="#A8B79A" opacity="0.15" transform="rotate(-10 60 580)" />
+              <ellipse cx="220" cy="470" rx="360" ry="100" fill="#0B6B57" opacity="0.17" transform="rotate(-16 220 470)" />
+              <ellipse cx="480" cy="380" rx="320" ry="80" fill="#0F766E" opacity="0.13" transform="rotate(-13 480 380)" />
+              <ellipse cx="700" cy="280" rx="400" ry="150" fill="#FBF3DE" opacity="0.12" transform="rotate(-6 700 280)" />
+              <ellipse cx="1180" cy="440" rx="320" ry="95" fill="#D4AF37" opacity="0.11" transform="rotate(14 1180 440)" />
+              <ellipse cx="1310" cy="190" rx="260" ry="75" fill="#D4AF37" opacity="0.09" transform="rotate(10 1310 190)" />
+            </g>
 
             <rect className="sfw-glow sfw-glow-a" x="0" y="0" width="1400" height="620" fill="url(#sfwGlowEmerald)" />
             <rect className="sfw-glow sfw-glow-b" x="0" y="0" width="1400" height="620" fill="url(#sfwGlowGold)" />
