@@ -1,8 +1,7 @@
 import Image from "next/image";
-import { Poppins, Playfair_Display } from "next/font/google";
+import { Manrope } from "next/font/google";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
-const playfair = Playfair_Display({ subsets: ["latin"], weight: ["600", "700", "800"] });
+const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 
 function LogoMark({ size = 32 }: { size?: number }) {
   return (
@@ -24,11 +23,11 @@ export default function About() {
         .ab-header { position: sticky; top: 0; z-index: 20; background: rgba(250,250,247,.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--sf-border); }
         .ab-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; padding-bottom: 14px; }
         .ab-brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; color: var(--sf-ink); text-decoration: none; }
-        .ab-back { font-size: 12.5px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 8px 18px; text-decoration: none; }
+        .ab-back { font-size: 12.5px; font-weight: 600; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 8px 18px; text-decoration: none; }
 
         .ab-main { padding-top: 44px; padding-bottom: 40px; }
         .ab-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sf-primary); margin-bottom: 10px; }
-        .ab-title { font-size: 30px; font-weight: 800; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.2; margin: 0 0 20px; }
+        .ab-title { font-size: 30px; font-weight: 700; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.2; margin: 0 0 20px; }
         .ab-intro { font-size: 14px; line-height: 1.8; color: var(--sf-ink); }
         .ab-intro p { margin: 0 0 16px; }
         .ab-intro p:last-child { margin-bottom: 0; }
@@ -36,18 +35,18 @@ export default function About() {
         .ab-mv-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 36px 0; }
         @media (min-width: 600px) { .ab-mv-grid { grid-template-columns: 1fr 1fr; } }
         .ab-mv-card { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 20px; padding: 24px; }
-        .ab-mv-title { font-size: 11.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-primary); margin-bottom: 12px; }
+        .ab-mv-title { font-size: 11.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-primary); margin-bottom: 12px; }
         .ab-mv-text { font-size: 13.5px; line-height: 1.7; color: var(--sf-ink); margin: 0; }
 
         .ab-curator { display: flex; align-items: flex-start; gap: 16px; background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 20px; padding: 24px; margin: 0 0 36px; }
         .ab-curator-avatar { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--sf-primary); color: var(--sf-white); font-weight: 800; font-size: 14px; }
-        .ab-curator-name { font-size: 14px; font-weight: 800; color: var(--sf-ink); margin-bottom: 6px; }
+        .ab-curator-name { font-size: 14px; font-weight: 700; color: var(--sf-ink); margin-bottom: 6px; }
         .ab-curator-text { font-size: 13.5px; line-height: 1.7; color: var(--sf-ink); margin: 0; }
-        .ab-curator-linkedin { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 12px; font-weight: 700; color: var(--sf-primary); text-decoration: none; }
+        .ab-curator-linkedin { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 12px; font-weight: 600; color: var(--sf-primary); text-decoration: none; }
         .ab-curator-linkedin svg { width: 14px; height: 14px; flex-shrink: 0; }
         .ab-curator-linkedin:hover { color: #0A66C2; }
 
-        .ab-faq-title { font-size: 19px; font-weight: 800; color: var(--sf-ink); margin: 0 0 16px; }
+        .ab-faq-title { font-size: 19px; font-weight: 700; color: var(--sf-ink); margin: 0 0 16px; }
         .ab-faq-item { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 16px; padding: 4px 20px; margin-bottom: 10px; }
         .ab-faq-item summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 0; font-size: 13.5px; font-weight: 700; color: var(--sf-ink); cursor: pointer; }
         .ab-faq-item summary::-webkit-details-marker { display: none; }
@@ -57,7 +56,7 @@ export default function About() {
 
         .ab-footer { margin-top: 24px; border-top: 1px solid var(--sf-border); padding: 28px 0 40px; }
         .ab-footer-links { display: flex; justify-content: center; margin-bottom: 10px; }
-        .ab-footer-link { font-size: 12.5px; font-weight: 700; color: var(--sf-primary); text-decoration: none; }
+        .ab-footer-link { font-size: 12.5px; font-weight: 500; color: var(--sf-primary); text-decoration: none; }
         .ab-footer-link:hover { text-decoration: underline; }
         .ab-footer-copy { font-size: 12px; color: var(--sf-muted); text-align: center; }
 
@@ -75,7 +74,7 @@ export default function About() {
       `}</style>
 
       <div
-        className={poppins.className}
+        className={manrope.className}
         style={{
           background: "var(--sf-bg)",
           color: "var(--sf-ink)",
@@ -84,7 +83,7 @@ export default function About() {
       >
         <header className="ab-header">
           <div className="ab-wrap ab-header-row">
-            <a href="/" className={`ab-brand ${playfair.className}`}>
+            <a href="/" className="ab-brand">
               <LogoMark size={26} />
               Check This Finds
             </a>
@@ -94,7 +93,7 @@ export default function About() {
 
         <main className="ab-wrap ab-main">
           <span className="ab-eyebrow">About Check This Finds</span>
-          <h1 className={`ab-title ${playfair.className}`}>Welcome to Check This Finds</h1>
+          <h1 className="ab-title">Welcome to Check This Finds</h1>
 
           <div className="ab-intro">
             <p>
@@ -153,7 +152,7 @@ export default function About() {
           </div>
 
           <section>
-            <div className={`ab-faq-title ${playfair.className}`}>Frequently Asked Questions</div>
+            <div className="ab-faq-title">Frequently Asked Questions</div>
 
             <details className="ab-faq-item">
               <summary>How does purchasing work on this site?</summary>

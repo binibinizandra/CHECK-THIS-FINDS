@@ -2,12 +2,11 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Poppins, Playfair_Display } from "next/font/google";
+import { Manrope } from "next/font/google";
 import type { ProductRecord } from "@/lib/products/store";
 import { track } from "@/lib/tracking/track";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
-const playfair = Playfair_Display({ subsets: ["latin"], weight: ["600", "700", "800"] });
+const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 
 const WISHLIST_KEY = "ctf_wishlist";
 
@@ -75,10 +74,10 @@ export default function WishlistClient({ products, isAdmin }: { products: Produc
         .wl-header { position: sticky; top: 0; z-index: 20; background: rgba(250,250,247,.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--sf-border); }
         .wl-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 14px; padding-bottom: 14px; }
         .wl-brand { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: 17px; letter-spacing: -0.01em; color: var(--sf-ink); text-decoration: none; }
-        .wl-back { font-size: 12.5px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 8px 18px; text-decoration: none; }
+        .wl-back { font-size: 12.5px; font-weight: 600; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 8px 18px; text-decoration: none; }
 
         .wl-main { padding-top: 40px; padding-bottom: 60px; }
-        .wl-title { font-size: 26px; font-weight: 800; color: var(--sf-ink); margin: 0 0 6px; }
+        .wl-title { font-size: 26px; font-weight: 700; color: var(--sf-ink); margin: 0 0 6px; }
         .wl-sub { font-size: 13.5px; color: var(--sf-muted); margin: 0 0 32px; }
 
         .wl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
@@ -93,17 +92,17 @@ export default function WishlistClient({ products, isAdmin }: { products: Produc
         .wl-remove-btn::before { content: ""; position: absolute; inset: -7px; }
         .wl-remove-btn svg { width: 15px; height: 15px; }
         .wl-card-body { padding: 12px 13px 10px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
-        .wl-card-name { font-size: 12.5px; font-weight: 700; line-height: 1.35; color: var(--sf-ink); min-height: 34px; }
+        .wl-card-name { font-size: 12.5px; font-weight: 600; line-height: 1.35; color: var(--sf-ink); min-height: 34px; }
         .wl-card-price { font-size: 13.5px; font-weight: 800; color: var(--sf-accent); }
         .wl-card-actions { padding: 0 13px 13px; }
-        .wl-btn-store { display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 700; min-height: 44px; padding: 8px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-primary); text-decoration: none; }
+        .wl-btn-store { display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600; min-height: 44px; padding: 8px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-primary); text-decoration: none; }
         .wl-btn-store svg { width: 10px; height: 10px; }
 
         .wl-empty { text-align: center; padding: 60px 20px; }
         .wl-empty-icon { width: 52px; height: 52px; color: var(--sf-border); margin: 0 auto 18px; }
-        .wl-empty h2 { font-size: 18px; font-weight: 800; color: var(--sf-ink); margin: 0 0 8px; }
+        .wl-empty h2 { font-size: 18px; font-weight: 700; color: var(--sf-ink); margin: 0 0 8px; }
         .wl-empty p { font-size: 13.5px; color: var(--sf-muted); margin: 0 0 24px; }
-        .wl-empty a { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border-radius: 999px; padding: 12px 26px; text-decoration: none; }
+        .wl-empty a { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--sf-white); background: var(--sf-primary); border-radius: 999px; padding: 12px 26px; text-decoration: none; }
 
         a:focus-visible, button:focus-visible { outline: 2px solid var(--sf-primary); outline-offset: 2px; border-radius: 4px; }
 
@@ -121,7 +120,7 @@ export default function WishlistClient({ products, isAdmin }: { products: Produc
       `}</style>
 
       <div
-        className={poppins.className}
+        className={manrope.className}
         style={{
           background: "var(--sf-bg)",
           color: "var(--sf-ink)",
@@ -130,7 +129,7 @@ export default function WishlistClient({ products, isAdmin }: { products: Produc
       >
         <header className="wl-header">
           <div className="wl-wrap wl-header-row">
-            <a href="/" className={`wl-brand ${playfair.className}`}>
+            <a href="/" className="wl-brand">
               <LogoMark size={26} />
               Check This Finds
             </a>
@@ -139,13 +138,13 @@ export default function WishlistClient({ products, isAdmin }: { products: Produc
         </header>
 
         <main className="wl-wrap wl-main">
-          <h1 className={`wl-title ${playfair.className}`}>Your Wishlist</h1>
+          <h1 className="wl-title">Your Wishlist</h1>
           <p className="wl-sub">Products you&apos;ve saved by tapping the heart on any item.</p>
 
           {saved === null ? null : saved.length === 0 ? (
             <div className="wl-empty">
               <HeartIcon className="wl-empty-icon" />
-              <h2 className={playfair.className}>No saved finds yet</h2>
+              <h2>No saved finds yet</h2>
               <p>Browse the shop and tap the heart on anything you want to come back to.</p>
               <Link href="/">Explore Finds</Link>
             </div>

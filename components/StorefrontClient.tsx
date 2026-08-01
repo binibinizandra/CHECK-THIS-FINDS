@@ -2,13 +2,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Poppins, Playfair_Display } from "next/font/google";
+import { Manrope } from "next/font/google";
 import type { ProductRecord } from "@/lib/products/store";
 import { track } from "@/lib/tracking/track";
 import { subscribeNewsletter } from "@/lib/newsletter/actions";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
-const playfair = Playfair_Display({ subsets: ["latin"], weight: ["600", "700", "800"] });
+const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 
 const CATEGORIES: Record<string, string> = {
   home: "Home Needs & Appliances",
@@ -504,19 +503,19 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         .sf-nav-links { display: none; align-items: center; gap: 30px; margin-left: 28px; }
         @media (min-width: 920px) { .sf-nav-links { display: flex; } }
-        .sf-nav-link { background: none; border: none; font-family: inherit; font-size: 13.5px; font-weight: 600; color: var(--sf-ink); cursor: pointer; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; padding: 0; }
+        .sf-nav-link { background: none; border: none; font-family: inherit; font-size: 13.5px; font-weight: 500; color: var(--sf-ink); cursor: pointer; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; padding: 0; }
         .sf-nav-link:hover { color: var(--sf-primary); }
         .sf-nav-link svg { width: 13px; height: 13px; }
         .sf-nav-cat-wrap { position: relative; }
         .sf-nav-dropdown { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%); background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 14px; box-shadow: 0 16px 34px -12px rgba(31,41,55,.22); padding: 8px; min-width: 210px; z-index: 30; }
-        .sf-nav-dropdown button { display: flex; align-items: center; gap: 9px; width: 100%; text-align: left; padding: 9px 11px; border-radius: 9px; border: none; background: none; font-size: 12.5px; font-weight: 600; color: var(--sf-ink); cursor: pointer; font-family: inherit; }
+        .sf-nav-dropdown button { display: flex; align-items: center; gap: 9px; width: 100%; text-align: left; padding: 9px 11px; border-radius: 9px; border: none; background: none; font-size: 12.5px; font-weight: 500; color: var(--sf-ink); cursor: pointer; font-family: inherit; }
         .sf-nav-dropdown button:hover { background: var(--sf-bg); }
         .sf-nav-dropdown svg { width: 14px; height: 14px; color: var(--sf-primary); flex-shrink: 0; }
 
         .sf-nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
         .sf-nav-search-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--sf-card); border: 1px solid var(--sf-border); display: flex; align-items: center; justify-content: center; color: var(--sf-ink); cursor: pointer; flex-shrink: 0; }
         .sf-nav-search-btn svg { width: 16px; height: 16px; }
-        .sf-admin-link { flex-shrink: 0; display: inline-flex; align-items: center; min-height: 44px; font-size: 12px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 9px 20px; text-decoration: none; white-space: nowrap; }
+        .sf-admin-link { flex-shrink: 0; display: inline-flex; align-items: center; min-height: 44px; font-size: 12px; font-weight: 600; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 9px 20px; text-decoration: none; white-space: nowrap; }
         @media (prefers-reduced-motion: no-preference) { .sf-admin-link { transition: background .2s ease; } .sf-admin-link:hover { background: var(--sf-secondary); } }
 
         .sf-mobile-menu-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--sf-card); border: 1px solid var(--sf-border); display: flex; align-items: center; justify-content: center; color: var(--sf-ink); cursor: pointer; flex-shrink: 0; }
@@ -526,7 +525,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-mobile-menu.open { display: block; border-top: 1px solid var(--sf-border); background: var(--sf-card); }
         @media (min-width: 920px) { .sf-mobile-menu.open { display: none; } }
         .sf-mobile-menu-list { display: flex; flex-direction: column; padding: 8px 0; }
-        .sf-mobile-menu-list a, .sf-mobile-menu-list button { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 13px 20px; border: none; background: none; font-family: inherit; font-size: 14.5px; font-weight: 600; color: var(--sf-ink); text-decoration: none; cursor: pointer; }
+        .sf-mobile-menu-list a, .sf-mobile-menu-list button { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 13px 20px; border: none; background: none; font-family: inherit; font-size: 14.5px; font-weight: 500; color: var(--sf-ink); text-decoration: none; cursor: pointer; }
         .sf-mobile-menu-list a:hover, .sf-mobile-menu-list button:hover { background: var(--sf-bg); }
         .sf-mobile-menu-list svg { width: 16px; height: 16px; color: var(--sf-primary); flex-shrink: 0; }
         .sf-mobile-menu-sub { padding-left: 20px; }
@@ -576,7 +575,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
 
         .sf-trust-wrap { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 18px; padding: 20px 0 20px 16px; margin: 16px 0 40px; box-shadow: 0 20px 48px -28px rgba(31,41,55,.16); }
         @media (min-width: 640px) { .sf-trust-wrap { border-radius: 24px; padding: 38px 30px; margin: 16px 0 56px; } }
-        .sf-trust-title { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 11px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--sf-primary); text-align: center; margin: 0 16px 16px 0; }
+        .sf-trust-title { display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--sf-primary); text-align: center; margin: 0 16px 16px 0; }
         @media (min-width: 640px) { .sf-trust-title { gap: 10px; font-size: 14px; letter-spacing: 0.06em; margin: 0 0 32px; } }
         .sf-trust-title svg { width: 11px; height: 11px; color: var(--sf-accent); flex-shrink: 0; }
         @media (min-width: 640px) { .sf-trust-title svg { width: 14px; height: 14px; } }
@@ -592,7 +591,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @media (min-width: 640px) { .sf-trust-icon { width: 48px; height: 48px; margin: 0 auto 16px; } }
         .sf-trust-icon svg { width: 15px; height: 15px; }
         @media (min-width: 640px) { .sf-trust-icon svg { width: 21px; height: 21px; } }
-        .sf-trust-item-title { font-size: 11px; font-weight: 800; color: var(--sf-ink); margin-bottom: 3px; }
+        .sf-trust-item-title { font-size: 11px; font-weight: 700; color: var(--sf-ink); margin-bottom: 3px; }
         @media (min-width: 640px) { .sf-trust-item-title { font-size: 12.5px; margin-bottom: 6px; } }
         .sf-trust-item-text { font-size: 9.5px; line-height: 1.4; color: var(--sf-muted); }
         @media (min-width: 640px) { .sf-trust-item-text { font-size: 11.5px; line-height: 1.5; } }
@@ -605,9 +604,9 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-grid-section { padding: 0 0 56px; }
         .sf-cat-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 40px 0 18px; }
         .sf-cat-header:first-child { margin-top: 0; }
-        .sf-cat-label { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: var(--sf-ink); }
+        .sf-cat-label { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--sf-ink); }
         .sf-cat-label svg { width: 16px; height: 16px; color: var(--sf-primary); }
-        .sf-cat-viewall { font-size: 12px; font-weight: 700; color: var(--sf-primary); background: none; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 3px; }
+        .sf-cat-viewall { font-size: 12px; font-weight: 600; color: var(--sf-primary); background: none; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 3px; }
         .sf-cat-viewall:hover { text-decoration: underline; }
 
         .sf-product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -616,7 +615,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @media (min-width: 800px) { .sf-product-grid { grid-template-columns: repeat(4, 1fr); } }
         @media (min-width: 1080px) { .sf-product-grid { grid-template-columns: repeat(5, 1fr); } }
 
-        .sf-load-more { display: block; margin: 28px auto 0; font-size: 12.5px; font-weight: 700; color: var(--sf-primary); background: var(--sf-card); border: 1px solid var(--sf-primary); border-radius: 999px; padding: 10px 24px; cursor: pointer; }
+        .sf-load-more { display: block; margin: 28px auto 0; font-size: 12.5px; font-weight: 600; color: var(--sf-primary); background: var(--sf-card); border: 1px solid var(--sf-primary); border-radius: 999px; padding: 10px 24px; cursor: pointer; }
         @media (prefers-reduced-motion: no-preference) { .sf-load-more { transition: background .25s ease, color .25s ease; } .sf-load-more:hover { background: var(--sf-primary); color: var(--sf-white); } }
 
         .sf-card { background: var(--sf-card); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 4px 16px -10px rgba(31,41,55,.18); transition: box-shadow .3s ease, transform .3s ease; }
@@ -628,11 +627,11 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @media (prefers-reduced-motion: no-preference) { .sf-card:hover .sf-card-media img { transform: scale(1.06); } }
         .sf-badge-stack { position: absolute; top: 6px; left: 6px; display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
         @media (min-width: 640px) { .sf-badge-stack { top: 10px; left: 10px; gap: 5px; } }
-        .sf-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 7.5px; font-weight: 800; letter-spacing: 0.02em; border-radius: 999px; padding: 3px 7px 3px 5px; box-shadow: 0 3px 10px -3px rgba(0,0,0,.35); }
+        .sf-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 7.5px; font-weight: 600; letter-spacing: 0.02em; border-radius: 999px; padding: 3px 7px 3px 5px; box-shadow: 0 3px 10px -3px rgba(0,0,0,.35); }
         @media (min-width: 640px) { .sf-badge { gap: 4px; font-size: 9px; padding: 5px 10px 5px 8px; } }
         .sf-badge-icon { width: 8px; height: 8px; flex-shrink: 0; }
         @media (min-width: 640px) { .sf-badge-icon { width: 10px; height: 10px; } }
-        .sf-voucher-badge { font-size: 7px; font-weight: 800; letter-spacing: 0.02em; color: var(--sf-white); background: #C6603F; border-radius: 999px; padding: 3px 6px; }
+        .sf-voucher-badge { font-size: 7px; font-weight: 600; letter-spacing: 0.02em; color: var(--sf-white); background: #C6603F; border-radius: 999px; padding: 3px 6px; }
         @media (min-width: 640px) { .sf-voucher-badge { font-size: 8.5px; padding: 4px 9px; } }
         .sf-wishlist-btn { position: absolute; top: 6px; right: 6px; width: 22px; height: 22px; border-radius: 50%; background: rgba(255,255,255,.94); border: none; display: flex; align-items: center; justify-content: center; color: var(--sf-muted); cursor: pointer; box-shadow: 0 3px 10px -3px rgba(0,0,0,.3); }
         .sf-wishlist-btn::before { content: ""; position: absolute; inset: -11px; }
@@ -647,14 +646,14 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         @keyframes sfPop { 0% { transform: scale(1); } 40% { transform: scale(1.25); } 100% { transform: scale(1); } }
         .sf-card-body { padding: 8px 9px 6px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
         @media (min-width: 640px) { .sf-card-body { padding: 14px 15px 11px; gap: 8px; } }
-        .sf-card-name { font-size: 10.5px; font-weight: 700; line-height: 1.3; color: var(--sf-ink); min-height: 27px; }
+        .sf-card-name { font-size: 10.5px; font-weight: 600; line-height: 1.3; color: var(--sf-ink); min-height: 27px; }
         @media (min-width: 640px) { .sf-card-name { font-size: 12.5px; line-height: 1.35; min-height: 34px; } }
         .sf-rating-row { display: flex; align-items: center; gap: 5px; }
         .sf-card-price { font-size: 12px; font-weight: 800; letter-spacing: -0.01em; color: var(--sf-accent); font-variant-numeric: tabular-nums; }
         @media (min-width: 640px) { .sf-card-price { font-size: 14.5px; } }
         .sf-card-actions { display: flex; flex-direction: column; gap: 4px; padding: 0 9px 9px; }
         @media (min-width: 640px) { .sf-card-actions { gap: 5px; padding: 0 15px 15px; } }
-        .sf-btn-store { display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 9px; font-weight: 700; min-height: 44px; padding: 7px 6px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-primary); }
+        .sf-btn-store { display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 9px; font-weight: 600; min-height: 44px; padding: 7px 6px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-primary); }
         @media (min-width: 640px) { .sf-btn-store { font-size: 10.5px; min-height: 0; padding: 10px 8px; } }
         .sf-btn-store svg { width: 9px; height: 9px; flex-shrink: 0; }
         @media (prefers-reduced-motion: no-preference) {
@@ -673,14 +672,14 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-cta-headline em { font-style: normal; color: var(--sf-accent); }
         .sf-cta-sub { font-size: 10.5px; color: rgba(255,255,255,.78); margin: 0; }
         @media (min-width: 640px) { .sf-cta-sub { font-size: 12.5px; } }
-        .sf-cta-btn { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; color: #1F2937; background: var(--sf-accent); border: none; border-radius: 999px; padding: 10px 18px; cursor: pointer; text-decoration: none; }
+        .sf-cta-btn { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: #1F2937; background: var(--sf-accent); border: none; border-radius: 999px; padding: 10px 18px; cursor: pointer; text-decoration: none; }
         @media (min-width: 640px) { .sf-cta-btn { gap: 8px; font-size: 13px; padding: 14px 28px; } }
         .sf-cta-btn svg { width: 12px; height: 12px; }
         @media (min-width: 640px) { .sf-cta-btn svg { width: 15px; height: 15px; } }
         @media (prefers-reduced-motion: no-preference) { .sf-cta-btn { transition: transform .2s ease; } .sf-cta-btn:hover { transform: translateY(-2px); } }
 
         .sf-faq { margin: 6px 0 40px; }
-        .sf-faq-title { font-size: 19px; font-weight: 800; color: var(--sf-ink); margin: 0 0 16px; }
+        .sf-faq-title { font-size: 19px; font-weight: 700; color: var(--sf-ink); margin: 0 0 16px; }
         .sf-faq-item { background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 16px; padding: 4px 20px; margin-bottom: 10px; }
         .sf-faq-item summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 15px 0; font-size: 13.5px; font-weight: 700; color: var(--sf-ink); cursor: pointer; }
         .sf-faq-item summary::-webkit-details-marker { display: none; }
@@ -694,13 +693,13 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
         .sf-footer-brand { display: flex; align-items: center; gap: 10px; }
         .sf-footer-brand-name { font-weight: 800; font-size: 15px; color: var(--sf-ink); }
         .sf-footer-links { display: flex; flex-wrap: wrap; gap: 6px 18px; }
-        .sf-footer-link { font-size: 12.5px; font-weight: 600; color: var(--sf-muted); text-decoration: none; }
+        .sf-footer-link { font-size: 12.5px; font-weight: 500; color: var(--sf-muted); text-decoration: none; }
         .sf-footer-link:hover { color: var(--sf-primary); }
-        .sf-newsletter-label { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-ink); margin-bottom: 8px; }
+        .sf-newsletter-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sf-ink); margin-bottom: 8px; }
         .sf-newsletter-form { display: flex; gap: 8px; }
         .sf-newsletter-input { font-size: 12.5px; padding: 10px 14px; border: 1px solid var(--sf-border); border-radius: 999px; background: var(--sf-card); color: var(--sf-ink); min-width: 0; flex: 1; }
         .sf-newsletter-input:focus { outline: none; border-color: var(--sf-primary); }
-        .sf-newsletter-btn { flex-shrink: 0; font-size: 12.5px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 10px 18px; cursor: pointer; }
+        .sf-newsletter-btn { flex-shrink: 0; font-size: 12.5px; font-weight: 600; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 10px 18px; cursor: pointer; }
         .sf-newsletter-done, .sf-newsletter-error { font-size: 12px; margin: 0; }
         .sf-newsletter-done { color: var(--sf-primary); font-weight: 600; }
         .sf-newsletter-error { color: #B4483A; margin-top: 6px; }
@@ -729,7 +728,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
       `}</style>
 
       <div
-        className={poppins.className}
+        className={manrope.className}
         style={{
           background: "var(--sf-bg)",
           color: "var(--sf-ink)",
@@ -741,7 +740,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
             <div className="sf-brand-block">
               <LogoMark size={42} />
               <div className="sf-brand-text">
-                <span className={`sf-brand-name ${playfair.className}`}>
+                <span className="sf-brand-name">
                   Check <em>This</em> Finds
                 </span>
                 <span className="sf-brand-tagline">Only Tested &amp; High-Quality Items</span>
@@ -923,7 +922,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
             <div className="sf-hero-grid-inner">
               <div className="sf-hero-copy">
                 <span className="sf-hero-eyebrow">Curated Online Shopping</span>
-                <h1 className={`sf-hero-headline ${playfair.className}`}>
+                <h1 className="sf-hero-headline">
                   <span className="sf-hero-headline-l1">We do the research</span>
                   <span className="sf-hero-headline-l2">so you don&apos;t have to.</span>
                 </h1>
@@ -1073,7 +1072,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
             <div className="sf-cta-left">
               <LogoMark size={40} />
               <div>
-                <div className={`sf-cta-headline ${playfair.className}`}>
+                <div className="sf-cta-headline">
                   Find it. Love it. <em>Check it.</em>
                 </div>
                 <p className="sf-cta-sub">Quality finds you can trust, every time. ✨</p>
@@ -1086,7 +1085,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
           </section>
 
           <section className="sf-faq">
-            <h2 className={`sf-faq-title ${playfair.className}`}>Frequently Asked Questions</h2>
+            <h2 className="sf-faq-title">Frequently Asked Questions</h2>
 
             <details className="sf-faq-item">
               <summary>How does ordering work?</summary>
@@ -1111,7 +1110,7 @@ export default function StorefrontClient({ products, isAdmin }: { products: Prod
               <div>
                 <div className="sf-footer-brand">
                   <LogoMark size={26} />
-                  <span className={`sf-footer-brand-name ${playfair.className}`}>Check This Finds</span>
+                  <span className="sf-footer-brand-name">Check This Finds</span>
                 </div>
                 <div className="sf-footer-links" style={{ marginTop: 14 }}>
                   <Link href="/about" className="sf-footer-link">About</Link>

@@ -1,7 +1,6 @@
-import { Poppins, Playfair_Display } from "next/font/google";
+import { Manrope } from "next/font/google";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
-const playfair = Playfair_Display({ subsets: ["latin"], weight: ["700", "800"] });
+const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
 
 export default function SimplePage({ eyebrow, title, children }: { eyebrow: string; title: string; children: React.ReactNode }) {
   return (
@@ -11,11 +10,11 @@ export default function SimplePage({ eyebrow, title, children }: { eyebrow: stri
         .sp-header { position: sticky; top: 0; z-index: 20; background: rgba(250,250,247,.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--sf-border); }
         .sp-header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 16px; padding-bottom: 16px; }
         .sp-brand { font-weight: 800; font-size: 18px; color: var(--sf-ink); text-decoration: none; }
-        .sp-back { font-size: 12.5px; font-weight: 700; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 8px 18px; text-decoration: none; }
+        .sp-back { font-size: 12.5px; font-weight: 600; color: var(--sf-white); background: var(--sf-primary); border: none; border-radius: 999px; padding: 8px 18px; text-decoration: none; }
 
         .sp-main { padding-top: 44px; padding-bottom: 60px; }
         .sp-eyebrow { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sf-primary); margin-bottom: 10px; }
-        .sp-title { font-size: 28px; font-weight: 800; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.2; margin: 0 0 24px; }
+        .sp-title { font-size: 28px; font-weight: 700; letter-spacing: -0.01em; color: var(--sf-ink); line-height: 1.2; margin: 0 0 24px; }
         .sp-body { font-size: 14px; line-height: 1.8; color: var(--sf-ink); }
         .sp-body p { margin: 0 0 16px; }
         .sp-body h2 { font-size: 17px; font-weight: 700; color: var(--sf-ink); margin: 28px 0 10px; }
@@ -40,7 +39,7 @@ export default function SimplePage({ eyebrow, title, children }: { eyebrow: stri
       `}</style>
 
       <div
-        className={poppins.className}
+        className={manrope.className}
         style={{
           background: "var(--sf-bg)",
           color: "var(--sf-ink)",
@@ -49,14 +48,14 @@ export default function SimplePage({ eyebrow, title, children }: { eyebrow: stri
       >
         <header className="sp-header">
           <div className="sp-wrap sp-header-row">
-            <a href="/" className={`sp-brand ${playfair.className}`}>Check This Finds</a>
+            <a href="/" className="sp-brand">Check This Finds</a>
             <a href="/" className="sp-back">Back to all finds</a>
           </div>
         </header>
 
         <main className="sp-wrap sp-main">
           <span className="sp-eyebrow">{eyebrow}</span>
-          <h1 className={`sp-title ${playfair.className}`}>{title}</h1>
+          <h1 className="sp-title">{title}</h1>
           <div className="sp-body">{children}</div>
         </main>
 
