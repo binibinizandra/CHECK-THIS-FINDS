@@ -23,9 +23,15 @@ const EMPTY_FORM = {
 export default function TrendingManager({
   initialProducts,
   initialCategories,
+  productClicksShopee,
+  productClicksLazada,
+  productViews,
 }: {
   initialProducts: ProductRecord[];
   initialCategories: CategoryRecord[];
+  productClicksShopee: Record<string, number>;
+  productClicksLazada: Record<string, number>;
+  productViews: Record<string, number>;
 }) {
   const [products, setProducts] = useState(initialProducts);
   const [form, setForm] = useState({ ...EMPTY_FORM, category: initialCategories[0]?.key ?? "" });
@@ -327,6 +333,10 @@ export default function TrendingManager({
                 <div className="am-list-meta">
                   {initialCategories.find((c) => c.key === p.category)?.label ?? p.category}
                   {p.price != null && ` · ₱${p.price.toLocaleString()}`}
+                </div>
+                <div className="am-list-clicks">
+                  {productViews[p.id] ?? 0} views · {productClicksShopee[p.id] ?? 0} Shopee clicks
+                  {p.lazadaLink && ` · ${productClicksLazada[p.id] ?? 0} Lazada clicks`}
                 </div>
               </div>
               <div className="am-list-actions">

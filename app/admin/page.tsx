@@ -5,7 +5,7 @@ import { ensureUser } from "@/lib/users/store";
 import { listProducts } from "@/lib/products/store";
 import { listCategories } from "@/lib/categories/store";
 import { getAboutContent } from "@/lib/about/store";
-import { getPageViewCount, getProductClickCounts, getProductViewCounts } from "@/lib/tracking/store";
+import { getPageViewCount, getProductClickCountsShopee, getProductClickCountsLazada, getProductViewCounts } from "@/lib/tracking/store";
 import { listSubscribers } from "@/lib/newsletter/store";
 import ProductManager from "@/components/admin/ProductManager";
 import TrendingManager from "@/components/admin/TrendingManager";
@@ -20,15 +20,17 @@ export default async function AdminPage() {
 
   const user = await currentUser();
   await ensureUser(userId, user?.primaryEmailAddress?.emailAddress ?? null, user?.fullName ?? user?.firstName ?? null);
-  const [initialProducts, initialCategories, initialAboutContent, pageViews, productClicks, productViews, subscribers] = await Promise.all([
-    listProducts(userId),
-    listCategories(userId),
-    getAboutContent(userId),
-    getPageViewCount(),
-    getProductClickCounts(),
-    getProductViewCounts(),
-    listSubscribers(),
-  ]);
+  const [initialProducts, initialCategories, initialAboutContent, pageViews, productClicksShopee, productClicksLazada, productViews, subscribers] =
+    await Promise.all([
+      listProducts(userId),
+      listCategories(userId),
+      getAboutContent(userId),
+      getPageViewCount(),
+      getProductClickCountsShopee(),
+      getProductClickCountsLazada(),
+      getProductViewCounts(),
+      listSubscribers(),
+    ]);
 
   return (
     <AdminShell
@@ -37,12 +39,21 @@ export default async function AdminPage() {
           initialProducts={initialProducts}
           initialCategories={initialCategories}
           pageViews={pageViews}
-          productClicks={productClicks}
+          productClicksShopee={productClicksShopee}
+          productClicksLazada={productClicksLazada}
           productViews={productViews}
           subscribers={subscribers}
         />
       }
-      trending={<TrendingManager initialProducts={initialProducts} initialCategories={initialCategories} />}
+      trending={
+        <TrendingManager
+          initialProducts={initialProducts}
+          initialCategories={initialCategories}
+          productClicksShopee={productClicksShopee}
+          productClicksLazada={productClicksLazada}
+          productViews={productViews}
+        />
+      }
       about={<AboutManager initialContent={initialAboutContent} />}
     />
   );

@@ -28,7 +28,7 @@ export function TrackedBuyButton({
           href={shopeeLink}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => { if (!isAdmin) track("product_click", productId); }}
+          onClick={() => { if (!isAdmin) track("product_click_shopee", productId); }}
         >
           Buy on Shopee
         </a>
@@ -39,7 +39,7 @@ export function TrackedBuyButton({
           href={lazadaLink}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => { if (!isAdmin) track("product_click", productId); }}
+          onClick={() => { if (!isAdmin) track("product_click_lazada", productId); }}
         >
           Buy on Lazada
         </a>

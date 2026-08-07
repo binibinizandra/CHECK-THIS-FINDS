@@ -37,14 +37,16 @@ export default function ProductManager({
   initialProducts,
   initialCategories,
   pageViews,
-  productClicks,
+  productClicksShopee,
+  productClicksLazada,
   productViews,
   subscribers,
 }: {
   initialProducts: ProductRecord[];
   initialCategories: CategoryRecord[];
   pageViews: number;
-  productClicks: Record<string, number>;
+  productClicksShopee: Record<string, number>;
+  productClicksLazada: Record<string, number>;
   productViews: Record<string, number>;
   subscribers: SubscriberRecord[];
 }) {
@@ -586,7 +588,10 @@ export default function ProductManager({
                 {categories.find((c) => c.key === p.category)?.label ?? p.category}
                 {p.price != null && ` · ₱${p.price.toLocaleString()}`}
               </div>
-              <div className="am-list-clicks">{productViews[p.id] ?? 0} views · {productClicks[p.id] ?? 0} Shopee clicks</div>
+              <div className="am-list-clicks">
+                {productViews[p.id] ?? 0} views · {productClicksShopee[p.id] ?? 0} Shopee clicks
+                {p.lazadaLink && ` · ${productClicksLazada[p.id] ?? 0} Lazada clicks`}
+              </div>
             </div>
             <div className="am-list-actions">
               <button type="button" onClick={() => handleTogglePublished(p)}>{p.published ? "Hide" : "Publish"}</button>

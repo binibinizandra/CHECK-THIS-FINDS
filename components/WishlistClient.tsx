@@ -94,9 +94,10 @@ export default function WishlistClient({ products, isAdmin }: { products: Produc
         .wl-card-body { padding: 12px 13px 10px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
         .wl-card-name { font-size: 12.5px; font-weight: 600; line-height: 1.35; color: var(--sf-ink); min-height: 34px; }
         .wl-card-price { font-size: 13.5px; font-weight: 800; color: var(--sf-accent); }
-        .wl-card-actions { padding: 0 13px 13px; }
+        .wl-card-actions { display: flex; flex-direction: column; gap: 4px; padding: 0 13px 13px; }
         .wl-btn-store { display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 11px; font-weight: 600; min-height: 44px; padding: 8px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-primary); text-decoration: none; }
         .wl-btn-store svg { width: 10px; height: 10px; }
+        .wl-btn-store-lazada { background: #1A237E; }
 
         .wl-empty { text-align: center; padding: 60px 20px; }
         .wl-empty-icon { width: 52px; height: 52px; color: var(--sf-border); margin: 0 auto 18px; }
@@ -176,9 +177,21 @@ export default function WishlistClient({ products, isAdmin }: { products: Produc
                         href={p.shopeeLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={() => { if (!isAdmin) track("product_click", p.id); }}
+                        onClick={() => { if (!isAdmin) track("product_click_shopee", p.id); }}
                       >
                         Buy on Shopee
+                        <ArrowRightIcon />
+                      </a>
+                    )}
+                    {p.lazadaLink && (
+                      <a
+                        className="wl-btn-store wl-btn-store-lazada"
+                        href={p.lazadaLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => { if (!isAdmin) track("product_click_lazada", p.id); }}
+                      >
+                        Buy on Lazada
                         <ArrowRightIcon />
                       </a>
                     )}

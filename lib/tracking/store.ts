@@ -1,9 +1,11 @@
 import "server-only";
-import { count, eq } from "drizzle-orm";
+import { count, eq, inArray } from "drizzle-orm";
 import { getDb, isDbConfigured } from "@/lib/db";
 import { analyticsEvents } from "@/lib/db/schema";
 
-const ALLOWED_TYPES = new Set(["page_view", "product_view", "product_click"]);
+// "product_click" is the legacy event from before Lazada buttons existed —
+// every click was a Shopee click back then, so it still counts toward Shopee.
+const ALLOWED_TYPES = new Set(["page_view", "product_view", "product_click", "product_click_shopee", "product_click_lazada"]);
 
 export async function recordEvent(type: string, productId: string | null): Promise<void> {
   if (!ALLOWED_TYPES.has(type)) return;
@@ -24,26 +26,30 @@ export async function getPageViewCount(): Promise<number> {
   return rows[0]?.value ?? 0;
 }
 
-async function getProductEventCounts(type: "product_click" | "product_view"): Promise<Record<string, number>> {
+async function getProductEventCounts(types: string[]): Promise<Record<string, number>> {
   if (!isDbConfigured()) return {};
   const db = getDb();
   if (!db) return {};
   const rows = await db
     .select({ productId: analyticsEvents.productId, value: count() })
     .from(analyticsEvents)
-    .where(eq(analyticsEvents.type, type))
+    .where(inArray(analyticsEvents.type, types))
     .groupBy(analyticsEvents.productId);
   const map: Record<string, number> = {};
   for (const r of rows) {
-    if (r.productId) map[r.productId] = r.value;
+    if (r.productId) map[r.productId] = (map[r.productId] ?? 0) + r.value;
   }
   return map;
 }
 
-export function getProductClickCounts(): Promise<Record<string, number>> {
-  return getProductEventCounts("product_click");
+export function getProductClickCountsShopee(): Promise<Record<string, number>> {
+  return getProductEventCounts(["product_click", "product_click_shopee"]);
+}
+
+export function getProductClickCountsLazada(): Promise<Record<string, number>> {
+  return getProductEventCounts(["product_click_lazada"]);
 }
 
 export function getProductViewCounts(): Promise<Record<string, number>> {
-  return getProductEventCounts("product_view");
+  return getProductEventCounts(["product_view"]);
 }

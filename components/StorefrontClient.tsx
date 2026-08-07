@@ -301,7 +301,7 @@ function ProductCard({
             href={p.shopeeLink}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => { if (!isAdmin) track("product_click", p.id); }}
+            onClick={() => { if (!isAdmin) track("product_click_shopee", p.id); }}
           >
             Buy on Shopee
             <ArrowRightIcon />
@@ -313,7 +313,7 @@ function ProductCard({
             href={p.lazadaLink}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => { if (!isAdmin) track("product_click", p.id); }}
+            onClick={() => { if (!isAdmin) track("product_click_lazada", p.id); }}
           >
             Buy on Lazada
             <ArrowRightIcon />
