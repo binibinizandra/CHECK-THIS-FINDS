@@ -556,13 +556,16 @@ export default function ProductManager({
           {error && <div className="am-error">{error}</div>}
         </div>
 
-        <div style={{ fontWeight: 700, fontSize: 14, color: "#1F2937", marginBottom: 12 }}>
-          Current products ({products.length})
+        <div style={{ fontWeight: 700, fontSize: 14, color: "#1F2937", marginBottom: 4 }}>
+          Current products ({products.filter((p) => !p.saleTag).length})
         </div>
-        {products.length === 0 && (
+        <div className="am-sub" style={{ marginBottom: 12 }}>
+          Tagged products (Trending, 8.8 Sale, etc.) are managed separately in the Trending / Sale tab above.
+        </div>
+        {products.filter((p) => !p.saleTag).length === 0 && (
           <div style={{ fontSize: 13, color: "#6B7280" }}>No products yet — add your first one above.</div>
         )}
-        {products.map((p) => (
+        {products.filter((p) => !p.saleTag).map((p) => (
           <div className="am-list-item" key={p.id}>
             <Image src={p.imageUrl} alt={p.name} width={48} height={48} />
             <div style={{ minWidth: 0 }}>

@@ -8,7 +8,9 @@ import { getAboutContent } from "@/lib/about/store";
 import { getPageViewCount, getProductClickCounts, getProductViewCounts } from "@/lib/tracking/store";
 import { listSubscribers } from "@/lib/newsletter/store";
 import ProductManager from "@/components/admin/ProductManager";
+import TrendingManager from "@/components/admin/TrendingManager";
 import AboutManager from "@/components/admin/AboutManager";
+import AdminShell from "@/components/admin/AdminShell";
 
 export default async function AdminPage() {
   const userId = await currentUserId();
@@ -29,16 +31,19 @@ export default async function AdminPage() {
   ]);
 
   return (
-    <>
-      <ProductManager
-        initialProducts={initialProducts}
-        initialCategories={initialCategories}
-        pageViews={pageViews}
-        productClicks={productClicks}
-        productViews={productViews}
-        subscribers={subscribers}
-      />
-      <AboutManager initialContent={initialAboutContent} />
-    </>
+    <AdminShell
+      products={
+        <ProductManager
+          initialProducts={initialProducts}
+          initialCategories={initialCategories}
+          pageViews={pageViews}
+          productClicks={productClicks}
+          productViews={productViews}
+          subscribers={subscribers}
+        />
+      }
+      trending={<TrendingManager initialProducts={initialProducts} initialCategories={initialCategories} />}
+      about={<AboutManager initialContent={initialAboutContent} />}
+    />
   );
 }
