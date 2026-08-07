@@ -333,12 +333,8 @@ function useProductGridColumns() {
 function PromoCard({ tag, onClick }: { tag: string; onClick: () => void }) {
   return (
     <button type="button" className="sf-promo-card" onClick={onClick}>
-      <FlameIcon className="sf-promo-card-icon" />
       <span className="sf-promo-card-tag">{tag}</span>
-      <span className="sf-promo-card-cta">
-        Shop now
-        <ArrowRightIcon />
-      </span>
+      <span className="sf-promo-card-cta">Shop now →</span>
     </button>
   );
 }
@@ -724,15 +720,12 @@ export default function StorefrontClient({
         @media (min-width: 640px) { .sf-card { border-radius: 20px; box-shadow: 0 8px 24px -14px rgba(31,41,55,.18); } }
         @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 28px 48px -20px rgba(31,41,55,.28); transform: translateY(-6px); } }
 
-        .sf-promo-card { width: 100%; height: 100%; min-height: 150px; background: linear-gradient(155deg, var(--sf-primary), var(--sf-secondary)); border: none; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 6px; padding: 16px 10px; cursor: pointer; color: var(--sf-white); box-shadow: 0 4px 16px -10px rgba(31,41,55,.18); }
+        .sf-promo-card { width: 100%; height: 100%; min-height: 150px; background: var(--sf-white); border: 2px solid var(--sf-accent); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 6px; padding: 16px 10px; cursor: pointer; box-shadow: 0 4px 16px -10px rgba(31,41,55,.18); }
         @media (min-width: 640px) { .sf-promo-card { min-height: 220px; border-radius: 20px; gap: 10px; padding: 24px 16px; box-shadow: 0 8px 24px -14px rgba(31,41,55,.18); } }
-        .sf-promo-card-icon { width: 22px; height: 22px; color: var(--sf-accent); }
-        @media (min-width: 640px) { .sf-promo-card-icon { width: 34px; height: 34px; } }
-        .sf-promo-card-tag { font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em; }
-        @media (min-width: 640px) { .sf-promo-card-tag { font-size: 15px; } }
-        .sf-promo-card-cta { font-size: 9px; font-weight: 600; color: var(--sf-accent); display: inline-flex; align-items: center; gap: 3px; }
-        .sf-promo-card-cta svg { width: 9px; height: 9px; }
-        @media (min-width: 640px) { .sf-promo-card-cta { font-size: 12px; } .sf-promo-card-cta svg { width: 12px; height: 12px; } }
+        .sf-promo-card-tag { font-weight: 800; font-size: 15px; text-transform: uppercase; letter-spacing: 0.03em; color: #C6603F; }
+        @media (min-width: 640px) { .sf-promo-card-tag { font-size: 19px; } }
+        .sf-promo-card-cta { font-size: 11px; font-weight: 700; color: #C6603F; }
+        @media (min-width: 640px) { .sf-promo-card-cta { font-size: 13px; } }
         @media (prefers-reduced-motion: no-preference) { .sf-promo-card { transition: transform .2s ease, box-shadow .2s ease; } .sf-promo-card:hover { transform: translateY(-6px); box-shadow: 0 28px 48px -20px rgba(31,41,55,.28); } }
         .sf-card-link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; min-width: 0; }
         .sf-card-media { position: relative; aspect-ratio: 1; background: var(--sf-border); overflow: hidden; }
