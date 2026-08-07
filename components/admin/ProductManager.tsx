@@ -23,6 +23,7 @@ const EMPTY_FORM = {
   category: "",
   imageUrl: "",
   shopeeLink: "",
+  lazadaLink: "",
   price: "",
   pros: "",
   cons: "",
@@ -141,6 +142,7 @@ export default function ProductManager({
       category: p.category,
       imageUrl: p.imageUrl,
       shopeeLink: p.shopeeLink ?? "",
+      lazadaLink: p.lazadaLink ?? "",
       price: p.price != null ? String(p.price) : "",
       pros: p.pros ?? "",
       cons: p.cons ?? "",
@@ -191,6 +193,7 @@ export default function ProductManager({
         reviews: reviewsNum,
         imageUrl: form.imageUrl,
         shopeeLink: form.shopeeLink.trim() || null,
+        lazadaLink: form.lazadaLink.trim() || null,
         tiktokLink: null,
         price: priceNum != null && Number.isFinite(priceNum) ? priceNum : null,
         pros: form.pros.trim() || null,
@@ -209,7 +212,7 @@ export default function ProductManager({
         setProducts((prev) =>
           prev.map((p) =>
             p.id === form.id
-              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, price: priceNum, pros: form.pros || null, cons: form.cons || null, voucherNote: form.voucherNote || null, badge: form.badge || null, saleTag: form.saleTag.trim() || null, published: form.published }
+              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, lazadaLink: form.lazadaLink || null, price: priceNum, pros: form.pros || null, cons: form.cons || null, voucherNote: form.voucherNote || null, badge: form.badge || null, saleTag: form.saleTag.trim() || null, published: form.published }
               : p
           )
         );
@@ -224,6 +227,7 @@ export default function ProductManager({
             reviews: reviewsNum,
             imageUrl: form.imageUrl,
             shopeeLink: form.shopeeLink || null,
+            lazadaLink: form.lazadaLink || null,
             tiktokLink: null,
             price: priceNum,
             pros: form.pros || null,
@@ -472,6 +476,12 @@ export default function ProductManager({
           <div className="am-field">
             <label className="am-label">Shopee link</label>
             <input className="am-input" value={form.shopeeLink} onChange={(e) => setForm({ ...form, shopeeLink: e.target.value })} placeholder="https://shopee.ph/..." />
+          </div>
+
+          <div className="am-field">
+            <label className="am-label">Lazada link (optional)</label>
+            <input className="am-input" value={form.lazadaLink} onChange={(e) => setForm({ ...form, lazadaLink: e.target.value })} placeholder="https://lazada.com.ph/..." />
+            <div className="am-hint">Leave blank to show only the Shopee button. Fill this in too and both buttons show on the product.</div>
           </div>
 
           <div className="am-field">

@@ -12,21 +12,38 @@ export function ProductViewTracker({ productId, isAdmin }: { productId: string; 
 export function TrackedBuyButton({
   productId,
   shopeeLink,
+  lazadaLink,
   isAdmin,
 }: {
   productId: string;
-  shopeeLink: string;
+  shopeeLink: string | null;
+  lazadaLink?: string | null;
   isAdmin: boolean;
 }) {
   return (
-    <a
-      className="pd-btn-store"
-      href={shopeeLink}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={() => { if (!isAdmin) track("product_click", productId); }}
-    >
-      Buy on Shopee
-    </a>
+    <>
+      {shopeeLink && (
+        <a
+          className="pd-btn-store"
+          href={shopeeLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => { if (!isAdmin) track("product_click", productId); }}
+        >
+          Buy on Shopee
+        </a>
+      )}
+      {lazadaLink && (
+        <a
+          className="pd-btn-store pd-btn-store-lazada"
+          href={lazadaLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => { if (!isAdmin) track("product_click", productId); }}
+        >
+          Buy on Lazada
+        </a>
+      )}
+    </>
   );
 }

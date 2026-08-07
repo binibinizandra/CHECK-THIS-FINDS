@@ -255,6 +255,7 @@ export const products = pgTable(
     reviews: integer("reviews").notNull().default(0),
     imageUrl: text("image_url").notNull(),
     shopeeLink: text("shopee_link"),
+    lazadaLink: text("lazada_link"),
     tiktokLink: text("tiktok_link"),
     pros: text("pros"),
     cons: text("cons"),

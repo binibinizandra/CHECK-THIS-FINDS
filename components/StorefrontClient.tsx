@@ -307,6 +307,18 @@ function ProductCard({
             <ArrowRightIcon />
           </a>
         )}
+        {p.lazadaLink && (
+          <a
+            className="sf-btn-store sf-btn-store-lazada"
+            href={p.lazadaLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => { if (!isAdmin) track("product_click", p.id); }}
+          >
+            Buy on Lazada
+            <ArrowRightIcon />
+          </a>
+        )}
       </div>
     </article>
   );
@@ -778,9 +790,11 @@ export default function StorefrontClient({
         .sf-btn-store { display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 9px; font-weight: 600; min-height: 44px; padding: 7px 6px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-primary); }
         @media (min-width: 640px) { .sf-btn-store { font-size: 10.5px; min-height: 0; padding: 10px 8px; } }
         .sf-btn-store svg { width: 9px; height: 9px; flex-shrink: 0; }
+        .sf-btn-store-lazada { background: #1A237E; }
         @media (prefers-reduced-motion: no-preference) {
           .sf-btn-store { transition: background .2s ease, transform .2s ease; }
           .sf-btn-store:hover { background: var(--sf-secondary); transform: translateY(-1px); }
+          .sf-btn-store-lazada:hover { background: #10164F; }
         }
 
         .sf-cta { background: var(--sf-primary); border-radius: 16px; margin: 0 0 40px; padding: 18px 16px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; box-shadow: 0 16px 32px -20px rgba(11,107,87,.4); }

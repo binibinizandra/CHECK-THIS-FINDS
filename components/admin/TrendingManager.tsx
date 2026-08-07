@@ -11,6 +11,7 @@ const EMPTY_FORM = {
   category: "",
   imageUrl: "/images/placeholder-product.svg",
   shopeeLink: "",
+  lazadaLink: "",
   price: "",
   pros: "",
   cons: "",
@@ -45,6 +46,7 @@ export default function TrendingManager({
       category: p.category,
       imageUrl: p.imageUrl,
       shopeeLink: p.shopeeLink ?? "",
+      lazadaLink: p.lazadaLink ?? "",
       price: p.price != null ? String(p.price) : "",
       pros: p.pros ?? "",
       cons: p.cons ?? "",
@@ -96,6 +98,7 @@ export default function TrendingManager({
         reviews: 0,
         imageUrl: form.imageUrl,
         shopeeLink: form.shopeeLink.trim() || null,
+        lazadaLink: form.lazadaLink.trim() || null,
         tiktokLink: null,
         price: priceNum != null && Number.isFinite(priceNum) ? priceNum : null,
         pros: form.pros.trim() || null,
@@ -120,6 +123,7 @@ export default function TrendingManager({
                   category: form.category,
                   imageUrl: form.imageUrl,
                   shopeeLink: form.shopeeLink || null,
+                  lazadaLink: form.lazadaLink || null,
                   price: priceNum,
                   pros: form.pros || null,
                   cons: form.cons || null,
@@ -141,6 +145,7 @@ export default function TrendingManager({
             reviews: 0,
             imageUrl: form.imageUrl,
             shopeeLink: form.shopeeLink || null,
+            lazadaLink: form.lazadaLink || null,
             tiktokLink: null,
             price: priceNum,
             pros: form.pros || null,
@@ -236,6 +241,12 @@ export default function TrendingManager({
         <div className="am-field">
           <label className="am-label">Shopee link</label>
           <input className="am-input" value={form.shopeeLink} onChange={(e) => setForm({ ...form, shopeeLink: e.target.value })} placeholder="https://shopee.ph/..." />
+        </div>
+
+        <div className="am-field">
+          <label className="am-label">Lazada link (optional)</label>
+          <input className="am-input" value={form.lazadaLink} onChange={(e) => setForm({ ...form, lazadaLink: e.target.value })} placeholder="https://lazada.com.ph/..." />
+          <div className="am-hint">Leave blank to show only the Shopee button. Fill this in too and both buttons show on the product.</div>
         </div>
 
         <div className="am-field">

@@ -84,7 +84,8 @@ export default function ProductDetail({
 
         .pd-cta-row { display: flex; gap: 10px; margin-top: 28px; flex-wrap: wrap; }
         .pd-btn-store { display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; font-weight: 600; padding: 14px 26px; border-radius: 999px; border: none; color: var(--sf-white); cursor: pointer; background: var(--sf-primary); }
-        @media (prefers-reduced-motion: no-preference) { .pd-btn-store { transition: background .15s ease; } .pd-btn-store:hover { background: var(--sf-secondary); } }
+        .pd-btn-store-lazada { background: #1A237E; }
+        @media (prefers-reduced-motion: no-preference) { .pd-btn-store { transition: background .15s ease; } .pd-btn-store:hover { background: var(--sf-secondary); } .pd-btn-store-lazada:hover { background: #10164F; } }
 
         .pd-comments { margin-top: 36px; background: var(--sf-card); border: 1px solid var(--sf-border); border-radius: 20px; padding: 20px; }
         .pd-comment-empty { font-size: 13px; color: var(--sf-muted); }
@@ -187,7 +188,7 @@ export default function ProductDetail({
               )}
 
               <div className="pd-cta-row">
-                {product.shopeeLink && <TrackedBuyButton productId={product.id} shopeeLink={product.shopeeLink} isAdmin={isAdmin} />}
+                <TrackedBuyButton productId={product.id} shopeeLink={product.shopeeLink} lazadaLink={product.lazadaLink} isAdmin={isAdmin} />
               </div>
             </div>
           </div>

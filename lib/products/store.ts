@@ -11,6 +11,7 @@ export interface ProductRecord {
   reviews: number;
   imageUrl: string;
   shopeeLink: string | null;
+  lazadaLink: string | null;
   tiktokLink: string | null;
   pros: string | null;
   cons: string | null;
@@ -31,6 +32,7 @@ function toRecord(r: typeof products.$inferSelect): ProductRecord {
     reviews: r.reviews,
     imageUrl: r.imageUrl,
     shopeeLink: r.shopeeLink,
+    lazadaLink: r.lazadaLink,
     tiktokLink: r.tiktokLink,
     pros: r.pros,
     cons: r.cons,
@@ -77,6 +79,7 @@ export interface ProductInput {
   reviews: number;
   imageUrl: string;
   shopeeLink: string | null;
+  lazadaLink: string | null;
   tiktokLink: string | null;
   pros: string | null;
   cons: string | null;

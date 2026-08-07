@@ -36,7 +36,7 @@ const DEFAULTS: AboutContentRecord = {
     {
       question: "How does purchasing work on this site?",
       answer:
-        "Check This Finds is a curated recommendation hub. When you click on an item, you'll be redirected directly to the official and verified seller on Shopee, where you can securely place your order.",
+        "Check This Finds is a curated recommendation hub. When you click on an item, you'll be redirected directly to the official and verified seller on Shopee or Lazada, where you can securely place your order.",
     },
     {
       question: "How are products selected?",
@@ -50,7 +50,7 @@ const DEFAULTS: AboutContentRecord = {
     },
     {
       question: "Are the seller links safe and verified?",
-      answer: "Yes! We only link to Shopee Mall, Preferred sellers, and top-rated merchants so you can shop safely with peace of mind.",
+      answer: "Yes! We only link to Shopee Mall, LazMall, Preferred sellers, and top-rated merchants so you can shop safely with peace of mind.",
     },
   ],
 };
