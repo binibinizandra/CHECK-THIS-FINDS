@@ -572,6 +572,14 @@ export default function StorefrontClient({
         @keyframes sfwTwinkle { 0%, 100% { opacity: 0.18; } 50% { opacity: 0.55; } }
 
         .sf-header { position: sticky; top: 0; z-index: 20; background: rgba(250,250,247,.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--sf-border); }
+
+        .sf-promo-bar { background: linear-gradient(90deg, var(--sf-primary), var(--sf-secondary)); padding: 10px 20px; }
+        .sf-promo-bar-inner { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        .sf-promo-pill { display: inline-flex; align-items: center; gap: 7px; font-weight: 800; font-size: 13px; letter-spacing: 0.02em; text-transform: uppercase; color: #1F2937; background: var(--sf-accent); border: none; border-radius: 999px; padding: 8px 22px; cursor: pointer; box-shadow: 0 4px 14px -4px rgba(0,0,0,.35); min-height: 36px; }
+        .sf-promo-pill svg { width: 15px; height: 15px; flex-shrink: 0; }
+        @media (min-width: 640px) { .sf-promo-pill { font-size: 14px; padding: 9px 26px; } }
+        @media (prefers-reduced-motion: no-preference) { .sf-promo-pill { animation: sfPromoPulse 2.4s ease-in-out infinite; } }
+        @keyframes sfPromoPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.045); } }
         .sf-nav-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 16px; padding-bottom: 16px; }
         .sf-brand-block { display: flex; align-items: center; gap: 11px; }
         .sf-brand-text { display: flex; flex-direction: column; gap: 1px; }
@@ -969,6 +977,19 @@ export default function StorefrontClient({
             </nav>
           </div>
         </header>
+
+        {saleTags.length > 0 && (
+          <div className="sf-promo-bar">
+            <div className="sf-wrap sf-promo-bar-inner">
+              {saleTags.map((tag) => (
+                <button key={tag} type="button" className="sf-promo-pill" onClick={() => goToTag(tag)}>
+                  <FlameIcon />
+                  {tag}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="sf-hero">
           <svg className="sf-hero-bg" viewBox="0 0 1400 620" preserveAspectRatio="xMidYMin slice" fill="none" aria-hidden="true">

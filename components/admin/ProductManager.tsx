@@ -464,6 +464,9 @@ export default function ProductManager({
             <input ref={fileInputRef} className="am-input" type="file" accept="image/*" onChange={handleFileChange} disabled={uploading} />
             {uploading && <div style={{ fontSize: 12.5, color: "#6B7280", marginTop: 6 }}>Uploading…</div>}
             {form.imageUrl && <Image className="am-preview" src={form.imageUrl} alt="Preview" width={100} height={100} />}
+            {form.imageUrl.includes("placeholder-product") && (
+              <div className="am-hint">This is still the placeholder image — you can Publish now and swap in the real photo anytime later.</div>
+            )}
           </div>
 
           <div className="am-field">
