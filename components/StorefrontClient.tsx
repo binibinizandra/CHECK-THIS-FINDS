@@ -429,6 +429,10 @@ export default function StorefrontClient({
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
   const [dealsOnly, setDealsOnly] = useState(false);
+  const [activeTag, setActiveTag] = useState<string | null>(null);
+  // Distinct tags currently used by published products — each one gets its
+  // own menu item automatically, and disappears once nothing uses it anymore.
+  const saleTags = Array.from(new Set(products.map((p) => p.saleTag).filter((t): t is string => !!t && t.trim().length > 0)));
   const [categoriesOpen, setCategoriesOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
@@ -487,15 +491,26 @@ export default function StorefrontClient({
   const searchActive = searchQuery.length > 0;
   const searchResults = searchActive ? products.filter((p) => p.name.toLowerCase().includes(searchQuery)) : [];
   const dealsResults = dealsOnly ? products.filter((p) => p.voucherNote) : [];
+  const tagResults = activeTag ? products.filter((p) => p.saleTag === activeTag) : [];
 
   function goToProducts() {
     document.getElementById("sf-products")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function goToTag(tag: string) {
+    setActiveTag(tag);
+    setFilter("all");
+    setSearch("");
+    setDealsOnly(false);
+    setCategoriesOpen(false);
+    goToProducts();
   }
 
   function goToCategory(key: string) {
     setFilter(key);
     setSearch("");
     setDealsOnly(false);
+    setActiveTag(null);
     setCategoriesOpen(false);
     goToProducts();
   }
@@ -819,6 +834,7 @@ export default function StorefrontClient({
                   setFilter("all");
                   setSearch("");
                   setDealsOnly(false);
+                  setActiveTag(null);
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
               >
@@ -849,12 +865,18 @@ export default function StorefrontClient({
                 onClick={() => {
                   setDealsOnly(true);
                   setSearch("");
+                  setActiveTag(null);
                   setCategoriesOpen(false);
                   goToProducts();
                 }}
               >
                 Deals
               </button>
+              {saleTags.map((tag) => (
+                <button key={tag} type="button" className="sf-nav-link" onClick={() => goToTag(tag)}>
+                  {tag}
+                </button>
+              ))}
               <Link href="/wishlist" className="sf-nav-link">Wishlist</Link>
               <Link href="/about" className="sf-nav-link">About</Link>
               <Link href="/contact" className="sf-nav-link">Contact</Link>
@@ -886,6 +908,7 @@ export default function StorefrontClient({
                   setFilter("all");
                   setSearch("");
                   setDealsOnly(false);
+                  setActiveTag(null);
                   setMobileMenuOpen(false);
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
@@ -916,6 +939,7 @@ export default function StorefrontClient({
                 onClick={() => {
                   setDealsOnly(true);
                   setSearch("");
+                  setActiveTag(null);
                   setMobileMenuOpen(false);
                   goToProducts();
                 }}
@@ -923,6 +947,19 @@ export default function StorefrontClient({
                 <SparkleIcon />
                 Deals
               </button>
+              {saleTags.map((tag) => (
+                <button
+                  key={tag}
+                  type="button"
+                  onClick={() => {
+                    goToTag(tag);
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  <FlameIcon />
+                  {tag}
+                </button>
+              ))}
               <Link href="/wishlist" onClick={() => setMobileMenuOpen(false)}>
                 <HeartIcon />
                 Wishlist
@@ -1037,6 +1074,7 @@ export default function StorefrontClient({
                     onChange={(e) => {
                       setSearch(e.target.value);
                       setDealsOnly(false);
+                      setActiveTag(null);
                     }}
                     aria-label="Search products"
                   />
@@ -1057,11 +1095,12 @@ export default function StorefrontClient({
                         key={t.key}
                         type="button"
                         className="sf-tab-btn"
-                        aria-pressed={!dealsOnly && filter === t.key}
+                        aria-pressed={!dealsOnly && !activeTag && filter === t.key}
                         onClick={() => {
                           setFilter(t.key);
                           setSearch("");
                           setDealsOnly(false);
+                          setActiveTag(null);
                         }}
                       >
                         <Icon />
@@ -1128,6 +1167,23 @@ export default function StorefrontClient({
                   </>
                 ) : (
                   <div className="sf-empty">No active deals right now — check back soon!</div>
+                )
+              ) : activeTag ? (
+                tagResults.length > 0 ? (
+                  <>
+                    <div className="sf-cat-header">
+                      <span className="sf-cat-label">
+                        <FlameIcon />
+                        {activeTag}
+                      </span>
+                      <button type="button" className="sf-cat-viewall" onClick={() => setActiveTag(null)}>
+                        Show all →
+                      </button>
+                    </div>
+                    <ProductGrid items={tagResults} isAdmin={isAdmin} wishlist={wishlist} onToggleWishlist={toggleWishlist} />
+                  </>
+                ) : (
+                  <div className="sf-empty">No products tagged &quot;{activeTag}&quot; right now — check back soon!</div>
                 )
               ) : filter === "all" ? (
                 <>

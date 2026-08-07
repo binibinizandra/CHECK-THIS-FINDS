@@ -28,6 +28,7 @@ const EMPTY_FORM = {
   cons: "",
   voucherNote: "",
   badge: "",
+  saleTag: "",
   published: true,
 };
 
@@ -145,6 +146,7 @@ export default function ProductManager({
       cons: p.cons ?? "",
       voucherNote: p.voucherNote ?? "",
       badge: p.badge ?? "",
+      saleTag: p.saleTag ?? "",
       published: p.published,
     });
     setSaved(false);
@@ -195,6 +197,7 @@ export default function ProductManager({
         cons: form.cons.trim() || null,
         voucherNote: form.voucherNote.trim() || null,
         badge: form.badge || null,
+        saleTag: form.saleTag.trim() || null,
         published: form.published,
       });
       if ("error" in result) {
@@ -206,7 +209,7 @@ export default function ProductManager({
         setProducts((prev) =>
           prev.map((p) =>
             p.id === form.id
-              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, price: priceNum, pros: form.pros || null, cons: form.cons || null, voucherNote: form.voucherNote || null, badge: form.badge || null, published: form.published }
+              ? { ...p, name: form.name, category: form.category, rating: ratingNum, reviews: reviewsNum, imageUrl: form.imageUrl, shopeeLink: form.shopeeLink || null, price: priceNum, pros: form.pros || null, cons: form.cons || null, voucherNote: form.voucherNote || null, badge: form.badge || null, saleTag: form.saleTag.trim() || null, published: form.published }
               : p
           )
         );
@@ -227,6 +230,7 @@ export default function ProductManager({
             cons: form.cons || null,
             voucherNote: form.voucherNote || null,
             badge: form.badge || null,
+            saleTag: form.saleTag.trim() || null,
             published: form.published,
             sortOrder: prev.length,
           },
@@ -489,6 +493,20 @@ export default function ProductManager({
               ))}
             </select>
             <div className="am-hint">Only tag a product as Best Pick / Trending / etc. if it genuinely earns it.</div>
+          </div>
+
+          <div className="am-field">
+            <label className="am-label">Menu tag (optional)</label>
+            <input
+              className="am-input"
+              value={form.saleTag}
+              onChange={(e) => setForm({ ...form, saleTag: e.target.value })}
+              placeholder="e.g. Trending or 8.8 Sale"
+            />
+            <div className="am-hint">
+              Products sharing the same tag automatically get their own menu item on the site — clear it and the menu item
+              disappears once no published products use it anymore. Leave blank for normal products.
+            </div>
           </div>
 
           <div className="am-field">

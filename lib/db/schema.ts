@@ -260,13 +260,17 @@ export const products = pgTable(
     cons: text("cons"),
     voucherNote: text("voucher_note"),
     badge: text("badge"),
+    saleTag: text("sale_tag"),
     price: doublePrecision("price"),
     published: boolean("published").notNull().default(true),
     sortOrder: integer("sort_order").notNull().default(0),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
-  (t) => [index("products_user_category_idx").on(t.userId, t.category)]
+  (t) => [
+    index("products_user_category_idx").on(t.userId, t.category),
+    index("products_sale_tag_idx").on(t.saleTag),
+  ]
 );
 
 export const aboutContent = pgTable("about_content", {
