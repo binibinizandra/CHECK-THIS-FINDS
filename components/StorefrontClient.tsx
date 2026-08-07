@@ -330,11 +330,20 @@ function useProductGridColumns() {
   return columns;
 }
 
+const PROMO_COPY: Record<string, { subtitle: string; cta: string }> = {
+  Trending: { subtitle: "Popular finds worth checking out", cta: "Explore →" },
+  Deals: { subtitle: "Great finds at better prices", cta: "Shop deals →" },
+};
+
 function PromoCard({ tag, onClick }: { tag: string; onClick: () => void }) {
+  const copy = PROMO_COPY[tag] ?? { subtitle: "Curated picks just for you", cta: "Shop now →" };
   return (
     <button type="button" className="sf-promo-card" onClick={onClick}>
+      <SparkleIcon className="sf-promo-card-sparkle sf-promo-card-sparkle-a" />
+      <SparkleIcon className="sf-promo-card-sparkle sf-promo-card-sparkle-b" />
       <span className="sf-promo-card-tag">{tag}</span>
-      <span className="sf-promo-card-cta">Shop now →</span>
+      <span className="sf-promo-card-sub">{copy.subtitle}</span>
+      <span className="sf-promo-card-cta">{copy.cta}</span>
     </button>
   );
 }
@@ -720,17 +729,20 @@ export default function StorefrontClient({
         @media (min-width: 640px) { .sf-card { border-radius: 20px; box-shadow: 0 8px 24px -14px rgba(31,41,55,.18); } }
         @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 28px 48px -20px rgba(31,41,55,.28); transform: translateY(-6px); } }
 
-        .sf-promo-card { position: relative; overflow: hidden; width: 100%; height: 100%; min-height: 150px; background: var(--sf-white); border: 2px solid var(--sf-accent); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 8px; padding: 16px 10px; cursor: pointer; box-shadow: 0 4px 16px -10px rgba(31,41,55,.18); }
-        @media (min-width: 640px) { .sf-promo-card { min-height: 220px; border-radius: 20px; gap: 12px; padding: 24px 16px; box-shadow: 0 8px 24px -14px rgba(31,41,55,.18); } }
-        .sf-promo-card::before, .sf-promo-card::after { content: ""; position: absolute; border-radius: 50%; filter: blur(26px); pointer-events: none; }
-        .sf-promo-card::before { width: 110px; height: 110px; top: -36px; left: -36px; background: var(--sf-primary); opacity: 0.14; }
-        .sf-promo-card::after { width: 120px; height: 120px; bottom: -44px; right: -36px; background: var(--sf-accent); opacity: 0.22; }
-        .sf-promo-card-tag { position: relative; font-weight: 800; font-size: 16px; text-transform: uppercase; letter-spacing: 0.04em; color: #C6603F; }
+        .sf-promo-card { position: relative; overflow: hidden; width: 100%; height: 100%; min-height: 150px; background: var(--sf-bg); border: 1.5px solid var(--sf-accent); border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 8px; padding: 18px 14px; cursor: pointer; box-shadow: 0 4px 14px -10px rgba(31,41,55,.14); }
+        @media (min-width: 640px) { .sf-promo-card { min-height: 220px; border-radius: 20px; gap: 10px; padding: 26px 20px; box-shadow: 0 6px 20px -12px rgba(31,41,55,.14); } }
+        .sf-promo-card-sparkle { position: absolute; color: var(--sf-accent); opacity: 0.35; pointer-events: none; }
+        .sf-promo-card-sparkle-a { width: 12px; height: 12px; top: 14px; right: 16px; }
+        .sf-promo-card-sparkle-b { width: 9px; height: 9px; bottom: 18px; left: 18px; }
+        @media (min-width: 640px) { .sf-promo-card-sparkle-a { width: 16px; height: 16px; top: 20px; right: 22px; } .sf-promo-card-sparkle-b { width: 12px; height: 12px; bottom: 24px; left: 24px; } }
+        .sf-promo-card-tag { position: relative; font-weight: 800; font-size: 16px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--sf-primary); }
         @media (min-width: 640px) { .sf-promo-card-tag { font-size: 21px; } }
         .sf-promo-card-tag::after { content: ""; display: block; width: 26px; height: 2px; background: var(--sf-accent); margin: 7px auto 0; border-radius: 2px; }
-        .sf-promo-card-cta { position: relative; font-size: 10.5px; font-weight: 700; color: var(--sf-white); background: #C6603F; padding: 5px 14px; border-radius: 999px; }
-        @media (min-width: 640px) { .sf-promo-card-cta { font-size: 12.5px; padding: 7px 18px; } }
-        @media (prefers-reduced-motion: no-preference) { .sf-promo-card { transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; } .sf-promo-card:hover { transform: translateY(-6px); box-shadow: 0 28px 48px -20px rgba(31,41,55,.28); border-color: #C6603F; } }
+        .sf-promo-card-sub { position: relative; font-size: 10.5px; color: var(--sf-muted); line-height: 1.4; max-width: 165px; }
+        @media (min-width: 640px) { .sf-promo-card-sub { font-size: 12.5px; max-width: 210px; } }
+        .sf-promo-card-cta { position: relative; font-size: 10.5px; font-weight: 700; color: var(--sf-primary); background: var(--sf-white); border: 1px solid var(--sf-accent); padding: 6px 16px; border-radius: 999px; margin-top: 2px; }
+        @media (min-width: 640px) { .sf-promo-card-cta { font-size: 12.5px; padding: 8px 20px; } }
+        @media (prefers-reduced-motion: no-preference) { .sf-promo-card { transition: transform .2s ease, box-shadow .2s ease; } .sf-promo-card:hover { transform: translateY(-6px); box-shadow: 0 18px 36px -16px rgba(31,41,55,.18); } .sf-promo-card:hover .sf-promo-card-cta { background: var(--sf-accent); } }
         .sf-card-link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; min-width: 0; }
         .sf-card-media { position: relative; aspect-ratio: 1; background: var(--sf-border); overflow: hidden; }
         .sf-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease; }
