@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Manrope } from "next/font/google";
@@ -329,26 +330,47 @@ function useProductGridColumns() {
   return columns;
 }
 
+function PromoCard({ tag, onClick }: { tag: string; onClick: () => void }) {
+  return (
+    <button type="button" className="sf-promo-card" onClick={onClick}>
+      <FlameIcon className="sf-promo-card-icon" />
+      <span className="sf-promo-card-tag">{tag}</span>
+      <span className="sf-promo-card-cta">
+        Shop now
+        <ArrowRightIcon />
+      </span>
+    </button>
+  );
+}
+
 function ProductGrid({
   items,
   isAdmin,
   wishlist,
   onToggleWishlist,
+  leading,
+  leadingCount = 0,
 }: {
   items: ProductRecord[];
   isAdmin: boolean;
   wishlist: Set<string>;
   onToggleWishlist: (id: string) => void;
+  leading?: ReactNode;
+  leadingCount?: number;
 }) {
   const columns = useProductGridColumns();
   const pageSize = columns * 2; // two full rows per page, whatever the current column count
-  const [visible, setVisible] = useState(pageSize);
+  // Leading cards (e.g. a promo tile) take up slots in the first row too, so
+  // the first batch of real products is shorter by that many, keeping the
+  // total tile count (leading + products) a full multiple of the columns.
+  const firstBatchSize = Math.max(columns, pageSize - leadingCount);
+  const [visible, setVisible] = useState(firstBatchSize);
 
   // Keep visible count a full multiple of the current column count so the
   // grid never ends on a half-empty row (e.g. 6 items in a 5-column layout).
   useEffect(() => {
-    setVisible((v) => Math.max(v, pageSize));
-  }, [pageSize]);
+    setVisible((v) => Math.max(v, firstBatchSize));
+  }, [firstBatchSize]);
 
   const shown = items.slice(0, visible);
   const remaining = items.length - shown.length;
@@ -356,6 +378,7 @@ function ProductGrid({
   return (
     <>
       <div className="sf-product-grid">
+        {leading}
         {shown.map((p) => (
           <ProductCard key={p.id} p={p} isAdmin={isAdmin} wishlisted={wishlist.has(p.id)} onToggleWishlist={onToggleWishlist} />
         ))}
@@ -573,13 +596,6 @@ export default function StorefrontClient({
 
         .sf-header { position: sticky; top: 0; z-index: 20; background: rgba(250,250,247,.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--sf-border); }
 
-        .sf-promo-bar { background: linear-gradient(90deg, var(--sf-primary), var(--sf-secondary)); padding: 10px 20px; }
-        .sf-promo-bar-inner { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        .sf-promo-pill { display: inline-flex; align-items: center; gap: 7px; font-weight: 800; font-size: 13px; letter-spacing: 0.02em; text-transform: uppercase; color: #1F2937; background: var(--sf-accent); border: none; border-radius: 999px; padding: 8px 22px; cursor: pointer; box-shadow: 0 4px 14px -4px rgba(0,0,0,.35); min-height: 36px; }
-        .sf-promo-pill svg { width: 15px; height: 15px; flex-shrink: 0; }
-        @media (min-width: 640px) { .sf-promo-pill { font-size: 14px; padding: 9px 26px; } }
-        @media (prefers-reduced-motion: no-preference) { .sf-promo-pill { animation: sfPromoPulse 2.4s ease-in-out infinite; } }
-        @keyframes sfPromoPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.045); } }
         .sf-nav-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 16px; padding-bottom: 16px; }
         .sf-brand-block { display: flex; align-items: center; gap: 11px; }
         .sf-brand-text { display: flex; flex-direction: column; gap: 1px; }
@@ -707,6 +723,17 @@ export default function StorefrontClient({
         .sf-card { background: var(--sf-card); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 4px 16px -10px rgba(31,41,55,.18); transition: box-shadow .3s ease, transform .3s ease; }
         @media (min-width: 640px) { .sf-card { border-radius: 20px; box-shadow: 0 8px 24px -14px rgba(31,41,55,.18); } }
         @media (prefers-reduced-motion: no-preference) { .sf-card:hover { box-shadow: 0 28px 48px -20px rgba(31,41,55,.28); transform: translateY(-6px); } }
+
+        .sf-promo-card { width: 100%; height: 100%; min-height: 150px; background: linear-gradient(155deg, var(--sf-primary), var(--sf-secondary)); border: none; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 6px; padding: 16px 10px; cursor: pointer; color: var(--sf-white); box-shadow: 0 4px 16px -10px rgba(31,41,55,.18); }
+        @media (min-width: 640px) { .sf-promo-card { min-height: 220px; border-radius: 20px; gap: 10px; padding: 24px 16px; box-shadow: 0 8px 24px -14px rgba(31,41,55,.18); } }
+        .sf-promo-card-icon { width: 22px; height: 22px; color: var(--sf-accent); }
+        @media (min-width: 640px) { .sf-promo-card-icon { width: 34px; height: 34px; } }
+        .sf-promo-card-tag { font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em; }
+        @media (min-width: 640px) { .sf-promo-card-tag { font-size: 15px; } }
+        .sf-promo-card-cta { font-size: 9px; font-weight: 600; color: var(--sf-accent); display: inline-flex; align-items: center; gap: 3px; }
+        .sf-promo-card-cta svg { width: 9px; height: 9px; }
+        @media (min-width: 640px) { .sf-promo-card-cta { font-size: 12px; } .sf-promo-card-cta svg { width: 12px; height: 12px; } }
+        @media (prefers-reduced-motion: no-preference) { .sf-promo-card { transition: transform .2s ease, box-shadow .2s ease; } .sf-promo-card:hover { transform: translateY(-6px); box-shadow: 0 28px 48px -20px rgba(31,41,55,.28); } }
         .sf-card-link { display: flex; flex-direction: column; flex: 1; text-decoration: none; color: inherit; min-width: 0; }
         .sf-card-media { position: relative; aspect-ratio: 1; background: var(--sf-border); overflow: hidden; }
         .sf-card-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease; }
@@ -978,19 +1005,6 @@ export default function StorefrontClient({
           </div>
         </header>
 
-        {saleTags.length > 0 && (
-          <div className="sf-promo-bar">
-            <div className="sf-wrap sf-promo-bar-inner">
-              {saleTags.map((tag) => (
-                <button key={tag} type="button" className="sf-promo-pill" onClick={() => goToTag(tag)}>
-                  <FlameIcon />
-                  {tag}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
         <div className="sf-hero">
           <svg className="sf-hero-bg" viewBox="0 0 1400 620" preserveAspectRatio="xMidYMin slice" fill="none" aria-hidden="true">
             <defs>
@@ -1217,7 +1231,16 @@ export default function StorefrontClient({
                       View all finds →
                     </button>
                   </div>
-                  <ProductGrid items={products} isAdmin={isAdmin} wishlist={wishlist} onToggleWishlist={toggleWishlist} />
+                  <ProductGrid
+                    items={products}
+                    isAdmin={isAdmin}
+                    wishlist={wishlist}
+                    onToggleWishlist={toggleWishlist}
+                    leadingCount={saleTags.length}
+                    leading={saleTags.map((tag) => (
+                      <PromoCard key={tag} tag={tag} onClick={() => goToTag(tag)} />
+                    ))}
+                  />
                 </>
               ) : (
                 <>
